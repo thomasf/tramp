@@ -2160,9 +2160,9 @@ This one expects to be in the right *rcp* buffer."
       (when (rcp-handle-file-executable-p
              (rcp-make-rcp-file-name method user host x))
         (setq result x)))
-    (unless result
-      (error "Couldn't find remote executable %s." progname))
-    (rcp-message 5 "Found remote executable %s" result)
+    (if result
+        (rcp-message 5 "Found remote executable %s" result)
+      (rcp-message 5 "Couldn't find remote executable %s." progname))
     result))
 
 (defun rcp-set-remote-path (method user host var dirlist)
@@ -2457,6 +2457,8 @@ Mainly sets the prompt and the echo correctly."
      "Danger!  Couldn't find ls which groks -n.  Muddling through anyway.")
     (setq rcp-ls-command
           (rcp-find-executable method user host "ls" rcp-remote-path)))
+  (unless rcp-ls-command
+    (error "Fatal error: Couldn't find remote executable `ls'."))
   (rcp-message 5 "Using remote command %s for getting directory listings."
                rcp-ls-command)
   ;; Tell remote shell to use standard time format, needed for
