@@ -770,7 +770,7 @@ Some shells send such garbage upon connection setup."
 ;; File name format.
 
 (defcustom tramp-file-name-structure
-  (list "\\`/\\[\\(\\([a-zA-Z0-9]+\\)/\\)?\\(\\([-a-zA-Z0-9_#/:]+\\)@\\)?\\([-a-zA-Z0-9_#/:@]+\\)\\]\\(.*\\)\\'"
+  (list "\\`/\\[\\(\\([a-zA-Z0-9]+\\)/\\)?\\(\\([-a-zA-Z0-9_#/:]+\\)@\\)?\\([-a-zA-Z0-9_#/:@.]+\\)\\]\\(.*\\)\\'"
         2 4 5 6)
   "*List of five elements (REGEXP METHOD USER HOST FILE), detailing \
 the tramp file name structure.
