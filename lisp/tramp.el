@@ -86,7 +86,6 @@
 ;; find-backup-file-name
 ;; get-file-buffer -- use primitive
 ;; load
-;; make-directory
 ;; make-symbolic-link
 ;; rename-file
 ;; set-file-modes
@@ -297,6 +296,14 @@
   "Like `copy-file' for rssh files."
   (error "copy-file not implemented yet for rssh files."))
 
+;; mkdir
+(defun rssh-handle-make-directory (dir &optional parents)
+  "Like `make-directory' for rssh files."
+  (rssh-send-command user host
+                     (if parents
+                         (format "mkdir -p %s" dir)
+                       (format "mkdir %s" dir))))
+
 ;; error checking?
 (defun rssh-handle-delete-directory (directory)
   "Like `delete-directory' for rssh files."
@@ -452,6 +459,8 @@
          (apply #'rssh-handle-add-name-to-file args))
         ((eq operation 'copy-file)
          (apply #'rssh-handle-copy-file args))
+        ((eq operation 'make-directory)
+         (apply #'rssh-handle-make-directory args))
         ((eq operation 'delete-directory)
          (apply #'rssh-handle-delete-directory args))
         ((eq operation 'delete-file)
