@@ -4050,6 +4050,7 @@ locale to C and sets up the remote shell search path."
 	(tramp-kill-process multi-method method user host)
 	(error "Remote host cannot execute de/encoding commands.  See buffer `%s' for details"
 	       (buffer-name)))
+      (erase-buffer)
       (tramp-message
        5 "Checking to see if encoding/decoding commands work on remote host...done"))))
 
