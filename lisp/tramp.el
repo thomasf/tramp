@@ -3715,6 +3715,12 @@ ALIST is of the form ((FROM . TO) ...)."
         (setq alist (cdr alist))))
     string))
 
+(defun rcp-insert-with-face (face string)
+  "Insert text with a specific face."
+  (let ((start (point)))
+    (insert string)
+    (add-text-properties start (point) (list 'face face))))
+
 ;; ------------------------------------------------------------
 ;; -- Compatibility functions section --
 ;; ------------------------------------------------------------
