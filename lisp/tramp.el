@@ -3045,7 +3045,6 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 ;; I think that I will go through and remove the redundant calls to the
 ;; filename mangling functions some time real soon now...
 
-
 (provide 'rcp)
 
 ;;; rcp.el ends here
