@@ -33,9 +33,16 @@
 ;; For more detailed instructions, please see the info file, which is
 ;; included in the file `rcp.tar.gz' mentioned below.
 ;;
+;; Notes:
+;; -----
+;; 
 ;; This package only works for Emacs 20 and higher, and for XEmacs 21
 ;; and higher.  (XEmacs 20 is missing the `with-timeout' macro.  Emacs
 ;; 19 is reported to have other problems.)
+;;
+;; This version might not work with pre-Emacs 21 VC unless VC is
+;; loaded before rcp.el.  Could you please test this and tell me about
+;; the result?  Thanks.
 ;;
 ;; Also see the todo list at the bottom of this file.
 ;;
