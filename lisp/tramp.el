@@ -2870,7 +2870,7 @@ otherwise."
       (setq result
             (tramp-send-command-and-check
              multi-method method user host
-             (format "%s -lnd / >/dev/null 2>&1"
+             (format "%s -lnd / >/dev/null"
                      cmd)))
       (tramp-message 7 "Testing remote command `%s' for -n...%s"
                    cmd
@@ -3800,7 +3800,7 @@ If the optional argument SUBSHELL is non-nil, the command is executed in
 a subshell, ie surrounded by parentheses."
   (tramp-send-command multi-method method user host
                       (concat (if subshell "( " "")
-                              command
+                              command " 2>/dev/null"
                               (if command " ; " "")
                               "echo tramp_exit_status $?"
                               (if subshell " )" "")))
