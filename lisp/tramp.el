@@ -1252,6 +1252,9 @@ rather than as numbers."
   ;; Care must be taken that this function returns `t' for symlinks
   ;; pointing to directories.  Surely the most obvious implementation
   ;; would be `test -d', but that returns false for such symlinks.
+  ;; CCC: Stefan Monnier says that `test -d' follows symlinks.  And
+  ;; I now think he's right.  So we could be using `test -d', couldn't
+  ;; we?
   (let ((v (rcp-dissect-file-name filename)))
     (rcp-send-command
      (rcp-file-name-multi-method v) (rcp-file-name-method v)
