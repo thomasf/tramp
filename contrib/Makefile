@@ -1,6 +1,11 @@
 # For compiling the add-on packages.
 # $Id$
 
+clean:
+	$(RM) *.elc
+
+all: base64.elc format-spec.elc
+
 base64.elc: base64.el
 	$(EMACS) -batch -f batch-byte-compile base64.el
 
