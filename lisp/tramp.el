@@ -78,7 +78,7 @@
   "Email address to send bug reports to.")
 
 (require 'timer)
-(require 'format-spec)
+(require 'format-spec)                  ;from Gnus 5.8, also in tar ball
 
 ;; CCC: The following require should be removed once the integration
 ;; with VC is clear.  Talking to Andre Spiegel about this.
