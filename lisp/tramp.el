@@ -2505,7 +2505,10 @@ is true)."
   "Wait for output from remote rsh command."
   (let ((proc (get-buffer-process (current-buffer)))
         (result nil)
-        (found nil))
+        (found nil)
+        (end-of-output (concat "^"
+                               (regexp-quote rcp-end-of-output)
+                               "$")))
     ;; Algorithm: get waiting output.  See if last line contains
     ;; end-of-output sentinel.  If not, wait a bit and again get
     ;; waiting output.  Repeat until timeout expires or end-of-output
@@ -2517,16 +2520,13 @@ is true)."
                (accept-process-output proc 1)
                (goto-char (point-max))
                (forward-line -1)
-               (setq found
-                     (looking-at (concat "^"
-                                         (regexp-quote rcp-end-of-output)
-                                         "$"))))))
+               (setq found (looking-at end-of-output)))))
           (t
            (while (not found)
              (accept-process-output proc 1)
              (goto-char (point-max))
              (forward-line -1)
-             (setq found (looking-at (regexp-quote rcp-end-of-output))))))
+             (setq found (looking-at end-of-output)))))
     ;; At this point, either the timeout has expired or we have found
     ;; the end-of-output sentinel.
     (when found
