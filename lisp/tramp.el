@@ -2583,7 +2583,7 @@ USER the array of user names, HOST the array of host names."
   "A name for the debug buffer for USER at HOST using METHOD."
   (if multi-method
       (rcp-buffer-name-multi-method "debug rcp" multi-method method user host)
-    (format "*debug rcp/%s %s@%s*" multi-method method user host)))
+    (format "*debug rcp/%s %s@%s*" method user host)))
 
 (defun rcp-get-debug-buffer (multi-method method user host)
   "Get the debug buffer for USER at HOST using METHOD."
