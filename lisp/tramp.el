@@ -2471,8 +2471,12 @@ Mainly sets the prompt and the echo correctly."
     (error "Remote /bin/sh didn't come up.  See buffer `%s' for details"
            (buffer-name)))
   (rcp-message 9 "Setting up remote shell environment")
-  (process-send-string nil (format "PS1='\n%s\n'; PS2=''; PS3=''\n"
-                                   rcp-end-of-output))
+  (rcp-send-command method user host
+                    (format "PS1='\n%s\n'; PS2=''; PS3=''\n"
+                            rcp-end-of-output))
+  (unless (rcp-wait-for-output 5)
+    (pop-to-buffer (buffer-name))
+    (error "Couldn't set remote shell prompt."))
   (rcp-send-command
    method user host
    (format (concat "stty -onlcr -echo 1>/dev/null 2>/dev/null%s"
