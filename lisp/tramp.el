@@ -935,10 +935,10 @@ upon opening the connection.")
 if (($s[2] & 0170000) == 0120000) { $l = readlink($f); $l = \"\\\"$l\\\"\"; }
 elsif (($s[2] & 0170000) == 040000) { $l = \"t\"; }
 else { $l = \"nil\" };
-printf(\"(%s %u %u %u (%u %u) (%u %u) (%u %u) %u %u t %u (%u %u))\\n\",
+printf(\"(%s %u %u %u (%u %u) (%u %u) (%u %u) %u %u t (%u . %u) (%u %u))\\n\",
 $l, $s[3], $s[4], $s[5], $s[8] >> 16 & 0xffff, $s[8] & 0xffff,
 $s[9] >> 16 & 0xffff, $s[9] & 0xffff, $s[10] >> 16 & 0xffff, $s[10] & 0xffff,
-$s[7], $s[2], $s[1], $s[0] >> 16 & 0xffff, $s[0] & 0xffff);"
+$s[7], $s[2], $s[1] >> 16 & 0xffff, $s[1] & 0xffff, $s[0] >> 16 & 0xffff, $s[0] & 0xffff);"
  )
   "Perl script to produce output suitable for use with `file-attributes'
 on the remote file system.")
