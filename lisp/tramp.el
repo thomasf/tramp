@@ -3385,13 +3385,13 @@ nil."
                           timeout))
              (with-timeout (timeout)
                (while (not found)
-                 (accept-process-output proc 1)
+                 (tramp2-accept-process-output proc 1)
                  (goto-char (point-min))
                  (setq found (when (re-search-forward regexp nil t)
                                (tramp-match-string-list)))))))
           (t
            (while (not found)
-             (accept-process-output proc 1)
+             (tramp2-accept-process-output proc 1)
              (goto-char (point-min))
              (setq found (when (re-search-forward regexp nil t)
                            (tramp-match-string-list))))))
@@ -3738,13 +3738,13 @@ is true)."
                             timeout))
                (with-timeout (timeout)
                  (while (not found)
-                   (accept-process-output proc 1)
+                   (tramp2-accept-process-output proc 1)
                    (goto-char (point-max))
                    (forward-line -1)
                    (setq found (looking-at end-of-output))))))
             (t
              (while (not found)
-               (accept-process-output proc 1)
+               (tramp2-accept-process-output proc 1)
                (goto-char (point-max))
                (forward-line -1)
                (setq found (looking-at end-of-output))))))
@@ -3844,7 +3844,7 @@ METHOD, HOST and USER specify the the connection."
 If `tramp-discard-garbage' is nil, just erase buffer."
   (if (not tramp-discard-garbage)
       (erase-buffer)
-    (while (prog1 (erase-buffer) (accept-process-output p 0.25))
+    (while (prog1 (erase-buffer) (tramp2-accept-process-output p 0.25))
       (when tramp-debug-buffer
         (save-excursion
           (set-buffer (tramp-get-debug-buffer multi-method method user host))
