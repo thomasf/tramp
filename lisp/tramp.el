@@ -123,7 +123,7 @@
 ;;; User Customizable Internal Variables:
 
 (defvar rssh-file-name-quote-list
-  '(?\| ?& ?< ?> ?\( ?\) ?\; ?\  ?\* ?\! ?\" ?\' ?\` ?#)
+  '(?\| ?& ?< ?> ?\( ?\) ?[ ?] ?\; ?\  ?\* ?\? ?\! ?\" ?\' ?\` ?#)
   "Protect these characters from the remote shell.
 Any character in this list is quoted (preceded with a backslash)
 because it means something special to the shell.  This takes effect
