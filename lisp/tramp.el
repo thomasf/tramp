@@ -370,7 +370,7 @@ use for the remote host."
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
               (rcp-su-program           "su")
-              (rcp-su-args              ("-"))
+              (rcp-su-args              ("-" "%u"))
               (rcp-encoding-command     "mimencode -b")
               (rcp-decoding-command     "mimencode -u -b")
               (rcp-encoding-function    base64-encode-region)
@@ -384,7 +384,7 @@ use for the remote host."
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
               (rcp-su-program           "su")
-              (rcp-su-args              ("-"))
+              (rcp-su-args              ("-" "%u"))
               (rcp-encoding-command     "uuencode xxx")
               (rcp-decoding-command
                "( uudecode -o - 2>/dev/null || uudecode -p 2>/dev/null )")
@@ -470,8 +470,8 @@ pair of the form (KEY VALUE).  The following KEYs are defined:
     This specifies the name of the program to use for `su'.
   * `rcp-su-args'
     This specifies the list of arguments to pass to `su'.
-    The user name is always passed as the last argument, in addition
-    to the arguments specified here.
+    \"%u\" is replaced by the user name, use \"%%\" for a literal
+    percent character.
   * `rcp-encoding-command'
     This specifies a command to use to encode the file contents for
     transfer.  The command should read the raw file contents from
@@ -2889,8 +2889,9 @@ at all unlikely that this variable is set up wrongly!"
                      (rcp-buffer-name multi-method method user host)
                      (rcp-get-buffer multi-method method user host)
                      (rcp-get-su-program multi-method method)
-                     (append (rcp-get-su-args multi-method method)
-                             (list user))))
+                     (mapcar '(lambda (x)
+                                (format-spec x (list (cons u user))))
+                             (rcp-get-su-args multi-method method))))
            (found nil)
            (pw nil))
       (process-kill-without-query p)
