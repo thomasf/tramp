@@ -5048,6 +5048,8 @@ TRAMP.
 
 ;;; TODO:
 
+;; * Cooperate with PCL-CVS.  It uses start-process, which doesn't
+;;   work for remote files.
 ;; * Allow /[method/user@host:port] syntax for the ssh "-p" argument.
 ;; * Rewrite `tramp-shell-quote-argument' to abstain from using
 ;; `shell-quote-argument'.
