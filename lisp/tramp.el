@@ -1153,9 +1153,7 @@ on the same remote host."
     (save-excursion
       (zerop (tramp-send-command-and-check
 	      multi-method method user host
-	      (format "%s -d %s"
-		      (tramp-get-ls-command multi-method method user host)
-		      (tramp-shell-quote-argument path)))))))
+	      (format "test -e %s" (tramp-shell-quote-argument path)))))))
 
 ;; CCC: This should check for an error condition and signal failure
 ;;      when something goes wrong.
