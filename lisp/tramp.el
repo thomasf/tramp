@@ -1906,6 +1906,7 @@ Returns nil if none was found, else the command is returned."
                   (list "-l" user host "/bin/sh"))))
   (rcp-message 7 "Waiting for remote /bin/sh to come up...")
   ;; Gross hack for synchronization.  How do we do this right?
+  (sit-for 2)
   (rcp-send-command method user host "echo hello")
   (unless (rcp-wait-for-output 5)
     (pop-to-buffer (buffer-name))
