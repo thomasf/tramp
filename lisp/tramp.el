@@ -36,11 +36,13 @@
 ;; Usage is also simple: it's just like ange-ftp, but uses a different
 ;; syntax for the remote file names.  The syntax used is as follows:
 ;;
-;; /r:USER@HOST:FILENAME
+;; /r@METHOD:USER@HOST:FILENAME
 ;;
-;; This logs you in as USER to the remote HOST, retrieving FILENAME.
-;; The "USER@" part can be omitted, in this case the current local
-;; user name is used.
+;; This logs you in as USER to the remote HOST using METHOD,
+;; retrieving FILENAME.  The "USER@" part can be omitted, in this case
+;; the current local user name is used.  The "@METHOD" part can be
+;; omitted, in this case the default method specified in
+;; `rcp-default-method' is used (default value is "rcp").
 ;;
 ;; WARNING!
 ;;
