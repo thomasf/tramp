@@ -411,6 +411,17 @@ use for the remote host."
               (rcp-encoding-function    nil)
               (rcp-decoding-function    uudecode-decode-region)
               (rcp-telnet-program       nil))
+     ("scpx"  (rcp-connection-function  rcp-open-connection-rsh)
+              (rcp-rsh-program          "ssh")
+              (rcp-rcp-program          "scp")
+              (rcp-rsh-args             ("-e" "none" "-t" "/bin/sh"))
+              (rcp-rcp-args             nil)
+              (rcp-rcp-keep-date-arg    "-p")
+              (rcp-encoding-command     nil)
+              (rcp-decoding-command     nil)
+              (rcp-encoding-function    nil)
+              (rcp-decoding-function    nil)
+              (rcp-telnet-program       nil))
      )
   "*Alist of methods for remote files.
 This is a list of entries of the form (NAME PARAM1 PARAM2 ...).
