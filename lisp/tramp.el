@@ -801,7 +801,7 @@ rather than as numbers."
 (defun rcp-handle-file-modes (filename)
   (when (file-exists-p filename)
     (rcp-mode-string-to-int
-     (aref (rcp-handle-file-attributes filename) 8))))
+     (nth 8 (rcp-handle-file-attributes filename)))))
 
 (defun rcp-handle-file-directory-p (filename)
   (eq t (car (rcp-handle-file-attributes filename))))
@@ -2879,6 +2879,9 @@ Only works for Bourne-like shells."
 
 ;;; TODO:
 
+;; * Do not unconditionally use /bin/sh for local shell commands.
+;;   Instead, try to find out a local shell which groks tilde
+;;   expansion.  (Mario DeWeerd)
 ;; * Bug with file name completion if `@user' part is omitted.
 ;; * Add rcp-message for rcp calls, as well.
 ;; * Mark Galassi <rosalia@lanl.gov>: Barf on unknown methods.
