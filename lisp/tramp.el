@@ -3246,6 +3246,7 @@ locale to C and sets up the remote shell search path."
      (concat "tramp_test_nt () {" tramp-rsh-end-of-line
              "test -n \"`find $1 -prune -newer $2 -print`\"" tramp-rsh-end-of-line
              "}")))
+  (tramp-wait-for-output)
   ;; Find a `perl'.
   (erase-buffer)
   (let ((tramp-remote-perl
