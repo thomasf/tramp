@@ -3093,6 +3093,7 @@ METHOD, USER and HOST specify the connection."
   (set (make-local-variable 'tramp-current-method) method)
   (set (make-local-variable 'tramp-current-user)   user)
   (set (make-local-variable 'tramp-current-host)   host)
+  (set (make-local-variable 'inhibit-eol-conversion) nil)
   (erase-buffer))
 
 (defun tramp-open-connection-setup-interactive-shell
