@@ -916,6 +916,11 @@ upon opening the connection.")
 This variable is automatically made buffer-local to each rsh process buffer
 upon opening the connection.")
 
+(defvar rcp-remote-perl nil
+  "File name of `perl' executable, or nil if no `perl' found.
+This variable is automatically made buffer-local to each rsh process buffer
+upon opening the connection.")
+
 ;; New handlers should be added here.  The following operations can be
 ;; handled using the normal primitives: file-name-as-directory,
 ;; file-name-directory, file-name-nondirectory,
@@ -3503,7 +3508,15 @@ locale to C and sets up the remote shell search path."
      multi-method method user host
      (concat "rcp_test_nt () {" rcp-rsh-end-of-line
              "test -n \"`find $1 -prune -newer $2 -print`\"" rcp-rsh-end-of-line
-             "}"))))
+             "}")))
+  ;; Find a `perl'.
+  (erase-buffer)
+  (make-local-variable 'rcp-remote-perl)
+  (setq rcp-remote-perl
+        (or (rcp-find-executable multi-method method user host
+                                 "perl5" rcp-remote-path nil)
+            (rcp-find-executable multi-method method user host
+                                 "perl" rcp-remote-path nil))))
 
 (defun rcp-maybe-open-connection (multi-method method user host)
   "Maybe open a connection to HOST, logging in as USER, using METHOD.
@@ -4118,10 +4131,6 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 
 ;;; TODO:
 
-;; * If `test A -nt B' does not work to determine if A is newer than B,
-;;   use a tricky `find' expression as follows:
-;;       test -z "`find $1 -prune -newer $2 -print`"
-;;   May have to adjust `-z' or order of arguments.
 ;; * Find `perl' (if present) on the remote host.  Use it if present
 ;;   for `file-attributes', for example, to find out mtime and ctime.
 ;; * Implement `load' operation.
