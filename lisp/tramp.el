@@ -1812,6 +1812,9 @@ replaced with the given replacement string."
 ;;   on ssh/scp to fill these in.  Make this controllable with a variable.
 ;; * new method using `su' to edit files on local host as different user
 ;;   suggestion by Greg Stark <gsstark@mit.edu>
+;; * better error checking.  At least whenever we see something
+;;   strange when doing zerop, we should kill the process and start
+;;   again.  (Greg Stark)
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
