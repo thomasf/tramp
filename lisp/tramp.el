@@ -158,7 +158,7 @@ pair of the form (key value).  The following keys are defined:
                      (list (const rcp-rsh-args) (repeat string))
                      (list (const rcp-rcp-args) (repeat string))))))
 
-(defcustom rcp-default-method "rsh"
+(defcustom rcp-default-method "rcp"
   "*Default method to use for transferring files.
 See `rcp-methods' for possibilities."
   :group 'rcp
