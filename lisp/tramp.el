@@ -2802,7 +2802,7 @@ so, it is added to the environment variable VAR."
                                    60
                                    shell-prompt-pattern)
         (pop-to-buffer (buffer-name))
-        (error "Couldn't find remote `%s' prompt."))
+        (error "Couldn't find remote `%s' prompt." shell))
       ;(sit-for 1)                       ;why is this needed?
       (process-send-string nil (format "PS1='%s%s%s'; PS2=''; PS3=''%s"
                                        rcp-rsh-end-of-line
