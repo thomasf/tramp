@@ -2572,6 +2572,8 @@ Invokes `read-passwd' if that is defined, else `ange-ftp-read-passwd'."
 
 ;;; TODO:
 
+;; * Greg Stark: save a read-only file, Emacs asks whether to save
+;;   anyway, then tries to chmod the file, which fails.
 ;; * Make sure permissions of tmp file are good.
 ;;   (Nelson Minar <nelson@media.mit.edu>)
 ;; * rcp program name should be customizable on per-host basis?
