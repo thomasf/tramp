@@ -883,7 +883,8 @@ Operations not mentioned here will be handled by the normal Emacs functions.")
 
 (defun rcp-handle-file-regular-p (filename)
   "Like `file-regular-p' for rcp files."
-  (eq ?- (aref (nth 8 (rcp-handle-file-attributes filename)) 0)))
+  (and (rcp-handle-file-exists-p filename)
+       (eq ?- (aref (nth 8 (rcp-handle-file-attributes filename)) 0))))
 
 (defun rcp-handle-file-symlink-p (filename)
   "Like `file-symlink-p' for rcp files."
