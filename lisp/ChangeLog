@@ -1,3 +1,9 @@
+2005-02-02  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-file-name-for-operation) Use 'shell-command but
+	'shell.  Cut'n'waste error.  Reported by Vincent Bernat
+	<bernat@free.fr>.
+
 2005-01-16  Michael Albinus  <michael.albinus@gmx.de>
 
 	Version 2.0.47 released.
@@ -16,7 +22,7 @@
 	(tramp-do-copy-or-rename-file-directly): Mask `cp -p' error.  Call
 	`set-file-modes' when appropriate.
 	(tramp-action-out-of-band): Mask `scp -p' error.
-	Reported by Isak Johnsson <isak@hypergene.com>
+	Reported by Isak Johnsson <isak@hypergene.com>.
 
 2005-01-09  Michael Albinus  <michael.albinus@gmx.de>
 
@@ -53,7 +59,7 @@
 
 	* tramp.el (tramp-get-buffer, tramp-get-debug-buffer): Discard the
 	undo list of both Tramp buffer and debug buffer.  Reported by
-	Joakim Verona <joakim@verona.se>
+	Joakim Verona <joakim@verona.se>.
 
 2004-12-23  Michael Albinus  <michael.albinus@gmx.de>
 
@@ -175,7 +181,7 @@
 
 	* tramp.el (tramp-perl-decode): Fixed an error in Perl
 	implementation.  $pending must be cleared every loop.  Reported by
-	Benjamin Place <benjaminplace@sprintmail.com>
+	Benjamin Place <benjaminplace@sprintmail.com>.
 
 2004-08-10  Michael Albinus  <michael.albinus@gmx.de>
 
