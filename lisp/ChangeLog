@@ -1,3 +1,8 @@
+2005-01-05  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp-util.el: Fix copyright years.  Adapt author address.
+	(tramp-minor-mode): Mode must toggle.
+	
 2005-01-04  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp-util.el (tramp-compile, tramp-recompile): Enable
