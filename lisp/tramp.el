@@ -2053,11 +2053,13 @@ See `vc-do-command' for more information."
 
 (defun rcp-handle-vc-user-login-name (&optional uid)
   "Return the default user name on the remote machine.
-Generate an error if we are asked to map a uid to a name.
+Whenever VC calls this function, `file' is bound to the file name
+in question.  If no uid is provided or the uid is equal to the uid
+running Emacs, then we return the owner of the file.
 
 This should only be called when `file' is bound to the
 filename we are thinking about..."
-  (if uid
+  (if (and uid (/= uid (user-uid)))
       (error "rcp-handle-vc-user-login-name cannot map a uid to a name.")
     (let ((v (rcp-dissect-file-name (rcp-handle-expand-file-name file))))
       (rcp-file-name-user v))))
@@ -2710,7 +2712,7 @@ running as USER on HOST using METHOD."
 
 (defun rcp-dissect-file-name (name)
   "Return a vector: remote method, remote user, remote host, remote path name."
-  ;(save-match-data
+  (save-match-data
     (unless (string-match (nth 0 rcp-file-name-structure) name)
       (error "Not an rcp file name: %s" name))
     (make-rcp-file-name
@@ -2719,7 +2721,7 @@ running as USER on HOST using METHOD."
      :user (or (match-string (nth 2 rcp-file-name-structure) name)
                (user-login-name))
      :host (match-string (nth 3 rcp-file-name-structure) name)
-     :path (match-string (nth 4 rcp-file-name-structure) name)));)
+     :path (match-string (nth 4 rcp-file-name-structure) name))))
 
 (defun rcp-make-rcp-file-name (method user host path)
   "Constructs an rcp file name from METHOD, USER, HOST and PATH."
