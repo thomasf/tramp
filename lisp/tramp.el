@@ -4416,14 +4416,18 @@ If the value is not set for the connection, return `default'"
   (when tramp-auto-save-directory
     (unless (file-exists-p tramp-auto-save-directory)
       (make-directory tramp-auto-save-directory t)))
+  ;; jka-compr doesn't like auto-saving, so by appending "~" to the
+  ;; file name we make sure that jka-compr isn't used for the
+  ;; auto-save file.
   (expand-file-name
-   (tramp-subst-strs-in-string '(("_" . "|")
-				 ("/" . "_a")
-				 (":" . "_b")
-				 ("|" . "__")
-				 ("[" . "_l")
-				 ("]" . "_r"))
-			       fn)
+   (concat (tramp-subst-strs-in-string '(("_" . "|")
+					 ("/" . "_a")
+					 (":" . "_b")
+					 ("|" . "__")
+					 ("[" . "_l")
+					 ("]" . "_r"))
+				       fn)
+	   "~")
    tramp-auto-save-directory))
 
 (defadvice make-auto-save-file-name
