@@ -1998,7 +1998,7 @@ Returns nil if none was found, else the command is returned."
              (buffer-name)))
     (rcp-message 9 "Sending password")
     (process-send-string nil (concat pw "\n"))
-    (accept-process-output p 1)
+    (accept-process-output p 5)
     (rcp-open-connection-setup-interactive-shell p method user host)
     (rcp-post-connection method user host)))
 
