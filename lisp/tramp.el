@@ -3121,7 +3121,7 @@ to set up.  METHOD, USER and HOST specify the connection."
     (if (featurep 'mule)
         ;; Use MULE to select the right EOL convention for communicating
         ;; with the process.
-        (let* ((cs (process-coding-system p))
+        (let* ((cs (or (process-coding-system p) (cons 'undecided 'undecided)))
                (cs-decode (car cs))
                (cs-encode (cdr cs)))
           (setq cs-encode (coding-system-change-eol-conversion
