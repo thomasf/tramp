@@ -1980,6 +1980,26 @@ See `vc-do-command' for more information."
 ;;
 ;; 1999-10-10 Daniel Pittman <daniel@danann.net>
 
+(defun rcp-handle-vc-user-login-name (&optional uid)
+  "Return the default user name on the remote machine.
+Generate an error if we are asked to map a uid to a name.
+
+This should only be called when 'file' is bound to the
+filename we are thinking about..."
+  (if uid
+      (cerror "rcp-handle-vc-user-login-name cannot map a uid to a name.")
+    (let ((v (rcp-dissect-file-name (rcp-handle-expand-file-name filename))))
+      (rcp-file-name-user v))))
+
+(defadvice vc-user-login-name
+  (around rcp-vc-user-login-name activate)
+  "Support for files on remote machines accessed by RCP."
+  (or (and (stringp file)
+	   (rcp-rcp-file-p file)	; rcp file
+	   (setq ad-return-value 
+		 (rcp-handle-vc-user-login-name uid))) ; get the owner name
+      ad-do-it))			; else call the original
+
 ;; Determine the name of the user owning a file.
 (defun rcp-file-owner (filename)
   "Return who owns FILE (user name, as a string)."
