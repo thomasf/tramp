@@ -2335,6 +2335,8 @@ Doesn't do anything if the NAME does not start with a drive letter."
 	  (let ((uname (match-string 1 path))
 		(fname (match-string 2 path)))
 	    ;; CCC fanatic error checking?
+	    (set-buffer (tramp-get-buffer multi-method method user host))
+	    (erase-buffer)
 	    (tramp-send-command
 	     multi-method method user host
 	     (format "cd %s; pwd" uname)
