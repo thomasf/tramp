@@ -3103,7 +3103,8 @@ Returns nil if none was found, else the command is returned."
   (tramp-message 9 "Finding a suitable `ls' command")
   (or
    (tramp-check-ls-commands multi-method method user host "ls" tramp-remote-path)
-   (tramp-check-ls-commands multi-method method user host "gnuls" tramp-remote-path)))
+   (tramp-check-ls-commands multi-method method user host "gnuls" tramp-remote-path)
+   (tramp-check-ls-commands multi-method method user host "gls" tramp-remote-path)))
 
 ;; ------------------------------------------------------------ 
 ;; -- Functions for establishing connection -- 
