@@ -1394,6 +1394,7 @@ on the same remote host."
 		 ;; It's not a symlink; do next loop iteration.
 		 (pop steps)
 	       ;; It's a symlink.
+	       (pop steps)
 	       (when (string= curstri symlink-target)
 		 (error "Link `%s' points to itself" curstri))
 	       (setq steps (append (split-string symlink-target "/") steps)
@@ -3109,6 +3110,14 @@ Returns nil if none was found, else the command is returned."
 ;; ------------------------------------------------------------ 
 ;; -- Functions for establishing connection -- 
 ;; ------------------------------------------------------------ 
+
+(defun tramp-process-actions
+  (multi-method method user host actions &optional timeout)
+  "Process given ACTIONS for login specified via first four args.
+ACTIONS is a list of items (REGEXP FUN), where REGEXP specifies what
+output from the remote end to look for, and FUN specifies the action
+to take when the regexp matches."
+  nil)
 
 (defun tramp-open-connection-telnet (multi-method method user host)
   "Open a connection using a telnet METHOD.
