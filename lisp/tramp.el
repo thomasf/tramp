@@ -1571,6 +1571,8 @@ is initially created and is kept cached by the remote shell."
   (unless (buffer-file-name)
     (error "Can't set-visited-file-modtime: buffer `%s' not visiting a file"
 	   (buffer-name)))
+  (when time-list
+    (tramp-run-real-handler 'set-visited-file-modtime (list time-list)))
   (let* ((f (buffer-file-name))
 	 (v (tramp-dissect-file-name f))
 	 (multi-method (tramp-file-name-multi-method v))
