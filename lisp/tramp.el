@@ -3161,6 +3161,8 @@ to set up.  METHOD, USER and HOST specify the connection."
           (when (symbolp cs) (setq cs (cons cs cs)))
           (setq cs-decode (car cs))
           (setq cs-encode (cdr cs))
+          (unless cs-decode (setq cs-decode 'undecided))
+          (unless cs-encode (setq cs-encode 'undecided))
           (setq cs-encode (coding-system-change-eol-conversion
                            cs-encode 'unix))
           (when (search-forward "\r" nil t)
