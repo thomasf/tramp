@@ -3355,6 +3355,9 @@ locale to C and sets up the remote shell search path."
   (rcp-wait-for-output)
   (rcp-send-command multi-method method user host
                     "mesg n; echo huhu")
+  (rcp-wait-for-output)
+  (rcp-send-command multi-method method user host
+                    "biff n ; echo huhu")
   (rcp-wait-for-output))
 
 (defun rcp-maybe-open-connection (multi-method method user host)
