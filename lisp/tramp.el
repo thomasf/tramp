@@ -2436,7 +2436,9 @@ This will break if COMMAND prints a newline, followed by the value of
              (error (concat "tramp-handle-file-local-copy: `%s' didn't work, "
                             "see buffer `%s' for details")
                     (tramp-get-rcp-program multi-method method) trampbuf))
-           (tramp-message 5 "Fetching %s to tmp file %s...done" filename tmpfil))
+           (tramp-message-for-buffer
+	    multi-method method user host
+	    5 "Fetching %s to tmp file %s...done" filename tmpfil))
           ((and (tramp-get-encoding-command multi-method method)
                 (tramp-get-decoding-command multi-method method))
            ;; Use inline encoding for file transfer.
