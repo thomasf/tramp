@@ -1456,7 +1456,7 @@ on the same remote host."
 	 ;; People expect an error message in a timely fashion when
 	 ;; something is wrong; otherwise they might think that Emacs
 	 ;; is hung.  Of course, correctness has to come first.
-	 (numchase-limit 30)
+	 (numchase-limit 20)
 	 (result nil)			;result steps in reverse order
 	 (curstri "")
 	 symlink-target)
