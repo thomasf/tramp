@@ -2770,7 +2770,9 @@ Invokes `read-passwd' if that is defined, else `ange-ftp-read-passwd'."
 
 ;;; TODO:
 
-;; * BUG WITH scp METHOD!!!
+;; * Bug with file name completion if `@user' part is omitted.
+;; * Implement missing `file-modes' operation.
+;;   DI Maximilian Renkin <mxrenkin@ains.at>
 ;; * Add rcp-message for rcp calls, as well.
 ;; * Mark Galassi <rosalia@lanl.gov>: Barf on unknown methods.
 ;; * Mario DeWeerd: rcp-handle-copy-file should not switch the current
