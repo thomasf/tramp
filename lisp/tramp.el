@@ -2795,7 +2795,6 @@ be detected."
 ;; get-file-buffer -- use primitive
 ;; load
 ;; make-symbolic-link
-;; rename-file
 ;; set-file-modes
 ;; set-visited-file-modtime
 ;; shell-command
