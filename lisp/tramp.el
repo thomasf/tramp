@@ -2111,9 +2111,8 @@ This will break if COMMAND prints a newline, followed by the value of
         (set-visited-file-modtime '(0 0))
         (set-buffer-modified-p nil))
       (setq result
-            (let ((coding-system-for-read 'no-conversion))
-	      (tramp-run-real-handler 'insert-file-contents
-				    (list local-copy nil beg end replace))))
+            (tramp-run-real-handler 'insert-file-contents
+				    (list local-copy nil beg end replace)))
       (delete-file local-copy)
       (list (expand-file-name filename)
             (second result)))))
