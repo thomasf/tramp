@@ -435,7 +435,7 @@ Operations not mentioned here will be handled by the normal Emacs functions.")
 ;;; Internal functions which must come first.
 
 (defsubst rcp-message (level fmt-string &rest args)
-  (when (>= level rcp-verbose)
+  (when (<= level rcp-verbose)
     (apply #'message fmt-string args)))
 
 ;; Extract right value of alists, depending on host name.
@@ -775,7 +775,7 @@ FILE and NEWNAME must be absolute file names."
     (save-excursion
       (rcp-send-command method user host (format "cd %s" path))
       (rcp-send-command method user host
-                        (mapconcat #'identity (cons program arguments)))
+                        (mapconcat #'identity (cons program arguments) " "))
       (rcp-wait-for-output))
     (unless discard
       (insert-buffer (rcp-get-buffer method user host)))
