@@ -951,21 +951,24 @@ rather than as numbers."
                                        (point)))
               dirs)))
     ;; Now annotate all dirs in list of file names with a slash,
-    ;; at the same time checking for
+    ;; at the same time checking for 
     (mapcar
      (function (lambda (x)
                  (if (member x dirs)
                      (file-name-as-directory x)
                    x)))
-     (all-completions filename (mapcar 'list result)
-                      (lambda (x)
-                        (not (string-match
-                              (concat "\\("
-                                      (mapconcat 'regexp-quote
-                                                 completion-ignored-extensions
-                                                 "\\|")
-                                      "\\)\\'")
-                              (car x))))))))
+     (all-completions
+      filename (mapcar 'list result)
+      (lambda (x)
+        (and (not (string= (car x) "."))
+             (not (string= (car x) ".."))
+             (not (string-match
+                   (concat "\\("
+                           (mapconcat 'regexp-quote
+                                      completion-ignored-extensions
+                                      "\\|")
+                           "\\)\\'")
+                   (car x)))))))))
 
 ;; The following isn't needed for Emacs 20 but for 19.34?
 (defun rcp-handle-file-name-completion (filename directory)
