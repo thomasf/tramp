@@ -95,8 +95,11 @@
 ;; with VC is clear.  Talking to Andre Spiegel about this.
 (require 'vc)                           ;for doing remote vc
 
+;; Can't be in eval-when-compile because of `defstruct'.
+(require 'cl)
+
 (eval-when-compile
-  (require 'cl)
+  (require 'custom)
   ;; Emacs 19.34 compatibility hack -- is this needed?
   (or (>= emacs-major-version 20)
       (load "cl-seq")))
