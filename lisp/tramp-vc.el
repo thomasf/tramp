@@ -34,7 +34,6 @@
 (eval-when-compile
   (require 'cl))
 (require 'vc)
-(require 'tramp)
 
 ;; -- vc --
 
