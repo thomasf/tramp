@@ -1,3 +1,9 @@
+2004-12-30  Michael Albinus  <michael.albinus@gmx.de>
+
+	* aclocal.m4, configure.ac: grep(1) on OpenBSD 3.6 does not
+	understand the '-' option.  Small change.  From Ryan Yeske
+	<rcyeske@gmail.com>.
+
 2004-12-22  Michael Albinus  <michael.albinus@gmx.de>
 
 	* configure.ac: Bump version (to 2.0.47-pre).  Update merge
