@@ -839,6 +839,14 @@ last."
   :group 'tramp
   :type '(list string string string))
 
+(defcustom tramp-terminal-type "dumb"
+  "*Value of TERM environment variable for logging in to remote host.
+Because Tramp wants to parse the output of the remote shell, it is easily
+confused by ANSI color escape sequences and suchlike.  Often, shell init
+files conditionalize this setup based on the TERM environment variable."
+  :group 'tramp
+  :type 'string)
+
 ;;; Internal Variables:
 
 (defvar tramp-end-of-output "/////"
@@ -2809,7 +2817,7 @@ Maybe the different regular expressions need to be tuned.
     (tramp-message 7 "Opening connection for %s@%s using %s..." 
 		   (or user (user-login-name)) host method)
     (let ((process-environment (copy-sequence process-environment)))
-      (setenv "TERM" "dumb")
+      (setenv "TERM" tramp-terminal-type)
       (let* ((default-directory (tramp-temporary-file-directory))
              (coding-system-for-read (unless (and (not (featurep 'xemacs))
                                                   (> emacs-major-version 20))
@@ -2890,7 +2898,7 @@ must specify the right method in the file name.
 		       user host method)
       (tramp-message 7 "Opening connection at %s using %s..." host method))
     (let ((process-environment (copy-sequence process-environment)))
-      (setenv "TERM" "dumb")
+      (setenv "TERM" tramp-terminal-type)
       (let* ((default-directory (tramp-temporary-file-directory))
              (coding-system-for-read (unless (and (not (featurep 'xemacs))
                                                   (> emacs-major-version 20))
@@ -2976,7 +2984,7 @@ at all unlikely that this variable is set up wrongly!"
     (tramp-message 7 "Opening connection for `%s' using `%s'..." 
 		   (or user (user-login-name)) method)
     (let ((process-environment (copy-sequence process-environment)))
-      (setenv "TERM" "dumb")
+      (setenv "TERM" tramp-terminal-type)
       (let* ((default-directory (tramp-temporary-file-directory))
              (coding-system-for-read (unless (and (not (featurep 'xemacs))
                                                   (> emacs-major-version 20))
@@ -3058,7 +3066,7 @@ log in as u2 to h2."
     (tramp-pre-connection multi-method method user host)
     (tramp-message 7 "Opening `%s' connection..." multi-method)
     (let ((process-environment (copy-sequence process-environment)))
-      (setenv "TERM" "dumb")
+      (setenv "TERM" tramp-terminal-type)
       (let* ((default-directory (tramp-temporary-file-directory))
              (coding-system-for-read (unless (and (not (featurep 'xemacs))
                                                   (> emacs-major-version 20))
