@@ -689,7 +689,7 @@ Operations not mentioned here will be handled by the normal Emacs functions.")
     (setq path (rcp-file-name-path v))
     (save-excursion
       (rcp-send-command method user host
-                        (format "%s -d %s >/dev/null 2>&1 ; echo $?"
+                        (format "%s -1d %s >/dev/null 2>&1 ; echo $?"
                                 (rcp-get-ls-command method user host)
                                 (shell-quote-argument path)))
       (rcp-wait-for-output)
@@ -844,7 +844,7 @@ Operations not mentioned here will be handled by the normal Emacs functions.")
        (shell-quote-argument path))
       (rcp-send-command
        method user host
-       (concat (rcp-get-ls-command method user host) " -a"))
+       (concat (rcp-get-ls-command method user host) " -1a"))
       (rcp-wait-for-output)
       (goto-char (point-max))
       (while (zerop (forward-line -1))
@@ -877,7 +877,7 @@ Operations not mentioned here will be handled by the normal Emacs functions.")
        (shell-quote-argument path))
       ;; Get list of file names by calling ls.
       (rcp-send-command method user host
-                        (format "%s -a 2>/dev/null"
+                        (format "%s -a1 2>/dev/null"
                                 (rcp-get-ls-command method user host)))
       (rcp-wait-for-output)
       (goto-char (point-max))
@@ -887,7 +887,7 @@ Operations not mentioned here will be handled by the normal Emacs functions.")
               result))
       ;; Now get a list of directories in a similar way.
       (rcp-send-command method user host
-                        (format "%s -d .*/ */ 2>/dev/null"
+                        (format "%s -d1 .*/ */ 2>/dev/null"
                                 (rcp-get-ls-command method user host)
                                 (shell-quote-argument file)))
       (rcp-wait-for-output)
