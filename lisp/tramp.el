@@ -1061,7 +1061,7 @@ FILE and NEWNAME must be absolute file names."
           (pop-to-buffer rcpbuf)
           (error (concat "rcp-do-copy-or-rename-file: %s"
                          " didn't work, see buffer %s for details")
-                 (rcp-get-rcp-program method) rcpbuf))))))
+                 (rcp-get-rcp-program meth) rcpbuf))))))
 
 (defun rcp-do-copy-or-rename-file-directly
   (op method user host path1 path2 keep-date)
