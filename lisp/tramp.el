@@ -1001,8 +1001,10 @@ original definition."
 
 (defun vc-workfile-unchanged-p (file &optional want-differences-if-changed)
   (if (and (stringp file) (rcp-rcp-file-p file))
-      (rcp-vc-workfile-unchanged-p file want-differences-if-changed)
-    (rcp-original-vc-workfile-unchanged-p file want-differences-if-changed)))
+      (apply 'rcp-vc-workfile-unchanged-p
+             (list file want-differences-if-changed))
+    (apply 'rcp-original-vc-workfile-unchanged-p
+           (list file want-differences-if-changed))))
 
 
 ;; Redefine a function from vc.el -- allow rcp files.
