@@ -2342,7 +2342,8 @@ Doesn't do anything if the NAME does not start with a drive letter."
 	    (tramp-wait-for-output)
 	    (goto-char (point-min))
 	    (setq uname (buffer-substring (point) (tramp-line-end-position)))
-	    (setq path (concat uname fname))))
+	    (setq path (concat uname fname))
+	    (erase-buffer)))
 	;; No tilde characters in file name, do normal
 	;; expand-file-name (this does "/./" and "/../").  We bind
 	;; directory-sep-char here for XEmacs on Windows, which would
