@@ -1014,7 +1014,8 @@ FILE and NEWNAME must be absolute file names."
 ;; Pacify byte-compiler.  This is needed on XEmacs only.
 ;; CCC does this break anything?
 (eval-when-compile
-  (defun dired-insert-set-properties (b e) nil))
+  (fset 'dired-insert-set-properties 'ignore))
+;  (defun dired-insert-set-properties (b e) nil))
 
 (defun rcp-handle-insert-directory
   (file switches &optional wildcard full-directory-p)
