@@ -3462,7 +3462,7 @@ to set up.  METHOD, USER and HOST specify the connection."
   (tramp-message 9 "Setting up remote shell environment")
   (tramp-discard-garbage-erase-buffer p multi-method method user host)
   (process-send-string
-   nil (format "stty -inlcr -echo erase '^?'%s" tramp-rsh-end-of-line))
+   nil (format "stty -inlcr -echo kill '^U'%s" tramp-rsh-end-of-line))
   (unless (tramp-wait-for-regexp p 30
                                (format "\\(\\$\\|%s\\)" shell-prompt-pattern))
     (pop-to-buffer (buffer-name))
