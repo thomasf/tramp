@@ -2722,6 +2722,11 @@ Invokes `read-passwd' if that is defined, else `ange-ftp-read-passwd'."
 
 ;;; TODO:
 
+;; * Francesco PotortÅÏ: When logging in to a remote host, watch for
+;;   the shell prompt rather than sending `echo hello'.
+;; * Always use an interactive shell and just set the shell prompt
+;;   to a good value.  Then we can do away with this `echo /////'
+;;   business to find out when a remote command has finished.
 ;; * Greg Stark: save a read-only file, Emacs asks whether to save
 ;;   anyway, then tries to chmod the file, which fails.
 ;; * Make sure permissions of tmp file are good.
