@@ -2127,7 +2127,10 @@ Returns nil if none was found, else the command is returned."
              (buffer-name)))
     (rcp-message 9 "Sending password")
     (process-send-string nil (concat pw "\n"))
-    (accept-process-output p 5)
+    ;; Waiting twice does not seem to be the same as waiting once for
+    ;; a longer time.  (Matthias Koeppe)
+    (accept-process-output p 4)
+    (accept-process-output p 1)
     (rcp-open-connection-setup-interactive-shell p method user host)
     (rcp-post-connection method user host)))
 
