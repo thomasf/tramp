@@ -221,7 +221,7 @@ The idea is to use a local directory so that auto-saving is faster."
               (rcp-rsh-args             nil)
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
-              (rcp-encoding-command     "uuencode")
+              (rcp-encoding-command     "uuencode xxx")
               (rcp-decoding-command
                "( uudecode -o - 2>/dev/null || uudecode -p 2>/dev/null )")
               (rcp-encoding-function    nil)
@@ -233,7 +233,7 @@ The idea is to use a local directory so that auto-saving is faster."
               (rcp-rsh-args             nil)
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
-              (rcp-encoding-command     "uuencode")
+              (rcp-encoding-command     "uuencode xxx")
               (rcp-decoding-command
                "( uudecode -o - 2>/dev/null || uudecode -p 2>/dev/null )")
               (rcp-encoding-function    nil)
@@ -245,7 +245,7 @@ The idea is to use a local directory so that auto-saving is faster."
               (rcp-rsh-args             nil)
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
-              (rcp-encoding-command     "uuencode")
+              (rcp-encoding-command     "uuencode xxx")
               (rcp-decoding-command
                "( uudecode -o - 2>/dev/null || uudecode -p 2>/dev/null )")
               (rcp-encoding-function    nil)
@@ -257,7 +257,7 @@ The idea is to use a local directory so that auto-saving is faster."
               (rcp-rsh-args             nil)
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
-              (rcp-encoding-command     "uuencode")
+              (rcp-encoding-command     "uuencode xxx")
               (rcp-decoding-command
                "( uudecode -o - 2>/dev/null || uudecode -p 2>/dev/null )")
               (rcp-encoding-function    nil)
@@ -324,7 +324,7 @@ The idea is to use a local directory so that auto-saving is faster."
               (rcp-rsh-args             nil)
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
-              (rcp-encoding-command     "uuencode")
+              (rcp-encoding-command     "uuencode xxx")
               (rcp-decoding-command
                "( uudecode -o - 2>/dev/null || uudecode -p 2>/dev/null )")
               (rcp-encoding-function    nil)
