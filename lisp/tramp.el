@@ -1125,9 +1125,9 @@ FILENAME and NEWNAME must be absolute file names.  OP must be `copy' or
   (op method user host path1 path2 keep-date)
   "Invokes `cp' or `mv' on the remote system to copy or rename one file
 to another."
-  (let ((cmd (cond ((and (eq op 'copy) keep-date) "cp -p")
-                   ((eq op 'copy) "cp")
-                   ((eq op 'rename) "mv")
+  (let ((cmd (cond ((and (eq op 'copy) keep-date) "cp -f -p")
+                   ((eq op 'copy) "cp -f")
+                   ((eq op 'rename) "mv -f")
                    (t (error "Unknown operation %s, must be `copy' or `rename'."
                              op)))))
     (save-excursion
