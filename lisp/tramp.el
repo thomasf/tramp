@@ -103,6 +103,8 @@
 
 ;;; Code:
 
+(require 'timer)
+
 ;; CCC: The following require should be removed once the integration
 ;; with VC is clear.  Talking to Andre Spiegel about this.
 (require 'vc)                           ;for doing remote vc
