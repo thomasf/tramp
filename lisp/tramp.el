@@ -1237,7 +1237,8 @@ Bug: output of COMMAND must end with a newline."
              (delete-region (point) (progn (forward-line -1) (point)))
              
              (rcp-message 5 "Decoding remote file %s..." filename)
-             (if (rcp-get-decoding-function method)
+             (if (and (rcp-get-decoding-function method)
+                      (fboundp (rcp-get-decoding-function method)))
                  ;; If rcp-decoding-function is defined for this
                  ;; method, we call it.
                  (let ((tmpbuf (get-buffer-create " *rcp tmp*")))
@@ -1384,7 +1385,8 @@ Bug: output of COMMAND must end with a newline."
                (set-buffer tmpbuf)
                (erase-buffer)
                ;; Use encoding function or command.
-               (if encoding-function
+               (if (and encoding-function
+                        (fboundp encoding-function))
                    (progn
                      (rcp-message 6 "Encoding region using function...")
                      (insert-file-contents-literally tmpfil)
