@@ -2440,9 +2440,8 @@ This will break if COMMAND prints a newline, followed by the value of
                 5 "Decoding region into remote file %s..." filename)
                (tramp-send-command
                 multi-method method user host
-                (format "%s <<'%s' >%s" ;mkoeppe: must quote EOF delimiter
+                (format "%s >%s"
                         decoding-command
-                        tramp-end-of-output
                         (tramp-shell-quote-argument path)))
                (set-buffer tmpbuf)
                (tramp-message-for-buffer
@@ -2453,11 +2452,10 @@ This will break if COMMAND prints a newline, followed by the value of
                ;; wait for remote decoding to complete
                (tramp-message-for-buffer
                 multi-method method user host 6 "Sending end of data token...")
-               (tramp-send-command multi-method method user host
-                                 tramp-end-of-output t)
+               (tramp-send-eof multi-method method user host)
                (tramp-message 6 "Waiting for remote host to process data...")
-               ;;(tramp-send-command multi-method method user host "echo hello")
-               ;;(set-buffer (tramp-get-buffer multi-method method user host))
+               (tramp-send-command multi-method method user host "echo hello")
+               (set-buffer (tramp-get-buffer multi-method method user host))
                (tramp-wait-for-output)
                (tramp-barf-unless-okay
                 multi-method method user host nil nil
