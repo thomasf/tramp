@@ -34,6 +34,7 @@
 (eval-when-compile
   (require 'cl))
 (require 'vc)
+(require 'tramp)
 
 ;; -- vc --
 
@@ -397,7 +398,8 @@ filename we are thinking about..."
   ;;
   ;; CCC TODO there should be a real solution!  Talk to Andre Spiegel
   ;; about this.
-  (let ((file (symbol-value 'file)))    ;pacify byte-compiler
+  (let ((file (when (boundp 'file)
+                (symbol-value 'file))))    ;pacify byte-compiler
     (or (and (stringp file)
              (tramp-tramp-file-p file)	; tramp file
              (setq ad-return-value
