@@ -667,13 +667,14 @@ Bug: output of COMMAND must end with a newline."
 (defun rssh-handle-file-local-copy (file)
   "Like `file-local-copy' for rssh files."
   (let ((v (rssh-dissect-file-name filename))
+        (comint-file-name-quote-list rssh-file-name-quote-list)
         tmpfil)
     (setq tmpfil (make-temp-name "/tmp/rssh."))
     (call-process rssh-scp-program nil nil nil
                   (format "%s@%s:%s"
                           (rssh-file-name-user v)
                           (rssh-file-name-host v)
-                          (rssh-file-name-path v))
+                          (comint-quote-filename (rssh-file-name-path v)))
                   tmpfil)
     tmpfil))
 
@@ -704,6 +705,7 @@ Bug: output of COMMAND must end with a newline."
   (unless (eq confirm nil)
     (error "rssh-handle-write-region; CONFIRM must be nil."))
   (let ((v (rssh-dissect-file-name filename))
+        (comint-file-name-quote-list rssh-file-name-quote-list)
         tmpfil)
     (setq tmpfil (make-temp-name "/tmp/rssh."))
     (rssh-run-real-handler
@@ -716,7 +718,7 @@ Bug: output of COMMAND must end with a newline."
                   (format "%s@%s:%s"
                           (rssh-file-name-user v)
                           (rssh-file-name-host v)
-                          (rssh-file-name-path v)))
+                          (comint-quote-filename (rssh-file-name-path v))))
     (delete-file tmpfil)
     (when visit
       ;; Is this right for auto-saving?
