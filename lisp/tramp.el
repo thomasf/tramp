@@ -4145,8 +4145,6 @@ TRAMP.
 ;; * Grok `append' parameter for `write-region'.
 ;; * Test remote ksh or bash for tilde expansion in `tramp-find-shell'?
 ;; * abbreviate-file-name
-;; * file name completion doesn't work for /r:user@host:<TAB>?
-;;   (Henrik Holm <henrikh@tele.ntnu.no>)
 ;; * grok ~ in tramp-remote-path  (Henrik Holm <henrikh@tele.ntnu.no>)
 ;; * `C' in dired gives error `not tramp file name'.
 ;; * instead of putting in user-login-name as remote login, rely
