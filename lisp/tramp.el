@@ -3034,9 +3034,9 @@ file exists and nonzero exit status otherwise."
      ((string-match "^~root$" (buffer-string))
       (setq shell
             (or (tramp-find-executable multi-method method user host
-                                     "ksh"  tramp-remote-path t)
+                                     "bash"  tramp-remote-path t)
                 (tramp-find-executable multi-method method user host
-                                     "bash" tramp-remote-path t)))
+                                     "ksh" tramp-remote-path t)))
       (unless shell
         (error "Couldn't find a shell which groks tilde expansion"))
       (tramp-message 5 "Starting remote shell `%s' for tilde expansion..." shell)
