@@ -1309,7 +1309,8 @@ See `vc-do-command' for more information."
           activate)
   "Invoke rcp-vc-do-command for rcp files."
   (if (and (stringp file) (rcp-rcp-file-p file))
-      (apply 'rcp-vc-do-command buffer okstatus command file last flags)
+      (setq ad-return-value
+            (apply 'rcp-vc-do-command buffer okstatus command file last flags))
     ad-do-it))
 
 ;;-  (let ((f (ad-get-arg 3)))
@@ -1337,7 +1338,7 @@ See `vc-do-command' for more information."
 (defun rcp-vc-workfile-unchanged-p (file &optional want-differences-if-changed)
   (let ((status (vc-backend-diff file nil nil
                                  (not want-differences-if-changed))))
-    (or (null status) (zerop status))))
+    (zerop status)))
 
 (defadvice vc-workfile-unchanged-p
   (around rcp-advice-vc-workfile-unchanged-p
@@ -1345,7 +1346,8 @@ See `vc-do-command' for more information."
           activate)
   "Invoke rcp-vc-workfile-unchanged-p for rcp files."
   (if (and (stringp file) (rcp-rcp-file-p file))
-      (rcp-vc-workfile-unchanged-p file want-differences-if-changed)
+      (setq ad-return-value
+            (rcp-vc-workfile-unchanged-p file want-differences-if-changed))
     ad-do-it))
 
 ;;-(unless (fboundp 'rcp-original-vc-workfile-unchanged-p)
