@@ -3768,6 +3768,8 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 
 ;;; TODO:
 
+;; * Find out about the new auto-save mechanism in Emacs 21 and
+;;   do the right thing.
 ;; * `vc-directory' does not work.  It never displays any files, even
 ;;   if it does show files when run locally.
 ;; * Should we make the shell setup stuff smarter?  For example,
