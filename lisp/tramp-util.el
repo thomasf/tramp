@@ -40,8 +40,6 @@
 
   (defvar tramp-minor-mode-map (make-sparse-keymap)
     "Keymap for Tramp minor mode.")
-  (define-key tramp-minor-mode-map [remap compile] 'tramp-compile)
-  (define-key tramp-minor-mode-map [remap recompile] 'tramp-recompile)
 
   (define-minor-mode tramp-minor-mode "Tramp minor mode for utility functions."
     :group 'tramp
@@ -52,7 +50,39 @@
     (setq tramp-minor-mode
 	  (and tramp-minor-mode (tramp-tramp-file-p default-directory))))
 
-  (add-hook 'find-file-hooks 'tramp-minor-mode t))
+  (add-hook 'find-file-hooks 'tramp-minor-mode t)
+  (add-hook 'dired-mode-hook 'tramp-minor-mode t)
+
+  (defun tramp-remap-command (old-command new-command)
+    "Replaces bindings of OLD-COMMAND by NEW-COMMAND.
+If remapping functionality for keymaps is defined, this happens for all
+bindings.  Otherwise, only bindings active during invocation are taken
+into account.  XEmacs menubar bindings are not changed by this."
+    (if (functionp 'command-remapping)
+	;; Emacs 21.4
+	(eval
+	 `(define-key tramp-minor-mode-map [remap ,old-command] new-command))
+      ;; previous Emacs 21 versions.
+      (mapcar
+       '(lambda (x)
+	  (define-key tramp-minor-mode-map x new-command))
+       (where-is-internal old-command))))
+
+  (tramp-remap-command 'compile 'tramp-compile)
+  (tramp-remap-command 'recompile 'tramp-recompile)
+
+  ;; XEmacs has an own mimic for menu entries
+  (when (fboundp 'add-menu-button)
+    (funcall 'add-menu-button
+     '("Tools" "Compile")
+     ["Compile..."
+      (command-execute (if tramp-minor-mode 'tramp-compile 'compile))
+      :active (fboundp 'compile)])
+    (funcall 'add-menu-button
+     '("Tools" "Compile")
+     ["Repeat Compilation"
+      (command-execute (if tramp-minor-mode 'tramp-recompile 'recompile))
+      :active (fboundp 'compile)])))
 
 ;; Utility functions.
 
