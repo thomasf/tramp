@@ -1,3 +1,11 @@
+2004-12-29  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp-util.el (tramp-minor-mode): New minor mode.  Add it to
+	`find-file-hooks'.
+	(tramp-minor-mode-map): Respective map.  Add remapping for
+	`compile' and `recompile'.
+	(tramp-recompile): New defun.
+
 2004-12-19    <kgrossjo@eu.uu.net>
 
 	* tramp.el (tramp-wait-for-output): Fix typo in echo processing.
