@@ -498,7 +498,7 @@ FILE and NEWNAME must be absolute file names."
       (when keep-date
         (add-to-list 'rcp-args "-p"))
       (apply #'call-process rcp-rcp-program nil nil nil
-             rcp-args f1 f2))))
+             (append rcp-args (list f1 f2))))))
 
 ;; mkdir
 (defun rcp-handle-make-directory (dir &optional parents)
