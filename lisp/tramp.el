@@ -687,7 +687,7 @@ part, though."
 ;; File name format.
 
 (defcustom tramp-file-name-structure
-  (list "\\`/r\\(@\\([a-z0-9]+\\)\\)?:\\(\\([a-z0-9_#]+\\)@\\)?\\([a-z0-9.-]+\\):\\(.*\\)\\'"
+  (list "\\`/r\\(@\\([a-z0-9]+\\)\\)?:\\(\\([a-z0-9_#-]+\\)@\\)?\\([a-z0-9.-]+\\):\\(.*\\)\\'"
         2 4 5 6)
   "*List of five elements (REGEXP METHOD USER HOST FILE), detailing \
 the tramp file name structure.
