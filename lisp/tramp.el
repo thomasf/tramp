@@ -306,6 +306,16 @@ Possible values are \"uudecode -p\" and \"mimencode -b -u\"."
   :group 'rcp
   :type 'string)
 
+(defcustom rcp-encoding-function nil
+  "*See `rcp-methods'."
+  :group 'rcp
+  :type 'function)
+
+(defcustom rcp-decoding-function nil
+  "*See `rcp-methods'."
+  :group 'rcp
+  :type 'function)
+
 (defcustom rcp-rsh-end-of-line "\n"
   "*String used for end of line in rsh connections.
 I don't think this ever needs to be changed, so please tell me about it
@@ -795,7 +805,11 @@ FILE and NEWNAME must be absolute file names."
                                 switches))
       (sit-for 1)                       ;needed for rsh but not ssh?
       (rcp-wait-for-output))
-    (insert-buffer (rcp-get-buffer method user host))))
+    (insert-buffer (rcp-get-buffer method user host))
+    (when (and (featurep 'xemacs)
+               (eq major-mode 'dired-mode))
+      (save-excursion
+        (dired-insert-set-properties (point) (mark t))))))
 
 ;; Canonicalization of file names.
 
