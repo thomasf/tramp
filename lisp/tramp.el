@@ -2342,34 +2342,36 @@ If it doesn't exist, generate a new one."
       (let ((f (buffer-file-name)))
 	(with-parsed-tramp-file-name f nil
 	  (let* ((attr (file-attributes f))
-		 (modtime (nth 5 attr)))
+		 (modtime (nth 5 attr))
+		 (mt (visited-file-modtime)))
 	    
- 	    (cond ((and attr (not (equal modtime '(0 0))))
-		   (let ((mt (visited-file-modtime)))
-		     (< (abs (tramp-time-diff
-			      modtime
-			      ;; For compatibility, deal with both the old
-			      ;; (HIGH . LOW) and the new (HIGH LOW)
-			      ;; return values of `visited-file-modtime'.
-			      (if (atom (cdr mt))
-				  (list (car mt) (cdr mt))
-				mt)))
-			2)))
-		  ;; modtime has the don't know value.
-		  (attr
-		   (save-excursion
-		     (tramp-send-command
-		      multi-method method user host
-		      (format "%s -ild %s"
-			      (tramp-get-ls-command multi-method method
-						    user host)
-			      (tramp-shell-quote-argument localname)))
-		     (tramp-wait-for-output)
-		     (setq attr (buffer-substring
-				 (point) (progn (end-of-line) (point)))))
-		   (equal tramp-buffer-file-attributes attr))
-		  ;; If file does not exist, say it is not modified.
-		  (t t))))))))
+ 	    (cond
+	     ;; file exists, and has a known modtime.
+	     ((and attr (not (equal modtime '(0 0))))
+	      (< (abs (tramp-time-diff
+		       modtime
+		       ;; For compatibility, deal with both the old
+		       ;; (HIGH . LOW) and the new (HIGH LOW)
+		       ;; return values of `visited-file-modtime'.
+		       (if (atom (cdr mt))
+			   (list (car mt) (cdr mt))
+			 mt)))
+		 2))
+	     ;; modtime has the don't know value.
+	     (attr
+	      (save-excursion
+		(tramp-send-command
+		 multi-method method user host
+		 (format "%s -ild %s"
+			 (tramp-get-ls-command multi-method method user host)
+			 (tramp-shell-quote-argument localname)))
+		(tramp-wait-for-output)
+		(setq attr (buffer-substring
+			    (point) (progn (end-of-line) (point)))))
+	      (equal tramp-buffer-file-attributes attr))
+	     ;; If file does not exist, say it is not modified
+	     ;; if and only if that agrees with the buffer's record.
+	     (t (equal mt '(-1 65535))))))))))
 
 (defadvice clear-visited-file-modtime (after tramp activate)
   "Set `tramp-buffer-file-attributes' back to nil.
@@ -3812,7 +3814,10 @@ This will break if COMMAND prints a newline, followed by the value of
 	(error "Buffer has changed from `%s' to `%s'"
 	       curbuf (current-buffer)))
       (when (or (eq visit t) (stringp visit))
-	(set-visited-file-modtime))
+	(set-visited-file-modtime
+	 ;; We must pass modtime explicitely, because filename can be different
+	 ;; from (buffer-file-name), f.e. if `file-precious-flag' is set.
+	 (nth 5 (file-attributes filename))))
       ;; Make `last-coding-system-used' have the right value.
       (when (boundp 'last-coding-system-used)
 	(setq last-coding-system-used coding-system-used))
