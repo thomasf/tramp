@@ -2827,7 +2827,8 @@ Maybe the different regular expressions need to be tuned.
       (rcp-message 9 "Sending login name %s" user)
       (process-send-string p (concat user rcp-rsh-end-of-line))
       (rcp-message 9 "Waiting for password prompt...")
-      (unless (setq found (rcp-wait-for-regexp p nil rcp-password-prompt-regexp))
+      (unless (setq found (rcp-wait-for-regexp p nil
+                                               rcp-password-prompt-regexp))
         (pop-to-buffer (buffer-name))
         (kill-process p)
         (error "Couldn't find remote password prompt"))
@@ -3344,6 +3345,9 @@ locale to C and sets up the remote shell search path."
   (rcp-set-remote-path multi-method method user host "PATH" rcp-remote-path)
   (rcp-send-command multi-method method user host
                     "LC_TIME=C; export LC_TIME; echo huhu")
+  (rcp-wait-for-output)
+  (rcp-send-command multi-method method user host
+                    "mesg n; echo huhu")
   (rcp-wait-for-output))
 
 (defun rcp-maybe-open-connection (multi-method method user host)
@@ -3907,6 +3911,7 @@ Only works for Bourne-like shells."
        rcp-default-method
        rcp-rsh-end-of-line
        rcp-remote-path
+       rcp-login-prompt-regexp
        rcp-password-prompt-regexp
        rcp-wrong-passwd-regexp
        rcp-temp-name-prefix
