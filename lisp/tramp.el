@@ -1573,10 +1573,7 @@ is initially created and is kept cached by the remote shell."
 	   (buffer-name)))
   (when time-list
     (tramp-run-real-handler 'set-visited-file-modtime (list time-list)))
-  (let* ((last-coding-system-used	;don't clobber
-	  (if (boundp 'last-coding-system-used)
-	      last-coding-system-used
-	    nil))
+  (let* ((coding-system-used nil)
 	 (f (buffer-file-name))
 	 (v (tramp-dissect-file-name f))
 	 (multi-method (tramp-file-name-multi-method v))
@@ -1588,6 +1585,8 @@ is initially created and is kept cached by the remote shell."
 	 (modtime (nth 5 attr)))
     ;; We use '(0 0) as a don't-know value.  See also
     ;; `tramp-handle-file-attributes-with-ls'.
+    (when (boundp 'last-coding-system-used)
+      (setq coding-system-used last-coding-system-used))
     (if (not (equal modtime '(0 0)))
 	(tramp-run-real-handler 'set-visited-file-modtime (list modtime))
       (save-excursion
@@ -1600,6 +1599,8 @@ is initially created and is kept cached by the remote shell."
 	(setq attr (buffer-substring (point)
 				     (progn (end-of-line) (point)))))
       (setq tramp-buffer-file-attributes attr))
+    (when (boundp 'last-coding-system-used)
+      (setq last-coding-system-used coding-system-used))
     nil))
 
 ;; This function makes the same assumption as
