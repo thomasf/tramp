@@ -3643,9 +3643,9 @@ to enter a password for the `rcp-rcp-program'."
 If the value is not set for the connection, return `default'"
   (with-current-buffer (rcp-get-buffer multi-method method user host)
     (let (error)
-      (condition-case error
-	  (symbol-value (intern (concat "rcp-connection-property-" property)))
-	(t	default)))))
+      (condition-case nil
+	  (symbol-value (intern (concat "miss-rcp-connection-property-" property)))
+	(error	default)))))
 
 ;; Set a property of an RCP connection.
 (defun rcp-set-connection-property (property value multi-method method user host)
