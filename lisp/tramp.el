@@ -2261,7 +2261,7 @@ must specify the right method in the file name.
   (rcp-message 7 "Opening connection for %s@%s using %s..." user host method)
   (let ((p (start-process (rcp-buffer-name method user host)
                           (rcp-get-buffer method user host)
-                          (rcp-get-rsh-program method) "-l" user host))
+                          (rcp-get-rsh-program method) host "-l" user))
         (found nil))
     (process-kill-without-query p)
     (setq found
