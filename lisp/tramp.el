@@ -1,4 +1,4 @@
-;;; tramp.el --- remote file editing using rsh/rcp or work-alike programs 
+;;; tramp.el --- Transparent Remote Access, Multiple Protocol
 
 ;; Copyright (C) 1998, 1999, 2000 Free Software Foundation, Inc.
 
@@ -1416,8 +1416,9 @@ is initially created and is kept cached by the remote shell."
     result))
 
 ;; This function should return "foo/" for directories and "bar" for
-;; files.  We use `ls -ad *' to get a list of files (including
-;; directories), and `ls -ad */' to get a list of directories.
+;; files.  We use `ls -ad' to get a list of files (including
+;; directories), and `find . -type d \! -name . -prune' to get a list
+;; of directories.
 (defun tramp-handle-file-name-all-completions (filename directory)
   "Like `file-name-all-completions' for tramp files."
   (let ((v (tramp-dissect-file-name (tramp-handle-expand-file-name directory)))
