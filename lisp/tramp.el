@@ -80,6 +80,10 @@
 ;;   the binary?
 ;; * BSD doesn't grok `-n' to print numeric user/group ids.
 ;; * ``Active processes exist; kill them and exit anyway?''
+;; * Make sure permissions of tmp file are good.
+;;   (Nelson Minar <nelson@media.mit.edu>)
+;; * Temporary directory should be customizable.
+;;   (Francesco PotortÅÏ <F.Potorti@cnuce.cnr.it>)
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
@@ -696,7 +700,8 @@ Bug: output of COMMAND must end with a newline."
     (error "rssh-handle-write-region: VISIT must be t."))
   (unless (eq append nil)
     (error "rssh-handle-write-region: APPEND must be nil."))
-  (unless (eq lockname nil)
+  (unless (or (eq lockname nil)
+              (string= lockname filename))
     (error "rssh-handle-write-region: LOCKNAME must be nil."))
   (unless (eq confirm nil)
     (error "rssh-handle-write-region; CONFIRM must be nil."))
