@@ -906,10 +906,12 @@ Returns the exit code of test."
 This one expects to be in the right *rcp* buffer."
   (let (result x)
     (while (and (null result) dirlist)
-      (setq x (concat (file-name-as-directory (pop dirlist) progname)))
+      (setq x (concat (file-name-as-directory (pop dirlist)) progname))
+      (message "Looking for remote executable %s" x)
       (when (rcp-handle-file-executable-p
              (rcp-make-rcp-file-name user host x))
         (setq result x)))
+    (message "Found remote executable %s" result)
     result))
 
 ;; -- communication with external shell -- 
@@ -918,12 +920,16 @@ This one expects to be in the right *rcp* buffer."
   "Find a shell on the remote host which groks tilde expansion."
   (let ((shell nil))
     (rcp-send-command user host "echo ~root")
+    (rcp-wait-for-output)
     (unless (string-equal (buffer-string) "/\n")
       (setq shell 
             (or (rcp-find-executable user host "bash" rcp-remote-path)
                 (rcp-find-executable user host "ksh" rcp-remote-path)))
-      (if shell (rcp-send-command user host (concat "exec " shell))
-        (error "Couldn't find a shell which groks tilde expansion.")))))
+      (unless shell
+        (error "Couldn't find a shell which groks tilde expansion."))
+      (rcp-send-command user host (concat "exec " shell))
+      (rcp-send-command user host "echo hello")
+      (rcp-wait-for-output))))
 
 (defun rcp-open-connection-rsh (user host)
   "Open a connection to HOST, logging in as USER, using rsh."
