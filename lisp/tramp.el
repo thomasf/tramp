@@ -1278,16 +1278,23 @@ See `vc-do-command' for more information."
       status))
   )
 
-(unless (fboundp 'rcp-original-vc-do-command)
-  (fset 'rcp-original-vc-do-command (symbol-function 'vc-do-command)))
+(defadvice vc-do-command (around rcp-vc activate)
+  "Invoke rcp-vc-do-command for rcp files."
+  (let ((f (ad-get-arg 3)))
+    (if (and (stringp f) (rcp-rcp-file-p f))
+        (apply 'rcp-vc-do-command (ad-get-args 0))
+      ad-do-it)))
 
-(defun vc-do-command (buffer okstatus command file last &rest flags)
-  "Redefined to work with rcp.el; see `rcp-original-vc-do-command' for
-original definition."
-  (if (and (stringp file) (rcp-rcp-file-p file))
-      (apply 'rcp-vc-do-command buffer okstatus command file last flags)
-    (apply
-     'rcp-original-vc-do-command buffer okstatus command file last flags)))
+;;-(unless (fboundp 'rcp-original-vc-do-command)
+;;-  (fset 'rcp-original-vc-do-command (symbol-function 'vc-do-command)))
+;;-
+;;-(defun vc-do-command (buffer okstatus command file last &rest flags)
+;;-  "Redefined to work with rcp.el; see `rcp-original-vc-do-command' for
+;;-original definition."
+;;-  (if (and (stringp file) (rcp-rcp-file-p file))
+;;-      (apply 'rcp-vc-do-command buffer okstatus command file last flags)
+;;-    (apply
+;;-     'rcp-original-vc-do-command buffer okstatus command file last flags)))
 
 ;; `vc-workfile-unchanged-p'
 ;; This function does not deal well with remote files, so we do the
