@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 1998, 1999 Free Software Foundation, Inc.
 
-;; Author: Kai.Grossjohann@CS.Uni-Dortmund.DE
+;; Author: Kai.Grossjohann@CS.Uni-Dortmund.DE 
 ;; Keywords: comm, processes
 ;; Version: $Id$
 
