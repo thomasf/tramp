@@ -3470,13 +3470,14 @@ locale to C and sets up the remote shell search path."
                     "biff n ; echo huhu")
   (rcp-wait-for-output)
   ;; Does `test A -nt B' work?
+  (erase-buffer)
   (make-local-variable 'rcp-test-groks-nt)
   (rcp-send-command multi-method method user host
-                    "test / -nt / 2>/dev/null; echo $?")
+                    "test / -nt /")
   (rcp-wait-for-output)
-  (goto-char (point-max))
-  (forward-line -1)
-  (setq rcp-test-groks-nt (equal 1 (read (current-buffer)))))
+  (goto-char (point-min))
+  (setq rcp-test-groks-nt
+        (looking-at (format "\n%s\n" (regexp-quote rcp-end-of-output)))))
 
 (defun rcp-maybe-open-connection (multi-method method user host)
   "Maybe open a connection to HOST, logging in as USER, using METHOD.
