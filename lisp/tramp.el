@@ -2845,7 +2845,7 @@ so, it is added to the environment variable VAR."
       (rcp-message 5 "Starting remote shell `%s' for tilde expansion..." shell)
       (rcp-send-command
        multi-method method user host
-       (concat "PS1='$ '; exec " shell))
+       (concat "PS1='$ ' ; exec " shell))
       (unless (rcp-wait-for-regexp (get-buffer-process (current-buffer))
                                    60
                                    shell-prompt-pattern)
