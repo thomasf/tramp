@@ -3164,7 +3164,9 @@ at all unlikely that this variable is set up wrongly!"
       (error
        "Cannot connect to different host `%s' with `su' connection method"
        host))
-    (tramp-pre-connection multi-method method (or user (user-login-name)) host)
+    (when (not user)
+      (error "Must give user name for `su' connection method"))
+    (tramp-pre-connection multi-method method user host)
     (tramp-message 7 "Opening connection for `%s' using `%s'..." 
 		   (or user (user-login-name)) method)
     (let ((process-environment (copy-sequence process-environment)))
@@ -3175,14 +3177,14 @@ at all unlikely that this variable is set up wrongly!"
                                        tramp-dos-coding-system))
              (p (apply 'start-process
                        (tramp-buffer-name multi-method method 
-                                          (or user (user-login-name)) host)
+                                          user host)
                        (tramp-get-buffer multi-method method 
-                                         (or user (user-login-name)) host)
+                                         user host)
                        (tramp-get-su-program multi-method method)
                        (mapcar
                         '(lambda (x)
                            (format-spec
-                            x (list (cons ?u (or user (user-login-name))))))
+                            x (list (cons ?u user))))
                         (tramp-get-su-args multi-method method))))
              (found nil)
              (pw nil))
@@ -3215,9 +3217,9 @@ at all unlikely that this variable is set up wrongly!"
             (kill-process p)
             (error "`su' failed: %s" (nth 1 found))))
         (tramp-open-connection-setup-interactive-shell
-         p multi-method method (or user (user-login-name)) host)
+         p multi-method method user host)
         (tramp-post-connection multi-method method 
-                               (or user (user-login-name)) host)))))
+                               user host)))))
 
 ;; HHH: Not Changed.  Multi method.  It is not clear to me how this can 
 ;;      handle not giving a user name in the "file name".
