@@ -2277,6 +2277,10 @@ Invokes `read-passwd' if that is defined, else `ange-ftp-read-passwd'."
   (if (fboundp 'read-passwd) (read-passwd prompt)
     (ange-ftp-read-passwd prompt)))
 
+(unless (boundp 'last-coding-system-used)
+  (defvar last-coding-system-used nil
+    "Emacs compatibility variable, defined by rcp.el."))
+
 ;;; TODO:
 
 ;; * Make sure permissions of tmp file are good.
