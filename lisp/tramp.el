@@ -2443,11 +2443,10 @@ Mainly sets the prompt and the echo correctly."
   (process-send-string nil "exec /bin/sh\n")
   (process-send-string nil (format "PS1='\n%s\n'; PS2=''; PS3=''\n"
                                    rcp-end-of-output))
-  (rcp-send-command method user host "stty -onlcr -echo")
-  (rcp-send-command method user host "unset MAIL")
-  ;; Turn off bash history -- /bin/sh is really bash on Linux systems.
-  (rcp-send-command method user host "set +o history")
-  ;;(rcp-send-command method user host "echo hello")
+  (rcp-send-command
+   method user host
+   (format "stty -onlcr -echo%sunset MAIL%sset +o history"
+           rcp-rsh-end-of-line))
   (rcp-message 9 "Waiting for remote /bin/sh to come up...")
   (unless (rcp-wait-for-output 5)
     (unless (rcp-wait-for-output 5)
