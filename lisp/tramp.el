@@ -1618,7 +1618,7 @@ is initially created and is kept cached by the remote shell."
 	   (path (tramp-file-name-path v))
 	   (attr (file-attributes f))
 	   (modtime (nth 5 attr)))
-      (if (not (equal modtime '(0 0)))
+      (if (and modtime (not (equal modtime '(0 0))))
 	  ;; Why does `file-attributes' return a list (HIGH LOW), but
 	  ;; `visited-file-modtime' returns a cons (HIGH . LOW)?
 	  (let ((mt (visited-file-modtime)))
