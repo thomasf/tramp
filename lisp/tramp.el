@@ -1438,6 +1438,7 @@ Returns nil if none was found, else the command is returned."
 ;; * abbreviate-file-name
 ;; * file name completion doesn't work for /r:user@host:<TAB>?
 ;;   (Henrik Holm <henrikh@tele.ntnu.no>)
+;; * grok ~ in rcp-remote-path  (Henrik Holm <henrikh@tele.ntnu.no>)
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
