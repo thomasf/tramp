@@ -441,7 +441,8 @@ The regexp should match the whole line.
   :type 'regexp)
 
 (defcustom rcp-wrong-passwd-regexp
-  "^.*\\(Permission denied.\\|Login [Ii]ncorrect\\|Connection \\(refused\\|closed\\)\\).*$"
+  (concat "^.*\\(Permission denied.\\|Login [Ii]ncorrect\\|"
+          "Received signal [0-9]+\\|Connection \\(refused\\|closed\\)\\).*$")
   "*Regexp matching a `login failed' message.
 The regexp should match the whole line."
   :group 'rcp
