@@ -4050,6 +4050,10 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 
 ;;; TODO:
 
+;; * If `test A -nt B' does not work to determine if A is newer than B,
+;;   use a tricky `find' expression as follows:
+;;       test -z "`find $1 -prune -newer $2 -print`"
+;;   May have to adjust `-z' or order of arguments.
 ;; * Find `perl' (if present) on the remote host.  Use it if present
 ;;   for `file-attributes', for example, to find out mtime and ctime.
 ;; * Implement `load' operation.
