@@ -66,6 +66,11 @@
 ;;; TODO:
 
 ;; * Use more variables for program names.
+;; * Make it possible to make program names dependent on system type
+;;   as well as host name.
+;; * Is it cleaner to use whole commands rather than just abbrevs for
+;;   the binary?
+;; * BSD doesn't grok `-n' to print numeric user/group ids.
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
