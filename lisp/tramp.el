@@ -1378,20 +1378,27 @@ on the same remote host."
 	 symlink-target)
     (tramp-message 10 "Finding true name for `%s'" filename)
     (while (and steps (< numchase numchase-limit))
-      (setq thisstep (car steps))
+      (setq thisstep (pop steps))
+      (tramp-message 10 "Check %s"
+		     (mapconcat 'identity
+				(append '("") (reverse result) (list thisstep))
+				"/"))
       (setq symlink-target
 	    (nth 0 (tramp-handle-file-attributes
 		    (tramp-make-tramp-file-name
 		     multi-method method user host
-		     (concat "/" (mapconcat 'identity (reverse steps) "/")
-			     "/" thisstep)))))
+		     (mapconcat 'identity
+				(append '("") (reverse result) (list thisstep))
+				"/")))))
       (cond ((string= "." thisstep)
-	     (pop steps))
+	     (tramp-message 10 "Ignoring step `.'"))
 	    ((string= ".." thisstep)
-	     (pop steps)
+	     (tramp-message 10 "Processing step `..'")
 	     (pop result))
 	    ((stringp symlink-target)
 	     ;; It's a symlink, follow it.
+	     (tramp-message
+	      10 "Follow symlink to %s" symlink-target)
 	     (setq numchase (1+ numchase))
 	     (setq steps
 		   (if (file-name-absolute-p symlink-target)
@@ -1399,15 +1406,16 @@ on the same remote host."
 		     (append (split-string symlink-target "/") steps))))
 	    (t
 	     ;; It's a file.
-	     (pop steps)
 	     (setq result (cons thisstep result)))))
     (when (>= numchase numchase-limit)
       (error "Maximum number (%d) of symlinks exceeded" numchase-limit))
-    (tramp-message 10 "True name of `%s' is `%s'"
-		   filename (mapconcat 'identity (reverse result) "/"))
+    (setq result (reverse result))
+    (tramp-message
+     10 "True name of `%s' is `%s'"
+     filename (mapconcat 'identity (cons "" result) "/"))
     (tramp-make-tramp-file-name
      multi-method method user host
-     (concat "/" (mapconcat 'identity (reverse result) "/")))))
+     (mapconcat 'identity (cons "" result) "/"))))
 
 ;; Basic functions.
 
