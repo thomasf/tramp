@@ -2451,7 +2451,8 @@ Mainly sets the prompt and the echo correctly."
                                    rcp-end-of-output))
   (rcp-send-command
    method user host
-   (format "stty -onlcr -echo%sunset MAIL%sset +o history"
+   (format (concat "stty -onlcr -echo 1>/dev/null 2>/dev/null%s"
+                   "unset MAIL%sset +o history 1>/dev/null 2>/dev/null")
            rcp-rsh-end-of-line rcp-rsh-end-of-line))
   (rcp-message 9 "Waiting for remote /bin/sh to come up...")
   (unless (rcp-wait-for-output 5)
