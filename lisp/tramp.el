@@ -4662,6 +4662,13 @@ TRAMP.
 ;; * When editing a remote CVS controlled file as a different user, VC
 ;;   gets confused about the file locking status.  Try to find out why
 ;;   the workaround doesn't work.
+;; * When user is running ssh-agent, it would be useful to add the
+;;   passwords typed by the user to that agent.  This way, the next time
+;;   round, the users don't have to type all this in again.
+;;   This would be especially useful for start-process, I think.
+;;   An easy way to implement start-process is to open a second shell
+;;   connection which is inconvenient if the user has to reenter
+;;   passwords.
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
