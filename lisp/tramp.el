@@ -3349,8 +3349,7 @@ character."
       (kill-process p)
       (error "Couldn't find shell or passwd prompt for %s" 
 	     (or user (user-login-name))))
-    (if (not (nth 1 found))
-        (setq found t)
+    (unless (nth 1 found)
       (tramp-message 9 "Sending password...")
       (tramp-enter-password p (nth 1 found))
       (erase-buffer)
