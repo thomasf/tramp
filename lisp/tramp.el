@@ -3173,8 +3173,9 @@ nil."
            ;; Work around a bug in XEmacs 21, where the timeout
            ;; expires faster than it should.  This degenerates
            ;; to polling for buggy XEmacsen, but oh, well.
-           (while (< (rcp-time-diff (current-time) start-time)
-                     timeout)
+           (while (and (not found)
+                       (< (rcp-time-diff (current-time) start-time)
+                          timeout))
              (with-timeout (timeout)
                (while (not found)
                  (accept-process-output proc 1)
@@ -3406,8 +3407,9 @@ is true)."
              ;; Work around an XEmacs bug, where the timeout expires
              ;; faster than it should.  This degenerates into polling
              ;; for buggy XEmacsen, but oh, well.
-             (while (< (rcp-time-diff (current-time) start-time)
-                       timeout)
+             (while (and (not found)
+                         (< (rcp-time-diff (current-time) start-time)
+                            timeout))
                (with-timeout (timeout)
                  (while (not found)
                    (accept-process-output proc 1)
