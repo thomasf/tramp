@@ -562,6 +562,22 @@ use for the remote host."
 	      (tramp-decoding-function    base64-decode-region)
 	      (tramp-telnet-program       nil)
               (tramp-telnet-args          nil))
+     ("pscp"
+              (tramp-connection-function  tramp-open-connection-rsh)
+	      (tramp-rsh-program          "plink")
+	      (tramp-rcp-program          "pscp")
+	      (tramp-remote-sh            "/bin/sh")
+	      (tramp-rsh-args             ("-ssh"))
+	      (tramp-rcp-args             nil)
+	      (tramp-rcp-keep-date-arg    "-p")
+	      (tramp-su-program           nil)
+	      (tramp-su-args              nil)
+	      (tramp-encoding-command     nil)
+	      (tramp-decoding-command     nil)
+	      (tramp-encoding-function    nil)
+	      (tramp-decoding-function    nil)
+	      (tramp-telnet-program       nil)
+              (tramp-telnet-args          nil))
      )
   "*Alist of methods for remote files.
 This is a list of entries of the form (NAME PARAM1 PARAM2 ...).
