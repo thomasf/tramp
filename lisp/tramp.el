@@ -4443,10 +4443,6 @@ TRAMP.
 ;;   do the right thing.
 ;; * `vc-directory' does not work.  It never displays any files, even
 ;;   if it does show files when run locally.
-;; * Should we make the shell setup stuff smarter?  For example,
-;;   we could try to intercept prompts from the `tset' program
-;;   and enter `dumb' as terminal type.
-;;   "Edward J. Sabol" <sabol@alderaan.gsfc.nasa.gov>
 ;; * Allow correction of passwords, if the remote end allows this.
 ;;   (Mark Hershberger)
 ;; * Bug with file name completion if `@user' part is omitted.
