@@ -793,7 +793,7 @@ In the connection buffer, this variable has the value of the like-named
 method parameter, as specified in `rcp-methods' (which see).")
 
 (defvar rcp-remote-sh nil
-  "This internal variable holds a parameter for `rcp-meethods'.
+  "This internal variable holds a parameter for `rcp-methods'.
 In the connection buffer, this variable has the value of the like-named
 method parameter, as specified in `rcp-methods' (which see).")
 
