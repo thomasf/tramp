@@ -4027,12 +4027,15 @@ Only works for Bourne-like shells."
        backup-by-copying-when-privileged-mismatch)
      nil				; pre-hook
      nil				; post-hook
-     "Enter your bug report in this message, including as much detail as you
-possibly can about the problem, what you did to cause it and what the local
-and remote machines are.
+     "\
+Enter your bug report in this message, including as much detail as you
+possibly can about the problem, what you did to cause it and what the
+local and remote machines are.
 
-If you can give a simple set of instructions to make this bug happen reliably,
-please include those.  Thank you for helping kill bugs in TRAMP.")))
+If you can give a simple set of instructions to make this bug happen
+reliably, please include those.  Thank you for helping kill bugs in
+TRAMP.
+--bug report follows this line--")))
 
 (defalias 'tramp-submit-bug 'tramp-bug)
 
