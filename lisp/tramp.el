@@ -1249,7 +1249,16 @@ rather than as numbers."
 
 (defun rcp-handle-file-directory-p (filename)
   "Like `file-directory-p' for rcp files."
-  (eq t (car (rcp-handle-file-attributes filename))))
+  (let ((v (rcp-dissect-file-name filename)))
+    (rcp-send-command
+     (rcp-file-name-multi-method v) (rcp-file-name-method v)
+     (rcp-file-name-user v) (rcp-file-name-host v)
+     (format "( cd %s ; echo $? )"
+             (rcp-shell-quote-argument (rcp-file-name-path v))))
+    (rcp-wait-for-output)
+    (goto-char (point-max))
+    (forward-line -1)
+    (zerop (read (current-buffer)))))
 
 (defun rcp-handle-file-regular-p (filename)
   "Like `file-regular-p' for rcp files."
