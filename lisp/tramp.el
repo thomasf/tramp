@@ -1618,21 +1618,24 @@ is initially created and is kept cached by the remote shell."
 	   (path (tramp-file-name-path v))
 	   (attr (file-attributes f))
 	   (modtime (nth 5 attr)))
-      (if (and modtime (not (equal modtime '(0 0))))
-	  ;; Why does `file-attributes' return a list (HIGH LOW), but
-	  ;; `visited-file-modtime' returns a cons (HIGH . LOW)?
-	  (let ((mt (visited-file-modtime)))
-	    (< (abs (tramp-time-diff modtime (list (car mt) (cdr mt)))) 2))
-	(save-excursion
-	  (tramp-send-command
-	   multi-method method user host
-	   (format "%s -ild %s"
-		   (tramp-get-ls-command multi-method method user host)
-		   (tramp-shell-quote-argument path)))
-	  (tramp-wait-for-output)
-	  (setq attr (buffer-substring (point)
-				       (progn (end-of-line) (point)))))
-	(equal tramp-buffer-file-attributes attr)))))
+      (if attr
+	(if (not (equal modtime '(0 0)))
+	    ;; Why does `file-attributes' return a list (HIGH LOW), but
+	    ;; `visited-file-modtime' returns a cons (HIGH . LOW)?
+	    (let ((mt (visited-file-modtime)))
+	      (< (abs (tramp-time-diff modtime (list (car mt) (cdr mt)))) 2))
+	  (save-excursion
+	    (tramp-send-command
+	     multi-method method user host
+	     (format "%s -ild %s"
+		     (tramp-get-ls-command multi-method method user host)
+		     (tramp-shell-quote-argument path)))
+	    (tramp-wait-for-output)
+	    (setq attr (buffer-substring (point)
+					 (progn (end-of-line) (point)))))
+	  (equal tramp-buffer-file-attributes attr))
+	;; If file does not exist, say it is not modified.
+	nil))))
 
 (defadvice clear-visited-file-modtime (after tramp activate)
   "Set `tramp-buffer-file-attributes' back to nil.
