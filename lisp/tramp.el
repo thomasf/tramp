@@ -1615,8 +1615,8 @@ is initially created and is kept cached by the remote shell."
       (if (not (equal modtime '(0 0)))
 	  ;; Why does `file-attributes' return a list (HIGH LOW), but
 	  ;; `visited-file-modtime' returns a cons (HIGH . LOW)?
-	  (and (equal (car (visited-file-modtime)) (nth 0 modtime))
-	       (equal (cdr (visited-file-modtime)) (nth 1 modtime)))
+	  (let ((mt (visited-file-modtime)))
+	    (< (abs (tramp-time-diff modtime (list (car mt) (cdr mt)))) 2))
 	(save-excursion
 	  (tramp-send-command
 	   multi-method method user host
