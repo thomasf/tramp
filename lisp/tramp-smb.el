@@ -923,7 +923,8 @@ then sends the password to the remote host.
 
 Domain names in USER and port numbers in HOST are acknowledged."
 
-  (unless (executable-find tramp-smb-program)
+  (when (and (fboundp 'executable-find)
+	     (not (funcall 'executable-find tramp-smb-program)))
     (error "Cannot find command %s in %s" tramp-smb-program exec-path))
 
   (save-match-data

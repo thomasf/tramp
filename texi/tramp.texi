@@ -381,9 +381,10 @@ behind the scenes when you open a file with @value{tramp}.
 release may be downloaded from
 @uref{http://ftp.gnu.org/gnu/tramp/}. This release includes the full
 documentation and code for @value{tramp}, suitable for installation.
-But Emacs (22 or later) includes @value{tramp} already, and there is
-a @value{tramp} package for XEmacs, as well.  So maybe it is easier to
-just use those.  But if you want the bleeding edge, read on@dots{...}
+But GNU Emacs (22 or later) includes @value{tramp} already, and there
+is a @value{tramp} package for XEmacs, as well.  So maybe it is easier
+to just use those.  But if you want the bleeding edge, read
+on@dots{...}
 
 For the especially brave, @value{tramp} is available from CVS.  The CVS
 version is the latest version of the code and may contain incomplete
@@ -1111,7 +1112,9 @@ might like the @code{plink} method which uses the PuTTY implementation
 of @code{ssh}.  Or you use Kerberos and thus like @code{krlogin}.
 
 For the special case of editing files on the local host as another
-user, see the @code{su} or @code{sudo} method.
+user, see the @code{su} or @code{sudo} method.  It offers shortened
+syntax for the @samp{root} account, like
+@file{@value{prefix}su@value{postfixsinglehop}@value{postfix}/etc/motd}.
 
 People who edit large files may want to consider @code{scp} instead of
 @code{ssh}, or @code{pscp} instead of @code{plink}.  These out-of-band
@@ -1966,10 +1969,10 @@ There is also a Savannah project page.
 @item
 Which systems does it work on?
 
-The package has been used successfully on Emacs 20, Emacs 21 and Emacs
-22, as well as XEmacs 21.  XEmacs 20 is more problematic, see the
-notes in @file{tramp.el}.  I don't think anybody has really tried it
-on Emacs 19.
+The package has been used successfully on GNU Emacs 20, GNU Emacs 21
+and GNU Emacs 22, as well as XEmacs 21.  XEmacs 20 is more
+problematic, see the notes in @file{tramp.el}.  I don't think anybody
+has really tried it on GNU Emacs 19.
 
 The package was intended to work on Unix, and it really expects a
 Unix-like system on the remote end (except the @option{smb} method),
@@ -2336,9 +2339,9 @@ emulation macro to @value{tramp}, but if somebody who uses XEmacs 20 steps
 forward and wishes to implement and test it, please contact me or the
 mailing list.
 
-@item The @value{tramp} filename syntax differs between Emacs and XEmacs.
+@item The @value{tramp} filename syntax differs between GNU Emacs and XEmacs.
 
-The Emacs maintainers wish to use a unified filename syntax for
+The GNU Emacs maintainers wish to use a unified filename syntax for
 Ange-FTP and @value{tramp} so that users don't have to learn a new
 syntax.  It is sufficient to learn some extensions to the old syntax.
 
