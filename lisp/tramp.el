@@ -89,7 +89,7 @@
 ;; Make sure that we get integration with the VC package.
 ;; When it is loaded, we need to pull in the integration module.
 (eval-after-load "vc"
-  (require 'rcp-vc))
+  '(require 'rcp-vc))
 
 
 (eval-when-compile
@@ -3450,13 +3450,13 @@ METHOD, HOST and USER specify the the connection."
 
 (defun rcp-file-mode-from-int (mode)
   "Turn an integer representing a file mode into an ls(1)-like string."
-  (let ((type	(cdr (assoc (logand (>> mode 12) 15) rcp-file-mode-type-map)))
-	(user	(logand (>> mode 6) 7))
-	(group	(logand (>> mode 3) 7))
-	(other	(logand (>> mode 0) 7))
-	(suid	(> (logand (>> mode 9) 4) 0))
-	(sgid	(> (logand (>> mode 9) 2) 0))
-	(sticky	(> (logand (>> mode 9) 1) 0)))
+  (let ((type	(cdr (assoc (logand (lsh mode -12) 15) rcp-file-mode-type-map)))
+	(user	(logand (lsh mode -6) 7))
+	(group	(logand (lsh mode -3) 7))
+	(other	(logand (lsh mode -0) 7))
+	(suid	(> (logand (lsh mode -9) 4) 0))
+	(sgid	(> (logand (lsh mode -9) 2) 0))
+	(sticky	(> (logand (lsh mode -9) 1) 0)))
     (setq user  (rcp-file-mode-permissions user  suid "s"))
     (setq group (rcp-file-mode-permissions group sgid "s"))
     (setq other (rcp-file-mode-permissions other sticky "t"))
