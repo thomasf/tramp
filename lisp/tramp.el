@@ -595,7 +595,7 @@ upon opening the connection.")
     (file-local-copy . rcp-handle-file-local-copy)
     (insert-file-contents . rcp-handle-insert-file-contents)
     (write-region . rcp-handle-write-region)
-
+    (unhandled-file-name-directory . rcp-handle-unhandled-file-name-directory)
     (dired-call-process . rcp-handle-dired-call-process)
     (dired-recursive-delete-directory . rcp-handle-dired-recursive-delete-directory))
         "Alist of handler functions.
@@ -1233,6 +1233,11 @@ This is like 'dired-recursive-delete-directory' for rcp files."
 (eval-when-compile
   (when (eq (symbol-function 'dired-insert-set-properties) 'ignore)
     (fmakunbound 'dired-insert-set-properties)))
+
+;; CCC is this the right thing to do?
+(defun rcp-handle-unhandled-file-name-directory (filename)
+  "Like `unhandled-file-name-directory' for rcp files."
+  (expand-file-name "~/"))
 
 ;; Canonicalization of file names.
 
