@@ -2126,6 +2126,9 @@ This will break if COMMAND prints a newline, followed by the value of
   "Like `write-region' for tramp files."
   (unless (eq append nil)
     (error "Cannot append to file using tramp (`%s')" filename))
+  (setq filename (expand-file-name filename))
+  (when (and lockname (stringp lockname))
+    (setq lockname (expand-file-name lockname)))
   (unless (or (eq lockname nil)
               (string= lockname filename))
     (error "tramp-handle-write-region: LOCKNAME must be nil or equal FILENAME"))
