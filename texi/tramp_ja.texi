@@ -3,6 +3,8 @@
 @setfilename rcp_ja.info
 @settitle RCP User Manual
 @setchapternewpage odd
+@documentlanguage ja
+@documentencoding euc-jp
 @c %**end of header
 
 @c XXX This is a euc-jp file. I know it is better to use iso-2022-jp 
@@ -22,7 +24,7 @@
 @c NOTE: The 'UPDATED' value is updated by the 'time-stamp' function.
 @c       If you change it by hand, the modifications will not stay.
 @set VERSION $Revision$
-@set UPDATED 2000 年 5 月 31 日 (Wed)
+@set UPDATED 2000 年 5 月 30 日 (Tue)
 @c XXX VERSION and UPDATED are Japanese version's version and update date.
 @c XXX If we need English version's one, we MUST use literal version and
 @c XXX date strings.
