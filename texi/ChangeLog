@@ -1,3 +1,8 @@
+2005-02-13  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.texi: Replace "Linux" by "GNU/Linux".  Suggested by
+	Richard M. Stallman <rms@gnu.org>
+
 2005-02-09  Kim F. Storm  <storm@cua.dk>
 
 	Change release version from 21.4 to 22.1 throughout.
@@ -55,7 +60,7 @@
 	* tramp.texi (Frequently Asked Questions): Comment paragraph about
 	plink link.  The URL is outdated.  Originator contacted for
 	clarification.
-	
+
 2004-08-10  Michael Albinus  <michael.albinus@gmx.de>
 
 	Version 2.0.44 released.
@@ -112,7 +117,7 @@
 	moved to that file.  "tramp-" and "-" removed from flag names.
 	Flags `tramp' and `trampver' used properly.  Flag `tramp-inst'
 	replaced by `installchapter'.
-	
+
 2004-03-29  Michael Albinus  <Michael.Albinus@alcatel.de>
 
 	* Makefile.in (INSTALL_INFO): Use option `--quiet'.
@@ -149,7 +154,7 @@
 2004-03-14  Michael Albinus  <Michael.Albinus@alcatel.de>
 
 	* Makefile.in (savannah): Simplify copy command.
-	
+
 	* trampinst.texi (Installation, Installation parameters)
 	(Load paths): Explain new option `--with-contrib'.  Remove
 	description for explicit use of "contrib" directory.  Remove
@@ -202,7 +207,7 @@
 
 	* tramp.texi (Customizing Completion): Explain new functions
 	`tramp-parse-shostkeys' and `tramp-parse-sknownhosts'.
-	
+
 2004-01-05  Michael Albinus  <Michael.Albinus@alcatel.de>
 
 	* tramp.texi (Issues): Explain disabling "auto-autoloads.el*" for
@@ -273,7 +278,7 @@
 	(Japanese manual): New node.
 
 	* trampver.texi.in (all): New flag `japanese-manual'.  Typo fix.
-	
+
 2003-11-02  Michael Albinus  <Michael.Albinus@alcatel.de>
 
 	* tramp.texi (Inline methods): Small grammar fix.
@@ -343,7 +348,7 @@
 
 2003-06-17  Adrian Aichner  <adrian@xemacs.org>
 	Small patch.
-	
+
 	* tramp.texi: Fix minor typos.
 	* tramp.texi (Concept Index): Added to make manual searchable via
 	`Info-index'.
@@ -564,8 +569,8 @@
 
 2002-10-08  Kai Groﬂjohann  <Kai.Grossjohann@CS.Uni-Dortmund.DE>
 
-	* tramp.texi (Installation, Inline methods) 
-	(Customizing Completion, Remote shell setup) 
+	* tramp.texi (Installation, Inline methods)
+	(Customizing Completion, Remote shell setup)
 	(Frequently Asked Questions): Fix typos.  From Francis Litterio
 	<franl@world.std.com>.
 
@@ -663,7 +668,7 @@
 
 2002-08-22  Kai Groﬂjohann  <Kai.Grossjohann@CS.Uni-Dortmund.DE>
 
-	* tramp.texi (Usage): Mention type-ahead problem. 
+	* tramp.texi (Usage): Mention type-ahead problem.
 
 2002-08-22  Kai Groﬂjohann  <Kai.Grossjohann@CS.Uni-Dortmund.DE>
 
@@ -684,7 +689,7 @@
 2002-08-05  Kai Groﬂjohann  <Kai.Grossjohann@CS.Uni-Dortmund.DE>
 
 	Version 2.0.11 released.
-	
+
 2002-08-04  Kai Groﬂjohann  <Kai.Grossjohann@CS.Uni-Dortmund.DE>
 
 	* tramp.texi (Inline methods, Remote shell setup): Typos.  From
@@ -705,8 +710,8 @@
 2002-07-26  Kai Groﬂjohann  <Kai.Grossjohann@CS.Uni-Dortmund.DE>
 
 	* tramp.texi (Top): Add copying.
-	(Overview, Obtaining @tramp{}, Installation, Multi-hop Methods) 
-	(Remote Programs, Multi-hop filename syntax) 
+	(Overview, Obtaining @tramp{}, Installation, Multi-hop Methods)
+	(Remote Programs, Multi-hop filename syntax)
 	(Frequently Asked Questions): Reformat.
 
 	* Makefile (clean): Delete more.
@@ -714,7 +719,7 @@
 2002-07-24  Steve Youngs  <youngs@xemacs.org>
 
 	* Makefile (prepversion): New target.  Creates
-	tramp-version.texi. 
+	tramp-version.texi.
 	(all): Use it.
 	(clean): Add tramp-version.texi.
 
@@ -727,7 +732,7 @@
 	* Makefile (tramp.html, tramp_ja.html): Specify output file.
 
 	* tramp.texi (Inline methods): Document new-style "ssh -1"
-	methods and the renaming of "ssh1" methods.	
+	methods and the renaming of "ssh1" methods.
 
 2002-07-14  Kai Groﬂjohann  <Kai.Grossjohann@CS.Uni-Dortmund.DE>
 
@@ -807,7 +812,7 @@
 2002-04-19  Kai Groﬂjohann  <Kai.Grossjohann@CS.Uni-Dortmund.DE>
 	From Harry Putnam <reader@newsguy.com>.  Awaiting copyright
 	assignment.
-	
+
 	* tramp.texi (Installation): Give more details on byte-compiling
 	the Lisp files and creating and installing the info file.
 
