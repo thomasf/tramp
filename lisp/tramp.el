@@ -3802,7 +3802,7 @@ a subshell, ie surrounded by parentheses."
   (tramp-send-command multi-method method user host
                       (concat (if subshell "( " "")
                               command " 2>/dev/null"
-                              (if command " ; " "")
+                              (if command " ; " " ")
                               "echo tramp_exit_status $?"
                               (if subshell " )" "")))
   (tramp-wait-for-output)
