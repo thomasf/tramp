@@ -668,7 +668,7 @@ The `sudo' program appears to insert a `^@' character into the prompt."
 (defcustom tramp-wrong-passwd-regexp
   (concat "^.*\\(Permission denied.\\|Login [Ii]ncorrect\\|"
           "Received signal [0-9]+\\|Connection \\(refused\\|closed\\)\\|"
-          "Sorry, try again.\\).*$")
+          "Sorry, try again.\\|Name or service not known\\).*$")
   "*Regexp matching a `login failed' message.
 The regexp should match the whole line."
   :group 'tramp
