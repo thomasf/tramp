@@ -70,6 +70,9 @@
 
 ;;; TODO:
 
+;; * Protect against shell meta chars.  Can't just use '...'
+;;   everywhere because this would break expand-file-name.  (Ed Sabol
+;;   <sabol@alderaan.gsfc.nasa.gov>)
 ;; * Use more variables for program names.
 ;; * Make it possible to make program names dependent on system type
 ;;   as well as host name.
