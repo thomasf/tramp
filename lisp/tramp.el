@@ -761,8 +761,7 @@ Operations not mentioned here will be handled by the normal Emacs functions.")
                           (format "cd %s" (shell-quote-argument path)))
         (rcp-send-command
          method user host
-         (format "%s -a" (shell-quote-argument
-                          (rcp-get-ls-command method user host)))))
+         (format "%s -a" (rcp-get-ls-command method user host))))
       (rcp-wait-for-output)
       (goto-char (point-max))
       (while (zerop (forward-line -1))
@@ -785,7 +784,8 @@ Operations not mentioned here will be handled by the normal Emacs functions.")
     (setq host (rcp-file-name-host v))
     (setq path (rcp-file-name-path v))
     (save-excursion
-      (rcp-send-command method user host (format "cd %s" path))
+      (rcp-send-command method user host
+                        (format "cd %s" (shell-quote-argument path)))
       ;; Get list of file names by calling ls.
       (rcp-send-command method user host
                          (format "%s -ad %s* 2>/dev/null"
