@@ -712,21 +712,6 @@ remaining args passed to `rcp-message'."
     (set-buffer (rcp-get-buffer method user host))
     (apply 'rcp-message level fmt-string args)))
 
-;; Extract right value of alists, depending on host name.
-
-(defsubst rcp-alist-get (string alist)
-  "Return value from alist based on string matching.
-ALIST is a list of (KEY . VALUE) cons cells.  Returns the first VALUE
-from ALIST where STRING (the first arg) matches the regular expression
-KEY.  Returns nil if no KEY matches."
-  (let ((al alist)
-        (result nil))
-    (while (and al (not result))
-      (let ((elt (pop al)))
-        (when (string-match (car elt) string)
-          (setq result (cdr elt)))))
-    result))
-
 ;;; File Name Handler Functions:
 
 ;; Path manipulation functions that grok RCP paths...
