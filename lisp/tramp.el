@@ -3214,6 +3214,17 @@ to set up.  METHOD, USER and HOST specify the connection."
     (error "Couldn't `set +o history', see buffer `%s'"
            (buffer-name)))
   (erase-buffer)
+  (tramp-message 9 "Waiting 30s for `set +o vi'")
+  (process-send-string
+   nil (format "set +o vi %s"      ;mustn't `>/dev/null' with AIX?
+               tramp-rsh-end-of-line))
+  (unless (tramp-wait-for-regexp
+           p 30
+           (format "\\(\\$\\|%s\\)" shell-prompt-pattern))
+    (pop-to-buffer (buffer-name))
+    (error "Couldn't `set +o vi', see buffer `%s'"
+           (buffer-name)))
+  (erase-buffer)
   (tramp-message 9 "Waiting 30s for `unset MAIL MAILCHECK MAILPATH'")
   (process-send-string
    nil (format "unset MAIL MAILCHECK MAILPATH 1>/dev/null 2>/dev/null%s"
