@@ -2134,6 +2134,8 @@ This one expects to be in the right *rcp* buffer."
       (when (rcp-handle-file-executable-p
              (rcp-make-rcp-file-name method user host x))
         (setq result x)))
+    (unless result
+      (error "Couldn't find remote executable %s." progname))
     (rcp-message 5 "Found remote executable %s" result)
     result))
 
@@ -2851,7 +2853,8 @@ Only works for Bourne-like shells."
   (let ((result (shell-quote-argument s))
         (nl (regexp-quote "\\\n")))
     (while (string-match nl result)
-      (setq result (replace-match "'\n'" t t result)))))
+      (setq result (replace-match "'\n'" t t result)))
+    result))
 
 ;; EFS hooks itself into the file name handling stuff in more places
 ;; than just `file-name-handler-alist'. The following tells EFS to stay
