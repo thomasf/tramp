@@ -1,4 +1,4 @@
-;;; rcp.el --- remote file editing using rsh/rcp or work-alike programs
+;;; rcp.el --- remote file editing using rsh/rcp or work-alike programs 
 
 ;; Copyright (C) 1998, 1999, 2000 Free Software Foundation, Inc.
 
