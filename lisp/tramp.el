@@ -2222,7 +2222,6 @@ replaced with the given replacement string."
 
 ;; * Make sure permissions of tmp file are good.
 ;;   (Nelson Minar <nelson@media.mit.edu>)
-;; * Dired header line contains duplicated directory name.
 ;; * rcp program name should be customizable on per-host basis?
 ;;   (Francesco PotortÅÏ <F.Potorti@cnuce.cnr.it>)
 ;; * Grok passwd prompts with scp?  (David Winter
