@@ -4015,6 +4015,13 @@ this is the function `temp-directory'."
   (cond ((boundp 'temporary-file-directory) temporary-file-directory)
         ((fboundp 'temp-directory)
          (funcall (symbol-function 'temp-directory))) ;pacify byte-compiler
+        ((let ((t (getenv "TEMP"))) (and t (file-directory-p t)))
+         (file-name-as-directory (getenv "TEMP")))
+        ((let ((t (getenv "TMP"))) (and t (file-directory-p t)))
+         (file-name-as-directory (getenv "TMP")))
+        ((let ((t (getenv "TMPDIR"))) (and t (file-directory-p t)))
+         (file-name-as-directory (getenv "TMPDIR")))
+        ((file-exists-p "c:/temp") (file-name-as-directory "c:/temp"))
         (t (message (concat "Neither `temporary-file-directory' nor "
                             "`temp-directory' is defined -- using /tmp."))
            (file-name-as-directory "/tmp"))))
