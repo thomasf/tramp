@@ -380,8 +380,8 @@ Also see `rssh-rssh-file-name-structure' and `rssh-rssh-file-name-regexp'.")
       ;; Existing files must be writable.
       (zerop (rssh-run-test "-w" filename))
     ;; If file doesn't exist, check if directory is writable.
-    (and (zerop (rssh-run-test "-d" (file-name-nondirectory filename)))
-         (zerop (rssh-run-test "-w" (file-name-nondirectory filename))))))
+    (and (zerop (rssh-run-test "-d" (file-name-directory filename)))
+         (zerop (rssh-run-test "-w" (file-name-directory filename))))))
        
 
 ;; Other file name ops.
