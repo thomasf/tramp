@@ -1436,6 +1436,8 @@ Returns nil if none was found, else the command is returned."
 ;;     (let ((caller (backtrace-frame 3)))
 ;;       (message "%s" (symbol-name (cadr caller)))))
 ;; * abbreviate-file-name
+;; * file name completion doesn't work for /r:user@host:<TAB>?
+;;   (Henrik Holm <henrikh@tele.ntnu.no>)
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
