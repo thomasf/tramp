@@ -2537,9 +2537,6 @@ This will break if COMMAND prints a newline, followed by the value of
 	(setq result
 	      (tramp-run-real-handler 'insert-file-contents
 				      (list local-copy nil beg end replace)))
-	(tramp-message-for-buffer
-	 multi-method method user host
-	 9 "last coding system used was %s" last-coding-system-used)
 	;; Now `last-coding-system-used' has right value.  Remember it.
 	(when (boundp 'last-coding-system-used)
 	  (setq coding-system-used last-coding-system-used))
@@ -4889,6 +4886,7 @@ TRAMP.
 
 ;;; TODO:
 
+;; * Support `dired-compress-file' filename handler.
 ;; * In Emacs 21, `insert-directory' shows total number of bytes used
 ;;   by the files in that directory.  Add this here.
 ;; * Avoid screen blanking when hitting `g' in dired.  (Eli Tziperman)
