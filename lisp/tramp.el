@@ -1340,11 +1340,13 @@ is initially created and is kept cached by the remote shell."
                           (equal u1 u2)
                           (equal h1 h2))
                (signal 'file-error
-                       "Files must have same method, user, host" file1 file2))
+                       (list "Files must have same method, user, host"
+                             file1 file2)))
              (unless (and (tramp-tramp-file-p file1)
                           (tramp-tramp-file-p file2))
                (signal 'file-error
-                       "Files must be tramp files on same host" file1 file2))
+                       (list "Files must be tramp files on same host"
+                             file1 file2)))
              (if (tramp-get-test-groks-nt mm1 m1 u1 h1)
                  (zerop (tramp-run-test2 "test" file1 file2 "-nt"))
                (zerop (tramp-run-test2 "tramp_test_nt" file1 file2))))))))
@@ -1451,6 +1453,7 @@ is initially created and is kept cached by the remote shell."
 ;; of directories.
 (defun tramp-handle-file-name-all-completions (filename directory)
   "Like `file-name-all-completions' for tramp files."
+  (setq directory (expand-file-name directory))
   (let* ((v 		(tramp-dissect-file-name
 			 (tramp-handle-expand-file-name directory)))
 	 (multi-method 	(tramp-file-name-multi-method v))
