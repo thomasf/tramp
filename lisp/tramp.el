@@ -2309,7 +2309,7 @@ must specify the right method in the file name.
     (process-kill-without-query p)
     (setq found
           (rcp-wait-for-regexp
-           p 30
+           p 60
            (format
             "\\(%s\\)\\|\\(%s\\)"
             shell-prompt-pattern
@@ -2326,7 +2326,7 @@ must specify the right method in the file name.
       (rcp-message 9 "Sending password...")
       (rcp-enter-password p (match-string 2))
       (rcp-message 9 "Sending password...done")
-      (setq found (rcp-wait-for-regexp p 30
+      (setq found (rcp-wait-for-regexp p 60
                                        (format "\\(%s\\)\\|\\(%s\\)"
                                                shell-prompt-pattern
                                                rcp-wrong-passwd-regexp)))
