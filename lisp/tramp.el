@@ -81,10 +81,14 @@
 (require 'shell)
 (require 'advice)
 
-;; It does not work to load EFS after loading TRAMP.  Don't use `when'
-;; here, since that requires CL.
-(if (fboundp 'efs-file-handler-function)
-    (require 'efs))
+;; It does not work to load EFS after loading TRAMP.  
+(when (fboundp 'efs-file-handler-function)
+  (require 'efs))
+
+;; It does not work to load Tramp after loading jka-compr.
+(when (and (boundp 'auto-compression-mode)
+	   (symbol-value 'auto-compression-mode))
+  (error "Must load Tramp before enabling `auto-compression-mode'."))
 
 (eval-when-compile
   (require 'cl)
