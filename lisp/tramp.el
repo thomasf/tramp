@@ -3510,15 +3510,17 @@ to set up.  METHOD, USER and HOST specify the connection."
           (pop-to-buffer (buffer-name))
           (error "Couldn't `stty -onlcr', see buffer `%s'" (buffer-name))))))
   (erase-buffer)
-  (tramp-message 9 "Waiting 30s for `unset HISTFILE'")
+  (tramp-message
+   9 "Waiting 30s for `HISTFILE=$HOME/.tramp_history; HISTSIZE=1'")
   (process-send-string
-   nil (format "unset HISTFILE%s"      ;mustn't `>/dev/null' with AIX?
+   nil (format "HISTFILE=$HOME/.tramp_history; HISTSIZE=1%s"
                tramp-rsh-end-of-line))
   (unless (tramp-wait-for-regexp
            p 30
            (format "\\(\\$\\|%s\\)" shell-prompt-pattern))
     (pop-to-buffer (buffer-name))
-    (error "Couldn't `unset HISTFILE', see buffer `%s'"
+    (error (concat "Couldn't `HISTFILE=$HOME/.tramp_history; "
+                   "HISTSIZE=1', see buffer `%s'")
            (buffer-name)))
   (erase-buffer)
   (tramp-message 9 "Waiting 30s for `set +o vi +o emacs'")
