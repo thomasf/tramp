@@ -802,8 +802,10 @@ Bug: output of COMMAND must end with a newline."
     (list (rcp-handle-expand-file-name name))))
 
 ;; Check for complete.el and override PC-expand-many-files if appropriate.
+(eval-when-compile
+  (defun rcp-save-PC-expand-many-files (name))); avoid compiler warning
+
 (defun rcp-setup-complete ()
-  (defun rcp-save-PC-expand-many-files (name)); avoid compiler warning
   (fset 'rcp-save-PC-expand-many-files
         (symbol-function 'PC-expand-many-files))
   (defun PC-expand-many-files (name)
