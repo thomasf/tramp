@@ -910,7 +910,11 @@ upon opening the connection.")
 ;; file-name-directory, file-name-nondirectory,
 ;; file-name-sans-versions, get-file-buffer.
 (defconst rcp-file-name-handler-alist
-  '((file-name-directory . rcp-handle-file-name-directory)
+  '(
+    ;; these aren't implemented yet
+    (make-symbolic-link . rcp-handle-make-symbolic-link)
+    ;; these are implemented
+    (file-name-directory . rcp-handle-file-name-directory)
     (file-name-nondirectory . rcp-handle-file-name-nondirectory)
     (file-exists-p . rcp-handle-file-exists-p)
     (file-directory-p . rcp-handle-file-directory-p)
@@ -997,6 +1001,13 @@ Invokes `line-end-position' if that is defined, else uses a kluge."
       (point))))
 
 ;;; File Name Handler Functions:
+
+;; The following file name handler ops are not implemented (yet?).
+
+(defun rcp-handle-make-symbolic-link (filename linkname
+                                               &optional ok-if-already-exists)
+  "Like `make-symbolic-link' for rcp files.  Not implemented!"
+  (error "`make-symbolic-link' is not implemented for rcp files"))
 
 ;; Path manipulation functions that grok RCP paths...
 (defun rcp-handle-file-name-directory (file)
