@@ -933,6 +933,15 @@ remaining args passed to `rcp-message'."
     (set-buffer (rcp-get-buffer multi-method method user host))
     (apply 'rcp-message level fmt-string args)))
 
+(defsubst rcp-line-end-position ()
+  "Return position of end of line (compat function).
+Invokes `line-end-position' if that is defined, else uses a kluge."
+  (if (fboundp 'line-end-position)
+      (funcall 'line-end-position)
+    (save-excursion
+      (end-of-line)
+      (point))))
+
 ;;; File Name Handler Functions:
 
 ;; Path manipulation functions that grok RCP paths...
@@ -3774,15 +3783,6 @@ Invokes `read-passwd' if that is defined, else `ange-ftp-read-passwd'."
   (apply
    (if (fboundp 'read-passwd) #'read-passwd #'ange-ftp-read-passwd)
    (list prompt)))
-
-(defsubst rcp-line-end-position ()
-  "Return position of end of line (compat function).
-Invokes `line-end-position' if that is defined, else uses a kluge."
-  (if (fboundp 'line-end-position)
-      (funcall 'line-end-position)
-    (save-excursion
-      (end-of-line)
-      (point))))
 
 ;; ------------------------------------------------------------ 
 ;; -- Kludges section -- 
