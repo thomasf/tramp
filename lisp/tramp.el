@@ -3381,23 +3381,24 @@ to set up.  METHOD, USER and HOST specify the connection."
   ;; CCC this can't be the right way to do it.  Hm.
   (save-excursion
     (erase-buffer)
-    (process-send-string nil (format "echo foo ; echo bar %s"
+    (rcp-message 9 "Determining coding system")
+    (process-send-string nil (format "ls -l / %s"
                                      rcp-rsh-end-of-line))
     (unless (rcp-wait-for-regexp
              p 30 (format "\\(\\$\\|%s\\)" shell-prompt-pattern))
       (pop-to-buffer (buffer-name))
-      (error "Couldn't `echo foo ; echo bar' to determine line endings'"))
+      (error "Couldn't `ls -l /' to determine line endings'"))
     (goto-char (point-min))
-    (when (search-forward "\r" nil t)
-      (if (fboundp 'process-coding-system)
-          ;; We have found a ^M, so we need to set the coding
-          ;; system for output conversion to *-dos, I guess.
-          (progn
-            (rcp-message 9 "Frobbing coding system")
-            (let ((cs (process-coding-system p)))
-              (set-buffer-process-coding-system
-               (coding-system-change-eol-conversion (car cs) 'dos)
-               (cdr cs))))
+    (if (fboundp 'detect-coding-region)
+        ;; Have MULE select a plausible coding system.
+        (progn
+          (let* ((cs-decode (detect-coding-region (point-min) (point-max) t))
+                 (cs-encode (coding-system-change-eol-conversion
+                             cs-decode 'unix)))
+            (rcp-message 9 "Detected coding system `%s' for decoding" cs-decode)
+            (set-buffer-process-coding-system cs-decode cs-encode)))
+      ;; Look for ^M and do something useful if found.
+      (when (search-forward "\r" nil t)
         ;; We have found a ^M but cannot frob the process coding system
         ;; because we're running on a non-MULE Emacs.  Let's try
         ;; stty, instead.
