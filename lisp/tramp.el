@@ -447,7 +447,8 @@ Also see `rssh-rssh-file-name-structure' and `rssh-rssh-file-name-regexp'.")
   (try-completion
    file
    (mapcar (lambda (x)
-             (cons (rssh-handle-file-name-all-completions) nil)))))
+             (cons (rssh-handle-file-name-all-completions file directory)
+                   nil)))))
 
 ;; cp, mv and ln
 (defun rssh-handle-add-name-to-file
