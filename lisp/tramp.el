@@ -961,7 +961,8 @@ See `vc-do-command' for more information."
            (method (rcp-file-name-method v))
            (user (rcp-file-name-user v))
            (host (rcp-file-name-host v))
-           (path (rcp-file-name-path v)))
+           (path (rcp-file-name-path v))
+           (comint-file-name-quote-list rcp-file-name-quote-list))
       (set-buffer (get-buffer-create buffer))
       (set (make-local-variable 'vc-parent-buffer) camefrom)
       (set (make-local-variable 'vc-parent-buffer-name)
@@ -990,9 +991,8 @@ See `vc-do-command' for more information."
       (save-excursion
         ;; Actually execute remote command
         (rcp-handle-shell-command
-          (mapconcat
-           (lambda (x) (format "'%s'" x))
-           (cons command squeezed) " ") t)
+          (mapconcat 'comint-quote-filename
+                     (cons command squeezed) " ") t)
         ;(rcp-wait-for-output)
         ;; Get status from command
         (rcp-send-command method user host "echo $?")
