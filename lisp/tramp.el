@@ -603,7 +603,10 @@ if you need to change this."
   '("/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin" "/usr/ccs/bin"
     "/local/bin" "/local/freeware/bin" "/local/gnu/bin")
   "*List of directories to search for executables on remote host.
-Please notify me about other semi-standard directories to include here."
+Please notify me about other semi-standard directories to include here.
+
+You can use `~' in this list, but when searching for a shell which groks
+tilde expansion, all directory names starting with `~' will be ignored."
   :group 'rcp
   :type '(repeat string))
 
