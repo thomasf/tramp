@@ -3131,6 +3131,7 @@ METHOD, USER and HOST specify the connection."
   "Set up an interactive shell.
 Mainly sets the prompt and the echo correctly.  P is the shell process
 to set up.  METHOD, USER and HOST specify the connection."
+  (erase-buffer)
   (process-send-string nil (format "exec %s\n" (rcp-get-remote-sh
                                                 multi-method method)))
   (when rcp-debug-buffer
@@ -3934,6 +3935,7 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 ;;   to do it?
 ;; * Do the autoconf thing.
 ;; * Make it work for XEmacs 20, which is missing `with-timeout'.
+;; * Allow non-Unix remote systems.  (More a long-term thing.)
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
