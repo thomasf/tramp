@@ -2206,6 +2206,8 @@ replaced with the given replacement string."
 ;;   connection attempt requires passwd entry.  (Greg Stark)
 ;;   Maybe support passwd entry for scp?
 ;; * Remove unneeded parameters from methods.
+;; * Invoke rsync once for copying a whole directory hierarchy.
+;;   (Francesco PotortÅÏ)
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
