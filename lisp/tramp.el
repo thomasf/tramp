@@ -1011,11 +1011,13 @@ FILE and NEWNAME must be absolute file names."
       (rcp-wait-for-output)
       (read (rcp-get-buffer method user host)))))
 
-;; Pacify byte-compiler.  This is needed on XEmacs only.
-;; CCC does this break anything?
+;; Pacify byte-compiler.  The function is needed on XEmacs only.  I'm
+;; not sure at all that this is the right way to do it, but let's hope
+;; it works for now, and wait for a guru to point out the Right Way to
+;; achieve this.
 (eval-when-compile
-  (fset 'dired-insert-set-properties 'ignore))
-;  (defun dired-insert-set-properties (b e) nil))
+  (unless (fboundp 'dired-insert-set-properties)
+    (fset 'dired-insert-set-properties 'ignore)))
 
 (defun rcp-handle-insert-directory
   (file switches &optional wildcard full-directory-p)
