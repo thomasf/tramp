@@ -1236,8 +1236,8 @@ rather than as numbers."
     (unless (and meth1 meth2 user1 user2 host1 host2
                  (equal mmeth1 mmeth2)
                  (equal meth1 meth2)
-                 (string= user1 user2)
-                 (string= host1 host2))
+                 (equal user1 user2)
+                 (equal host1 host2))
       (error "add-name-to-file: %s"
              "only implemented for same method, same user, same host"))
     (when (and (not ok-if-already-exists)
@@ -1321,10 +1321,10 @@ and `rename'.  FILENAME and NEWNAME must be absolute file names."
          (rcpbuf (get-buffer-create "*rcp output*")))
     ;; Check if we can use a shortcut.
     (if (and meth1 meth2 (equal mmeth1 mmeth2) (equal meth1 meth2)
-             (string= (rcp-file-name-host v1)
-                      (rcp-file-name-host v2))
-             (string= (rcp-file-name-user v1)
-                      (rcp-file-name-user v2)))
+             (equal (rcp-file-name-host v1)
+                    (rcp-file-name-host v2))
+             (equal (rcp-file-name-user v1)
+                    (rcp-file-name-user v2)))
         ;; Shortcut: if method, host, user are the same for both
         ;; files, we invoke `cp' or `mv' on the remote host directly.
         (rcp-do-copy-or-rename-file-directly
