@@ -3020,9 +3020,9 @@ character."
       (error "Couldn't find shell or passwd prompt for %s" user))
     (if (not (match-string 1))
         (setq found t)
-      (erase-buffer)
       (tramp-message 9 "Sending password...")
       (tramp-enter-password p (match-string 1))
+      (erase-buffer)
       (tramp-message 9 "Sent password, waiting 60s for remote shell prompt")
       (setq found (tramp-wait-for-regexp p 60
                                        (format "\\(%s\\)\\|\\(%s\\)"
