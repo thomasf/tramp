@@ -222,7 +222,8 @@ The idea is to use a local directory so that auto-saving is faster."
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
               (rcp-encoding-command     "uuencode")
-              (rcp-decoding-command     "uudecode -p")
+              (rcp-decoding-command
+               "( uudecode -o - 2>/dev/null || uudecode -p 2>/dev/null )")
               (rcp-encoding-function    nil)
               (rcp-decoding-function    uudecode-decode-region)
               (rcp-telnet-program       nil))
@@ -233,7 +234,8 @@ The idea is to use a local directory so that auto-saving is faster."
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
               (rcp-encoding-command     "uuencode")
-              (rcp-decoding-command     "uudecode -p")
+              (rcp-decoding-command
+               "( uudecode -o - 2>/dev/null || uudecode -p 2>/dev/null )")
               (rcp-encoding-function    nil)
               (rcp-decoding-function    uudecode-decode-region)
               (rcp-telnet-program       nil))
@@ -244,7 +246,8 @@ The idea is to use a local directory so that auto-saving is faster."
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
               (rcp-encoding-command     "uuencode")
-              (rcp-decoding-command     "uudecode -p")
+              (rcp-decoding-command
+               "( uudecode -o - 2>/dev/null || uudecode -p 2>/dev/null )")
               (rcp-encoding-function    nil)
               (rcp-decoding-function    uudecode-decode-region)
               (rcp-telnet-program       nil))
@@ -255,7 +258,8 @@ The idea is to use a local directory so that auto-saving is faster."
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
               (rcp-encoding-command     "uuencode")
-              (rcp-decoding-command     "uudecode -p")
+              (rcp-decoding-command
+               "( uudecode -o - 2>/dev/null || uudecode -p 2>/dev/null )")
               (rcp-encoding-function    nil)
               (rcp-decoding-function    uudecode-decode-region)
               (rcp-telnet-program       nil))
@@ -321,7 +325,8 @@ The idea is to use a local directory so that auto-saving is faster."
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
               (rcp-encoding-command     "uuencode")
-              (rcp-decoding-command     "uudecode -p")
+              (rcp-decoding-command
+               "( uudecode -o - 2>/dev/null || uudecode -p 2>/dev/null )")
               (rcp-encoding-function    nil)
               (rcp-decoding-function    uudecode-decode-region)
               (rcp-telnet-program       "telnet"))
