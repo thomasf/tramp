@@ -34,10 +34,6 @@
 ;; No need to load this again if anyone asks.
 (provide 'rcp-vc)
 
-;; Ensure that RCP is loaded first, else we will end in a mess.
-(require 'rcp)
-
-
 
 ;; -- vc --
 
