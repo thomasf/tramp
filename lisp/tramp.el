@@ -3179,12 +3179,13 @@ to set up.  METHOD, USER and HOST specify the connection."
           (pop-to-buffer (buffer-name))
           (error "Couldn't `stty -onlcr', see buffer `%s'" (buffer-name))))))
   (erase-buffer)
+  (process-send-string
+   nil "unset MAIL MAILCHECK MAILPATH 1>/dev/null 2>/dev/null\n")
+  (process-send-string
+   nil "set +o history 1>/dev/null 2>/dev/null\n")
   (rcp-send-command
    multi-method method user host
-   (format (concat "unset MAIL MAILCHECK MAILPATH 1>/dev/null 2>/dev/null ; "
-                   "set +o history 1>/dev/null 2>/dev/null ; "
-                   "PS1='\n%s\n'; PS2=''; PS3=''")
-           rcp-end-of-output))
+   (format "PS1='\n%s\n'; PS2=''; PS3=''" rcp-end-of-output))
   (rcp-message 9 "Waiting for remote `%s' to come up..."
                (rcp-get-remote-sh multi-method method))
   (unless (rcp-wait-for-output 5)
