@@ -2729,7 +2729,8 @@ This function expects to be in the right *tramp* buffer."
      multi-method method user host
      (format (concat "while read d; "
                      "do if test -x $d/%s -a -f $d/%s; "
-                     "then echo $d/%s; break; fi; done <<'EOF'")
+                     "then echo tramp_executable $d/%s; "
+                     "break; fi; done <<'EOF'")
              progname progname progname))
     (mapcar (lambda (d)
               (tramp-send-command multi-method method user host
@@ -2738,9 +2739,11 @@ This function expects to be in the right *tramp* buffer."
     (tramp-send-command multi-method method user host
                         (concat "EOF" tramp-rsh-end-of-line))
     (tramp-wait-for-output)
-    (setq result (buffer-substring (point-min) (tramp-line-end-position)))
-    (when (not (string= result ""))
-      result)))
+    (goto-char (point-max))
+    (when (search-backward "tramp_executable " nil t)
+      (skip-chars-forward "^ ")
+      (skip-chars-forward " ")
+      (buffer-substring (point) (tramp-line-end-position)))))
 
 (defun tramp-set-remote-path (multi-method method user host var dirlist)
   "Sets the remote environment VAR to existing directories from DIRLIST.
@@ -3678,10 +3681,11 @@ locale to C and sets up the remote shell search path."
 	(tramp-wait-for-output))))
   ;; Find ln(1)
   (erase-buffer)
-  (tramp-set-connection-property "ln"
-				 (tramp-find-executable multi-method method user host
-							"ln" tramp-remote-path nil)
-				 multi-method method user host))
+  (tramp-set-connection-property
+   "ln"
+   (tramp-find-executable multi-method method user host
+                          "ln" tramp-remote-path nil)
+   multi-method method user host))
 
 
 (defun tramp-maybe-open-connection (multi-method method user host)
