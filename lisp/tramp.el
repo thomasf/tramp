@@ -2031,18 +2031,23 @@ This should only be called when `file' is bound to the
 filename we are thinking about..."
   (if uid
       (error "rcp-handle-vc-user-login-name cannot map a uid to a name.")
-    (let ((v (rcp-dissect-file-name (rcp-handle-expand-file-name filename))))
+    (let ((v (rcp-dissect-file-name (rcp-handle-expand-file-name file))))
       (rcp-file-name-user v))))
 
 (defadvice vc-user-login-name
   (around rcp-vc-user-login-name activate)
   "Support for files on remote machines accessed by RCP."
-  (let ((file (ad-get-arg 0)))
-    (or (and (stringp file)
-             (rcp-rcp-file-p file)      ; rcp file
-             (setq ad-return-value 
-                   (rcp-handle-vc-user-login-name uid))) ; get the owner name
-        ad-do-it)))                     ; else call the original
+  ;; We rely on the fact that `file' is bound when this is called.
+  ;; This appears to be the case everywhere in vc.el and vc-hooks.el
+  ;; as of Emacs 20.5.
+  ;;
+  ;; CCC TODO there should be a real solution!  Talk to Andre Spiegel
+  ;; about this.
+  (or (and (stringp file)
+           (rcp-rcp-file-p file)      ; rcp file
+           (setq ad-return-value 
+                 (rcp-handle-vc-user-login-name uid))) ; get the owner name
+      ad-do-it))                     ; else call the original
 
 ;; Determine the name of the user owning a file.
 (defun rcp-file-owner (filename)
