@@ -696,13 +696,11 @@ Bug: output of COMMAND must end with a newline."
 (defun rssh-handle-write-region
   (start end filename &optional append visit lockname confirm)
   "Like `write-region' for rssh files."
-  (unless (eq visit t)
-    (error "rssh-handle-write-region: VISIT must be t."))
   (unless (eq append nil)
     (error "rssh-handle-write-region: APPEND must be nil."))
   (unless (or (eq lockname nil)
               (string= lockname filename))
-    (error "rssh-handle-write-region: LOCKNAME must be nil."))
+    (error "rssh-handle-write-region: LOCKNAME must be nil or equal FILENAME."))
   (unless (eq confirm nil)
     (error "rssh-handle-write-region; CONFIRM must be nil."))
   (let ((v (rssh-dissect-file-name filename))
@@ -718,9 +716,13 @@ Bug: output of COMMAND must end with a newline."
                           (rssh-file-name-host v)
                           (rssh-file-name-path v)))
     (delete-file tmpfil)
-    ;; Is this right for auto-saving?
-    (when auto-save-default (auto-save-mode 1))
-    (message "Wrote %s" filename)))
+    (when visit
+      ;; Is this right for auto-saving?
+      (when auto-save-default (auto-save-mode 1)))
+    (when (or (eq visit t)
+              (eq visit nil)
+              (stringp visit))
+      (message "Wrote %s" filename))))
 
 ;; Main function.
 (defun rssh-run-real-handler (operation args)
@@ -743,6 +745,12 @@ Bug: output of COMMAND must end with a newline."
              (cons rssh-rssh-file-name-regexp 'rssh-file-name-handler))
 
 ;;; Internal Functions:
+
+(defun rssh-set-auto-save ()
+  (when (and (rssh-rssh-file-p (buffer-file-name))
+             auto-save-default)
+    (auto-save-mode 1)))
+(add-hook 'find-file-hooks 'rssh-set-auto-save t)
 
 (defun rssh-run-test (switch filename)
   "Run `test' on the remote system, given a switch and a file.
