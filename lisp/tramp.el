@@ -2642,7 +2642,7 @@ This function expects to be in the right *tramp* buffer."
     (tramp-send-command
      multi-method method user host
      (format (concat "( %s ) | while read d; "
-                     "do if test -x $d/%s -a '!' -d $d/%s; "
+                     "do if test -x $d/%s -a -f $d/%s; "
                      "then echo $d/%s; break; fi; done")
              (mapconcat
               (lambda (x) (concat "echo " (tramp-shell-quote-argument x)))
