@@ -1,3 +1,8 @@
+2004-05-26  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-completion-file-name-regexp-unified): Fix
+	cut'n'waste error.
+
 2004-05-16  Kai Grossjohann  <kai.grossjohann@gmx.net>
 	Merge from trunk.
 
