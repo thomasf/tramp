@@ -3938,6 +3938,8 @@ and remote machines are.
 If you can give a simple set of instructions to make this bug happen reliably,
 please include those.  Thank you for helping kill bugs in TRAMP.")))
 
+(defalias 'tramp-submit-bug 'tramp-bug)
+
 ;;; TODO:
 
 ;; * Don't use globbing for directories with many files, as this is
