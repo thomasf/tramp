@@ -14,6 +14,7 @@
 @c XXX Quick hack for Japanese translation. 
 @c XXX Use @ifset ja for the contents only in Japanese version and
 @c XXX the transrator's comment.
+@c CCC test change by kai for permission check
 @clear ja
 @set ja
 
