@@ -4075,27 +4075,11 @@ please include those.  Thank you for helping kill bugs in TRAMP.")))
 ;; find-backup-file-name
 ;; get-file-buffer -- use primitive
 ;; load
-;; make-symbolic-link
 ;; set-visited-file-modtime
 ;; shell-command
 ;; unhandled-file-name-directory
 ;; vc-registered
 ;; verify-visited-file-modtime
-
-;; PERFORMANCE!!!
-;;
-;; The following functions seem excessively slow with my light usage for this
-;; evening. These numbers are from ELP on XEmacs, not byte-complied.
-
-;; Function Name                   Call Count  Elapsed Time  Average Time
-;; ==============================  ==========  ============  ============
-;; tramp-handle-expand-file-name     2874        36.806337999  0.0128066590
-;; tramp-substitute-percent-escapes  8970        14.088506999  0.0015706250
-;; tramp-make-tramp-file-name          1794        6.0438420001  0.0033689197
-;; tramp-dissect-file-name           2376        4.9513150000  0.0020838867
-
-;; I think that I will go through and remove the redundant calls to the
-;; filename mangling functions some time real soon now...
 
 (provide 'tramp)
 
