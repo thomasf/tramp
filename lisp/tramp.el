@@ -3768,6 +3768,8 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 
 ;;; TODO:
 
+;; * Saving a file with execute permissions doesn't preserve the execute
+;;   permissions.  (Reported by Dan McGuirk <mcguirk@indirect.com>)
 ;; * Find out about the new auto-save mechanism in Emacs 21 and
 ;;   do the right thing.
 ;; * `vc-directory' does not work.  It never displays any files, even
