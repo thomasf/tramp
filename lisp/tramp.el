@@ -79,6 +79,7 @@
 ;; * Is it cleaner to use whole commands rather than just abbrevs for
 ;;   the binary?
 ;; * BSD doesn't grok `-n' to print numeric user/group ids.
+;; * ``Active processes exist; kill them and exit anyway?''
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
@@ -644,7 +645,9 @@ Bug: output of COMMAND must end with a newline."
     (when visit
       (setq buffer-file-name filename)
       (set-visited-file-modtime '(0 0))
-      (set-buffer-modified-p nil))
+      (set-buffer-modified-p nil)
+      ;; Is this the right way to go about auto-saving?
+      (when auto-save-default (auto-save-mode 1)))
     (rssh-run-real-handler 'insert-file-contents
                            (list local-copy nil beg end replace))
     (delete-file local-copy)
@@ -674,6 +677,8 @@ Bug: output of COMMAND must end with a newline."
                           (rssh-file-name-host v)
                           (rssh-file-name-path v)))
     (delete-file tmpfil)
+    ;; Is this right for auto-saving?
+    (when auto-save-default (auto-save-mode 1))
     (message "Wrote %s" filename)))
 
 ;; Main function.
