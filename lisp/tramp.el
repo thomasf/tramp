@@ -993,7 +993,15 @@ Operations not mentioned here will be handled by the normal Emacs functions.")
                  (if (member x dirs)
                      (file-name-as-directory x)
                    x)))
-     (all-completions file (mapcar (lambda (x) (list x)) result)))))
+     (all-completions file (mapcar 'list result)
+                      (lambda (x)
+                        (not (string-match
+                              (concat "\\("
+                                      (mapconcat 'regexp-quote
+                                                 completion-ignored-extensions
+                                                 "\\|")
+                                      "\\)\\'")
+                              (car x))))))))
 
 ;; The following isn't needed for Emacs 20 but for 19.34?
 (defun rcp-handle-file-name-completion (file directory)
