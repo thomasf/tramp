@@ -1239,12 +1239,12 @@ rather than as numbers."
                           (equal m1 m2)
                           (equal u1 u2)
                           (equal h1 h2))
-               (error "file-newer-than-file-p: `%s' and `%s' %s" file1 file2
-                      "must have same method, user host"))
+               (signal 'file-error
+                       "Files must have same method, user, host" file1 file2))
              (unless (and (rcp-rcp-file-p file1)
                           (rcp-rcp-file-p file2))
-               (error "file-newer-than-file-p: `%s' and `%s' %s" file1 file2
-                      "must be rcp files on same host"))
+               (signal 'file-error
+                       "Files must be rcp files on same host" file1 file2))
              (if (rcp-get-test-groks-nt mm1 m1 u1 h1)
                  (zerop (rcp-run-test2 "test" file1 file2 "-nt"))
                (zerop (rcp-run-test2 "rcp_test_nt" file1 file2))))))))
