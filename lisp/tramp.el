@@ -3181,7 +3181,7 @@ to set up.  METHOD, USER and HOST specify the connection."
   (erase-buffer)
   (rcp-send-command
    multi-method method user host
-   (format (concat "unset MAIL MAILCHECK MAILPATH ; "
+   (format (concat "unset MAIL MAILCHECK MAILPATH 1>/dev/null 2>/dev/null ; "
                    "set +o history 1>/dev/null 2>/dev/null ; "
                    "PS1='\n%s\n'; PS2=''; PS3=''")
            rcp-end-of-output))
