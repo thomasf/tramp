@@ -3635,7 +3635,7 @@ a subshell, ie surrounded by parentheses."
   (tramp-send-command multi-method method user host
                       (concat (if subshell "( " "")
                               command
-                              (if command " ; " "")
+                              (if command tramp-rsh-end-of-line "")
                               "echo tramp_exit_status $?"
                               (if subshell " )" "")))
   (tramp-wait-for-output)
