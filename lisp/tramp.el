@@ -5852,7 +5852,8 @@ locale to C and sets up the remote shell search path."
 	 multi-method method user host
 	 (concat "tramp_file_attributes () {\n"
 		 tramp-remote-perl
-		 " -e '" tramp-perl-file-attributes "' $1 $2 2>/dev/null\n"
+		 " -e '" tramp-perl-file-attributes "'"
+		 " \"$1\" \"$2\" 2>/dev/null\n"
 		 "}"))
 	(tramp-wait-for-output)
 	(unless (tramp-method-out-of-band-p multi-method method user host)
