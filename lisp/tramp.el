@@ -2015,7 +2015,7 @@ Returns nil if none was found, else the command is returned."
   "Set up an interactive shell such that it is ready to be used
 as if it was non-interactive."
   (process-send-string nil "exec /bin/sh\n")
-  (process-send-string nil "unset PS1 PS2 PS3\n")
+  (process-send-string nil "PS1=''\nPS2=''\nPS3=''\n")
   (accept-process-output p 1)
   (rcp-send-command method user host "stty -onlcr -echo")
   (rcp-send-command method user host "echo hello")
