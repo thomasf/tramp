@@ -3494,7 +3494,8 @@ locale to C and sets up the remote shell search path."
   (rcp-send-command multi-method method user host
                     "biff n ; echo huhu")
   (rcp-wait-for-output)
-  ;; Does `test A -nt B' work?
+  ;; Does `test A -nt B' work?  Use abominable `find' construct if it
+  ;; doesn't.
   (erase-buffer)
   (make-local-variable 'rcp-test-groks-nt)
   (rcp-send-command multi-method method user host
@@ -3852,6 +3853,12 @@ to enter a password for the `rcp-rcp-program'."
     (rcp-maybe-open-connection multi-method method user host)
     (set-buffer (rcp-get-buffer multi-method method user host))
     rcp-test-groks-nt))
+
+(defun rcp-get-remote-perl (multi-method method user host)
+  (save-excursion
+    (rcp-maybe-open-connection multi-method method user host)
+    (set-buffer (rcp-get-buffer multi-method method user host))
+    rcp-remote-perl))
 
 (defun rcp-get-connection-function (multi-method method)
   (second (or (assoc 'rcp-connection-function
