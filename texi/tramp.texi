@@ -969,6 +969,21 @@ display the output of @command{ls} in color. If you still cannot use
 filename completion, report a bug to the @tramp{} developers.
 
 
+@item File name completion does not work in large directories
+
+@tramp{} uses globbing for some operations.  (Globbing means to use the
+shell to expand wildcards such as `*.c'.)  This might create long
+command lines, especially in directories with many files.  Some shell
+choke on long command lines, or don't cope well with the globbing
+itself.
+
+If you have a large directory on the remote end, you may wish to execute
+a command like @command{ls -d * ..?* > /dev/null} and see if it hangs.
+Note that you must first start the right shell, which might be
+@command{/bin/sh}, @command{ksh} or @command{bash}, depending on which
+of those supports tilde expansion.
+
+
 @item What kinds of systems does @tramp{} work on
 
 @tramp{} really expects the remote system to be a Unix-like system.  The
