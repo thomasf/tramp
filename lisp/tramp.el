@@ -569,6 +569,16 @@ on the local side to encode or decode the file contents.  Set the
 in order to use the commands or to the function to use.  It is
 possible to specify one function and the other parameter as nil.
 
+So, to summarize: if the method is an inline method, you must specify
+`tramp-encoding-command' and `tramp-decoding-command', and
+`tramp-rcp-program' must be nil.  If the method is out of band, then
+you must specify `tramp-rcp-program' and `tramp-rcp-args' and
+`tramp-encoding-command' and `tramp-decoding-command' must be nil.
+Every method, inline or out of band, must specify
+`tramp-connection-function' plus the associated arguments (for
+example, the telnet program if you chose
+`tramp-open-connection-telnet').
+
 Notes:
 
 When using `tramp-open-connection-su' the phrase `open connection to a
