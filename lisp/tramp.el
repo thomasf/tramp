@@ -990,7 +990,9 @@ See `vc-do-command' for more information."
       (save-excursion
         ;; Actually execute remote command
         (rcp-handle-shell-command
-          (mapconcat 'identity (cons command squeezed) " ") t)
+          (mapconcat
+           (lambda (x) (format "'%s'" x))
+           (cons command squeezed) " ") t)
         ;(rcp-wait-for-output)
         ;; Get status from command
         (rcp-send-command method user host "echo $?")
