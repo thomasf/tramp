@@ -1141,13 +1141,13 @@ rather than as numbers."
 		 (host (rcp-file-name-host v))
 		 (path (rcp-file-name-path v)))
 	    (if (rcp-get-remote-perl multi-method method user host)
-		(rcp-handle-file-attributes-with-perl multi-method method user host nonnumeric)
-	      (rcp-handle-file-attributes-with-ls multi-method method user host nonnumeric)))))
+		(rcp-handle-file-attributes-with-perl multi-method method user host path nonnumeric)
+	      (rcp-handle-file-attributes-with-ls multi-method method user host path nonnumeric)))))
     nil))				; no file
 
 
 (defun rcp-handle-file-attributes-with-ls
-  (multi-method method user host &optional nonnumeric)
+  (multi-method method user host path &optional nonnumeric)
   "Implement `file-attributes' for rcp files using the ls(1) command."
   (let (symlinkp dirp
 		 res-inode res-filemodes res-numlinks
@@ -1228,7 +1228,7 @@ rather than as numbers."
      )))
 
 (defun rcp-handle-file-attributes-with-perl
-  (multi-method method user host &optional nonnumeric)
+  (multi-method method user host path &optional nonnumeric)
   "Implement `file-attributes' for rcp files using a Perl script.
 
 The Perl command is sent to the remote machine when the connection
