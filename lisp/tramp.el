@@ -2500,8 +2500,8 @@ hosts, or files, disagree."
 (defun tramp-buffer-name (multi-method method user host)
   "A name for the connection buffer for USER at HOST using METHOD."
   (if multi-method
-      (tramp-buffer-name-multi-method "tramp" multi-method method user host))
-    (format "*tramp/%s %s@%s*" method user host))
+      (tramp-buffer-name-multi-method "tramp" multi-method method user host)
+    (format "*tramp/%s %s@%s*" method user host)))
 
 (defun tramp-buffer-name-multi-method (prefix multi-method method user host)
   "A name for the multi method connection buffer.
@@ -2531,7 +2531,8 @@ USER the array of user names, HOST the array of host names."
 (defun tramp-debug-buffer-name (multi-method method user host)
   "A name for the debug buffer for USER at HOST using METHOD."
   (if multi-method
-      (tramp-buffer-name-multi-method "debug tramp" multi-method method user host)
+      (tramp-buffer-name-multi-method "debug tramp"
+                                      multi-method method user host)
     (format "*debug tramp/%s %s@%s*" method user host)))
 
 (defun tramp-get-debug-buffer (multi-method method user host)
