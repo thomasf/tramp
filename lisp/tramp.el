@@ -1105,7 +1105,11 @@ FILE and NEWNAME must be absolute file names."
                   (rcp-make-rcp-program-file-name
                    (rcp-file-name-user v2)
                    (rcp-file-name-host v2)
-                   (shell-quote-argument (rcp-file-name-path v2))))))
+                   (shell-quote-argument (rcp-file-name-path v2)))))
+            (default-directory
+              (if (rcp-rcp-file-p default-directory)
+                  (rcp-temporary-file-directory)
+                default-directory)))
         (when keep-date
           (add-to-list 'rcp-args (rcp-get-rcp-keep-date-arg meth)))
         (apply #'call-process (rcp-get-rcp-program meth) nil nil nil
