@@ -583,7 +583,7 @@ Also see `rssh-rssh-file-name-structure' and `rssh-rssh-file-name-regexp'.")
        user host
        (format (rssh-csh-expand-file-name-command-get host) path))
       (rssh-wait-for-output)
-      (beginning-of-buffer)
+      (goto-char (point-min))
       (rssh-make-rssh-file-name user host
                                 (buffer-substring (point)
                                                   (progn (end-of-line)
