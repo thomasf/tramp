@@ -1,3 +1,9 @@
+2004-12-16  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.46 released.
+
+	* configure.ac: Bump version.
+
 2004-10-17  Michael Albinus  <michael.albinus@gmx.de>
 
 	* Makefile.XEmacs, package-info.in: Synchronize with XEmacs CVS
