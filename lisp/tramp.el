@@ -2847,7 +2847,7 @@ to enter a password for the `rcp-rcp-program'."
 (defadvice make-auto-save-file-name
   (around rcp-advice-make-auto-save-file-name () activate)
   "Invoke `rcp-make-auto-save-file-name' for rcp files."
-  (if (rcp-rcp-file-p (buffer-file-name))
+  (if (and (buffer-file-name) (rcp-rcp-file-p (buffer-file-name)))
       (setq ad-return-value
             (rcp-make-auto-save-file-name (buffer-file-name)))
     ad-do-it))
