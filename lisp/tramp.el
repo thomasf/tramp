@@ -681,6 +681,12 @@ part, though."
   :group 'tramp
   :type 'string)
 
+(defcustom tramp-discard-garbage nil
+  "*If non-nil, try to discard garbage sent by remote shell.
+Some shells send such garbage upon connection setup."
+  :group 'tramp
+  :type 'boolean)
+
 ;; File name format.
 
 (defcustom tramp-file-name-structure
@@ -3348,7 +3354,7 @@ to set up.  METHOD, USER and HOST specify the connection."
   ;; junk first.  It seems that fencepost.gnu.org does this when doing
   ;; a Kerberos login.
   (sit-for 1)
-  (erase-buffer)
+  (tramp-discard-garbage-erase-buffer p)
   (process-send-string nil (format "exec %s%s"
                                    (tramp-get-remote-sh multi-method method)
                                    tramp-rsh-end-of-line))
@@ -3366,8 +3372,8 @@ to set up.  METHOD, USER and HOST specify the connection."
     (error "Remote `%s' didn't come up.  See buffer `%s' for details"
            (tramp-get-remote-sh multi-method method) (buffer-name)))
   (tramp-message 9 "Setting up remote shell environment")
-  (erase-buffer)
-  (process-send-string nil (format "stty -echo%s" tramp-rsh-end-of-line))
+  (tramp-discard-garbage-erase-buffer p)
+  (process-send-string nil (format "stty -inlcr -echo%s" tramp-rsh-end-of-line))
   (unless (tramp-wait-for-regexp p 30
                                (format "\\(\\$\\|%s\\)" shell-prompt-pattern))
     (pop-to-buffer (buffer-name))
@@ -3747,6 +3753,19 @@ METHOD, HOST and USER specify the the connection."
     (unless proc
       (error "Can't send EOF to remote host -- not logged in"))
     (process-send-eof proc)))
+
+(defun tramp-discard-garbage-erase-buffer (p)
+  "Erase buffer, then discard subsequent garbage.
+If `tramp-discard-garbage' is nil, just erase buffer."
+  (if (not tramp-discard-garbage)
+      (erase-buffer)
+    (while (prog1 (erase-buffer) (accept-process-output p 0.25))
+      (when tramp-debug-buffer
+        (save-excursion
+          (set-buffer (tramp-get-debug-buffer multi-method method user host))
+          (goto-char (point-max))
+          (tramp-insert-with-face
+           'bold (format "Additional characters detected\n")))))))
 
 (defun tramp-mode-string-to-int (mode-string)
   "Converts a ten-letter `drwxrwxrwx'-style mode string into mode bits."
