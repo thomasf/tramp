@@ -3818,7 +3818,7 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 ;;   (Francesco PotortÅÏ)
 ;; * Should we set PATH ourselves or should we rely on the remote end
 ;;   to do it?
-
+;; * Do the autoconf thing.
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
