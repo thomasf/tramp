@@ -1703,10 +1703,10 @@ If KEEP-DATE is non-nil, preserve the time stamp when copying."
     (tramp-barf-unless-okay
      (tramp-file-name-multi-method v) (tramp-file-name-method v)
      (tramp-file-name-user v) (tramp-file-name-host v)
-     nil
-     (format "%s %s"
+     (format " %s %s"
              (if parents "mkdir -p" "mkdir")
              (tramp-shell-quote-argument (tramp-file-name-path v)))
+     nil
      "Couldn't make directory %s" dir)))
 
 ;; CCC error checking?
