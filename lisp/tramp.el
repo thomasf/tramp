@@ -796,6 +796,9 @@ Bug: output of COMMAND must end with a newline."
                      (comint-quote-filename (rcp-file-name-path v)))
                     tmpfil)))
     (rcp-message 5 "Fetching %s to tmp file %s...done" file tmpfil)
+    ;; CCC does the following kluge do anything useful with
+    ;; permissions, Marco?
+    ;;-(call-process "/bin/sync" nil nil nil)
     tmpfil))
 
 ;; CCC need to do MULE stuff
