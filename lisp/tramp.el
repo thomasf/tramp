@@ -1631,6 +1631,7 @@ replaced with the given replacement string."
 ;; * file name completion doesn't work for /r:user@host:<TAB>?
 ;;   (Henrik Holm <henrikh@tele.ntnu.no>)
 ;; * grok ~ in rcp-remote-path  (Henrik Holm <henrikh@tele.ntnu.no>)
+;; * do the base64 thing by using Lisp function on local side
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
