@@ -28,6 +28,11 @@
 
 2004-06-26  Kai Grossjohann  <kai.grossjohann@gmx.net>
 
+	* configure.ac: Bump version (to 2.0.43-pre) and set
+	TRAMP_EMACS_MERGE_VERSION (to 2.0.42).
+
+2004-06-26  Kai Grossjohann  <kai.grossjohann@gmx.net>
+
 	Version 2.0.42 released.
 
 	* configure.ac: Release 2.0.42.
