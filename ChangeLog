@@ -1,3 +1,13 @@
+2004-09-19  Michael Albinus  <michael.albinus@gmx.de>
+
+	* Makefile.in (AUTOCONF, XEMACS_FILES): New variables.
+	(emacs): Use "cvs -f diff" in order to suppress "~/.cvsrc".  There
+	might be conflicting options else.
+	(xemacs): Reworked.  Same philosophy as `emacs' now.
+	(configure): Apply $(AUTOCONF).  Reported by Norbert Koch
+	<viteno@xemacs.org> in order to have a simple possibility applying
+	autoconf under another name.
+
 2004-09-11  Michael Albinus  <michael.albinus@gmx.de>
 
 	* configure.ac: Bump version (to 2.0.45-pre).  Update merge
