@@ -1265,14 +1265,14 @@ Returns nil if none was found, else the command is returned."
           (rcp-find-executable method user host "ls" rcp-remote-path)))
   (rcp-message 5 "Using remote command %s for getting directory listings."
                rcp-ls-command)
-  ;; Set remote PATH variable.
-  (rcp-set-remote-path method user host "PATH" rcp-remote-path)
   ;; Tell remote shell to use standard time format, needed for
   ;; parsing `ls -l' output.
   (rcp-send-command method user host
                     (concat "rcp_set_exit_status () {\n"
                             "return $1\n"
                             "}"))
+  ;; Set remote PATH variable.
+  (rcp-set-remote-path method user host "PATH" rcp-remote-path)
   (rcp-send-command method user host "LC_TIME=C; export LC_TIME; echo huhu")
   (rcp-wait-for-output))
 
