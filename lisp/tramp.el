@@ -71,6 +71,14 @@
 ;;     group ids.  Use `gnuls' instead.
 ;;
 ;; Also see the todo list at the bottom of this file.
+;;
+;; There's a mailing list for this, as well.  Its name is:
+;;                emacs-rcp@ls6.cs.uni-dortmund.de
+;; Send a mail with `help' in the subject (!) to the administration
+;; address for instructions on joining the list.  The administration
+;; address is:
+;;            emacs-rcp-request@ls6.cs.uni-dortmund.de
+;; You may also mail me, Kai, directly.
 
 ;;; Code:
 
