@@ -612,7 +612,8 @@ if you need to change this."
   :type 'string)
 
 (defcustom rcp-remote-path
-  '("/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin" "/usr/ccs/bin")
+  '("/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin" "/usr/ccs/bin"
+    "/local/bin" "/local/freeware/bin" "/local/gnu/bin")
   "*List of directories to search for executables on remote host.
 Please notify me about other semi-standard directories to include here."
   :group 'rcp
