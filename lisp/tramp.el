@@ -1006,7 +1006,7 @@ rather than as numbers."
            multi-method method user host
            (format "%s %s %s"
                    (rcp-get-ls-command multi-method method user host)
-                   (if nonnumeric "-iLld" "-iLldn")
+                   (if nonnumeric "-ild" "-ildn")
                    (rcp-shell-quote-argument path)))
           (rcp-wait-for-output)
           ;; parse `ls -l' output ...
