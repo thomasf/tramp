@@ -721,7 +721,7 @@ Returns the exit code of test."
                   (forward-line -1)
                   (not (looking-at (regexp-quote rssh-end-of-output))))
       (accept-process-output proc))
-    (kill-line 1)
+    (delete-region (point) (progn (forward-line 1) (point)))
     (goto-char (point-min))))
 
 ;; rssh file names
