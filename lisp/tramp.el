@@ -2213,7 +2213,7 @@ This is like `dired-recursive-delete-directory' for tramp files."
       (setq wildcard (file-name-nondirectory path))
       (setq path (file-name-directory path)))
     (when (listp switches)
-      (setq switches (mapconcat #'identity switches " ")))
+      (setq switches (mapconcat 'identity switches " ")))
     (unless full-directory-p
       (setq switches (concat "-d " switches)))
     (when wildcard
@@ -2229,7 +2229,7 @@ This is like `dired-recursive-delete-directory' for tramp files."
                    switches
                    (if wildcard
                        path
-                     (tramp-shell-quote-argument path))))
+                     (tramp-shell-quote-argument (concat path ".")))))
         (tramp-barf-unless-okay
          multi-method method user host
          (format "cd %s" (tramp-shell-quote-argument
