@@ -80,6 +80,7 @@
 (require 'timer)
 (require 'format-spec)                  ;from Gnus 5.8, also in tar ball
 (require 'base64)                       ;for the mimencode methods
+(require 'shell)
 
 ;; It does not work to load EFS after loading TRAMP.  Don't use `when'
 ;; here, since that requires CL.
