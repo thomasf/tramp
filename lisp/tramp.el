@@ -716,7 +716,7 @@ if you need to change this."
 (defcustom tramp-remote-path
   '("/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin" "/usr/ccs/bin"
     "/local/bin" "/local/freeware/bin" "/local/gnu/bin"
-    "/usr/freeware/bin" "/usr/pkg/bin")
+    "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin")
   "*List of directories to search for executables on remote host.
 Please notify me about other semi-standard directories to include here.
 
