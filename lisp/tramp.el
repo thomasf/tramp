@@ -1061,6 +1061,7 @@ FILE and NEWNAME must be absolute file names."
       (sit-for 1)                       ;needed for rsh but not ssh?
       (rcp-wait-for-output))
     (insert-buffer (rcp-get-buffer method user host))
+    (exchange-point-and-mark)
     (when (and (featurep 'xemacs)
                (eq major-mode 'dired-mode))
       (save-excursion
