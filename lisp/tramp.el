@@ -3344,6 +3344,10 @@ METHOD, USER and HOST specify the connection."
   "Set up an interactive shell.
 Mainly sets the prompt and the echo correctly.  P is the shell process
 to set up.  METHOD, USER and HOST specify the connection."
+  ;; Wait a bit in case the remote end feels like sending a little
+  ;; junk first.  It seems that fencepost.gnu.org does this when doing
+  ;; a Kerberos login.
+  (sit-for 1)
   (erase-buffer)
   (process-send-string nil (format "exec %s%s"
                                    (tramp-get-remote-sh multi-method method)
