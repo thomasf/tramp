@@ -465,6 +465,21 @@ use for the remote host."
               (tramp-encoding-function    nil)
               (tramp-decoding-function    nil)
               (tramp-telnet-program       nil))
+     ("km"
+              (tramp-connection-function  tramp-open-connection-rsh)
+	      (tramp-rsh-program          "krlogin")
+	      (tramp-rcp-program          nil)
+	      (tramp-remote-sh            "/bin/sh")
+	      (tramp-rsh-args             ("-x"))
+	      (tramp-rcp-args             nil)
+	      (tramp-rcp-keep-date-arg    nil)
+	      (tramp-su-program           nil)
+	      (tramp-su-args              nil)
+	      (tramp-encoding-command     "mimencode -b")
+	      (tramp-decoding-command     "mimencode -u -b")
+	      (tramp-encoding-function    base64-encode-region)
+	      (tramp-decoding-function    base64-decode-region)
+	      (tramp-telnet-program       nil))
      )
   "*Alist of methods for remote files.
 This is a list of entries of the form (NAME PARAM1 PARAM2 ...).
