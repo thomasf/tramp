@@ -1083,9 +1083,10 @@ The variable @code{tramp-terminal-type} can be used to change this value
 
 This section needs a lot of work!  Please help.
 
-If you use the Cygwin installation of ssh (you have to explicitly
-select it in the installer), then it should work out of the box to just
-select @code{smx} as the connection method.
+If you use the Cygwin installation of ssh (you have to explicitly select
+it in the installer), then it should work out of the box to just select
+@code{smx} as the connection method.  You can find information about
+setting up Cygwin in their FAQ at @uref{http://cygwin.com/faq/}.
 
 
 @node Usage, Bug Reports, Configuration, Top
