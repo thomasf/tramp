@@ -1235,7 +1235,7 @@ rather than as numbers."
            t)
           ;; We are sure both files exist at this point.
           (t
-           (unless (rcp-get-test-groks-nt mm m u h)
+           (unless (rcp-get-test-groks-nt mm1 m1 u1 h1)
              (error "Cannot compare file times for file `%s'" file1))
            (zerop (rcp-run-test2 file1 "-nt" file2))))))
 
