@@ -1,4 +1,44 @@
+2004-07-13  Michael Albinus  <michael.albinus@gmx.de>
+
+	Sync with trunk.
+
+	* tramp.el (all): Code cleanup.  Change all `tramp-handle-xxx'
+	calls to respective `xxx` calls.
+	(tramp-process-alive-regexp): Precise doc string.
+	(tramp-multi-action-process-alive): New defun.
+	(tramp-multi-actions): Use it.
+	(tramp-handle-find-backup-file-name): `copy-tree' is available
+	since Emacs 21.4 only (XEmacs has it).  Implementation rewritten
+	in order to avoid this function.
+	(tramp-handle-write-region): Set current buffer.  If connection
+	wasn't open, `file-modes' has changed it accidently.  Reported by
+	David Kastrup <dak@gnu.org>.
+	(tramp-enter-password, tramp-read-passwd): New arguments USER and
+	HOST.
+	(tramp-action-password, tramp-multi-action-password): Apply it.
+	(tramp-open-connection-rsh): If a port is given, the Tramp buffer
+	name must still contain the port number.  Otherwise, we have two
+	Tramp buffers, with all the confusion.  Reported by Myron Selby
+	<myron@xytech.com> and Rolf Dubitzky
+	<Dubitzky@physi.uni-heidelberg.de>.
+
+	* tramp-smb.el (tramp-smb-open-connection): Apply USER and HOST to
+	`tramp-enter-passwd'.
+
+	* tramp-vc.el (all): Code cleanup.  Change all `tramp-handle-xxx'
+	calls to respective `xxx` calls.
+
+2004-07-13  Kai Grossjohann  <kai.grossjohann@gmx.net>
+
+	Sync with trunk.
+
+	* tramp.el (tramp-locked, tramp-locker): New variables for
+	implementing a global lock.
+	(tramp-sh-file-name-handler): Use them to implement the global
+	lock.
+
 2004-06-26  Kai Grossjohann  <kai.grossjohann@gmx.net>
+
 	Merge from trunk.
 
 	* tramp.el (tramp-handle-file-remote-p): New implementation to
@@ -16,7 +56,7 @@
 
 	Version 2.0.41 released.
 
-	Sync with trunk
+	Sync with trunk.
 
 	* tramp.el (tramp-wait-for-regexp, tramp-wait-for-output): Throw
 	away if process has died.  Reported by Luc Teirlinck
@@ -42,7 +82,7 @@
 
 2004-05-29  Kai Grossjohann  <kai.grossjohann@gmx.net>
 
-	Sync with trunk
+	Sync with trunk.
 
 	* tramp.el (tramp-initial-commands): Add "unset HISTFILE"; this is
 	not really necessary but seems to keep the shell history smaller
@@ -69,6 +109,7 @@
 	cut'n'waste error.
 
 2004-05-16  Kai Grossjohann  <kai.grossjohann@gmx.net>
+
 	Merge from trunk.
 
 	* tramp.el (tramp-completion-file-name-regexp-unified): Avoid
