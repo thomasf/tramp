@@ -3929,12 +3929,13 @@ locale to C and sets up the remote shell search path."
   (let ((decoding (tramp-get-decoding-command multi-method method))
 	(encoding (tramp-get-encoding-command multi-method method))
 	(magic-string "xyzzy"))
-    (tramp-message
-     5 "Checking to see if encoding and decoding commands work on remote host.")
     (when (and (or decoding encoding) (not (and decoding encoding)))
       (error
        "Must give both decoding and encoding command in method definition"))
     (when (and decoding encoding)
+      (tramp-message
+       5
+       "Checking to see if encoding and decoding commands work on remote host.")
       (tramp-send-command
        multi-method method user host
        (format "echo %s | %s | %s"
