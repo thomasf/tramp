@@ -3158,7 +3158,8 @@ to set up.  METHOD, USER and HOST specify the connection."
   (erase-buffer)
   (rcp-send-command
    multi-method method user host
-   (format (concat "unset MAIL ; set +o history 1>/dev/null 2>/dev/null ; "
+   (format (concat "unset MAIL MAILCHECK MAILPATH ; "
+                   "set +o history 1>/dev/null 2>/dev/null ; "
                    "PS1='\n%s\n'; PS2=''; PS3=''")
            rcp-end-of-output))
   (rcp-message 9 "Waiting for remote `%s' to come up..."
