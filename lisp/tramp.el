@@ -4074,7 +4074,9 @@ ARGS are the arguments OPERATION has been called with."
      (if (bufferp (nth 0 args)) (nth 0 args) (current-buffer))))
    ; COMMAND
    ((member operation
-	    (list 'dired-call-process 'shell-command
+	    (list 'dired-call-process-command
+                  ; Emacs only
+		  'shell
                   ; Post Emacs 21.3 only
                   'process-file
 	          ; XEmacs only
@@ -6336,7 +6338,7 @@ Sends COMMAND, then waits 30 seconds for shell prompt."
       (save-excursion
 	(goto-char start-point)
 	(when (looking-at (regexp-quote tramp-last-cmd))
-	  (delete-region (point) (forward-line 1)))))
+	  (delete-region (point) (progn (forward-line 1) (point))))))
     ;; Add output to debug buffer if appropriate.
     (when tramp-debug-buffer
       (append-to-buffer

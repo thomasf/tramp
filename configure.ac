@@ -35,7 +35,7 @@ AC_MSG_NOTICE([$PACKAGE_STRING])
 
 # The last version of Tramp that was merged into the Emacs CVS
 # repository.  This will usually be the Tramp version minus one.
-TRAMP_EMACS_MERGE_VERSION=2.0.45
+TRAMP_EMACS_MERGE_VERSION=2.0.46
 AC_SUBST(TRAMP_EMACS_MERGE_VERSION)
 
 # Check suitable make version.
