@@ -1035,11 +1035,11 @@ Invokes `line-end-position' if that is defined, else uses a kluge."
 	 (host   (rcp-file-name-host v))
 	 (path   (rcp-file-name-path v)))
     ;; run the command on the path portion only
-    ;; REVISIT: This should take into account the remote machine type, no?
+    ;; CCC: This should take into account the remote machine type, no?
     ;;  --daniel <daniel@danann.net>
     (rcp-make-rcp-file-name multi-method method user host
 			    ;; This should not recurse...
-			    (file-name-directory path))))
+			    (or (file-name-directory path) ""))))
 
 (defun rcp-handle-file-name-nondirectory (file)
   "Like `file-name-nondirectory' but aware of RCP files."
