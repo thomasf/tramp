@@ -2847,6 +2847,9 @@ Invokes `read-passwd' if that is defined, else `ange-ftp-read-passwd'."
 ;;
 ;; The approach is simple: we call `shell-quote-argument', then
 ;; massage the newline part of the result.
+;;
+;; Thanks to Mario DeWeerd for the hint that it is sufficient for this
+;; function to work with Bourne-like shells.
 (defun rcp-shell-quote-argument (s)
   "Similar to `shell-quote-argument', but groks newlines.
 Only works for Bourne-like shells."
