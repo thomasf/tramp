@@ -611,7 +611,7 @@ tilde expansion, all directory names starting with `~' will be ignored."
   :type '(repeat string))
 
 (defcustom rcp-password-prompt-regexp
-  "^.*\\([pP]assword\\|passphrase.*\\): ? *$"
+  "^.*\\([pP]assword\\|passphrase.*\\):\^@? *$"
   "*Regexp matching password-like prompts.  Not used for telnet.
 The regexp should match the whole line.
 \(The prompt for telnet is hard-wired.)
