@@ -2205,7 +2205,12 @@ so, it is added to the environment variable VAR."
         (error "Couldn't find a shell which groks tilde expansion"))
       (rcp-message 5 "Starting remote shell %s for tilde expansion..." shell)
       (rcp-send-command method user host (concat "exec " shell))
-      (sit-for 1)                       ;why is this needed?
+      (unless (rcp-wait-for-regexp (get-buffer-process (current-buffer))
+                                   60
+                                   shell-prompt-pattern)
+        (pop-to-buffer (buffer-name))
+        (error "Couldn't find remote %s prompt."))
+      ;(sit-for 1)                       ;why is this needed?
       (process-send-string nil (format "PS1='\n%s\n'; PS2=''; PS3=''\n"
                                        rcp-end-of-output))
       (rcp-send-command method user host "echo hello")
