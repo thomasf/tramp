@@ -3853,11 +3853,12 @@ locale to C and sets up the remote shell search path."
                     "unalias ls; echo huhu")
   (tramp-wait-for-output)
   ;; Does `test A -nt B' work?  Use abominable `find' construct if it
-  ;; doesn't.
+  ;; doesn't.  BSD/OS 4.0 wants the parentheses around the command,
+  ;; for otherwise the shell crashes.
   (erase-buffer)
   (make-local-variable 'tramp-test-groks-nt)
   (tramp-send-command multi-method method user host
-                    "test / -nt /")
+                    "( test / -nt / )")
   (tramp-wait-for-output)
   (goto-char (point-min))
   (setq tramp-test-groks-nt
