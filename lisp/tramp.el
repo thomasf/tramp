@@ -4161,7 +4161,7 @@ the remote host use line-endings as defined in the variable
     (unless noerase (erase-buffer))
     (setq proc (get-buffer-process (current-buffer)))
     (mapcar (lambda (x)
-	      (sit-for 0.001)
+	      (sit-for 0.1)
 	      (process-send-string proc
 				   (concat x tramp-rsh-end-of-line)))
 	    lines)))
