@@ -599,10 +599,12 @@ Please notify me about other semi-standard directories to include here."
   :type '(repeat string))
 
 (defcustom rcp-password-prompt-regexp
-  "^.*\\([pP]assword\\|passphrase.*\\): *$"
+  "^.*\\([pP]assword\\|passphrase.*\\): ? *$"
   "*Regexp matching password-like prompts.  Not used for telnet.
 The regexp should match the whole line.
-\(The prompt for telnet is hard-wired.)"
+\(The prompt for telnet is hard-wired.)
+
+The `sudo' program appears to insert a `^@' character into the prompt."
   :group 'rcp
   :type 'regexp)
 
