@@ -1632,6 +1632,7 @@ replaced with the given replacement string."
 ;;   (Henrik Holm <henrikh@tele.ntnu.no>)
 ;; * grok ~ in rcp-remote-path  (Henrik Holm <henrikh@tele.ntnu.no>)
 ;; * do the base64 thing by using Lisp function on local side
+;; * `C' in dired gives error `not rcp file name'.
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
