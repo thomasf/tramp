@@ -1,3 +1,20 @@
+2004-05-29  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.41 released.
+
+	* configure.ac: Bump version.
+
+	Sync with trunk
+
+	* Makefile.in (.SILENT): Add lisp target.
+	(info): Depends on $(CONFIG_FILES).
+
+2004-05-29  Kai Grossjohann  <kai.grossjohann@gmx.net>
+
+	Sync with trunk
+
+	* Makefile.in (lisp): New target: byte-compile the lisp/*.el files.
+
 2004-05-29  Kai Grossjohann  <kai.grossjohann@gmx.net>
 
 	* configure.ac: Use "-pre" suffix on CVS versions.
