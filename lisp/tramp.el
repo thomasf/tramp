@@ -3077,10 +3077,15 @@ to set up.  METHOD, USER and HOST specify the connection."
     (error "Remote /bin/sh didn't come up.  See buffer `%s' for details"
            (buffer-name)))
   (rcp-message 9 "Setting up remote shell environment")
+  (process-send-string nil "stty -onlcr -echo\n")
+  (unless (rcp-wait-for-regexp p 30
+                               (format "\\(\\$\\|%s\\)" shell-prompt-pattern))
+    (pop-to-buffer (buffer-name))
+    (error "Couldn't `stty -onlcr -echo', see buffer `%s'"
+           (buffer-name)))
   (rcp-send-command
    multi-method method user host
-   (format (concat "stty -onlcr -echo 1>/dev/null 2>/dev/null ; "
-                   "unset MAIL ; set +o history 1>/dev/null 2>/dev/null ; "
+   (format (concat "unset MAIL ; set +o history 1>/dev/null 2>/dev/null ; "
                    "PS1='\n%s\n'; PS2=''; PS3=''\n")
            rcp-end-of-output))
   (unless (rcp-wait-for-output 5)
