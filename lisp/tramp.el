@@ -246,7 +246,7 @@ Operations not mentioned here will be handled by the normal Emacs functions.")
 
 (defsubst rcp-message (level fmt-string &rest args)
   (when (>= level rcp-verbose)
-    (apply #'message fmt args)))
+    (apply #'message fmt-string args)))
 
 ;; Extract right value of alists, depending on host name.
 
