@@ -1492,9 +1492,10 @@ is initially created and is kept cached by the remote shell."
       ;; Get list of file names by calling ls.
       (tramp-send-command
        multi-method method user host
-       (format "find . %s -maxdepth 1 \\! -name . -prune -print 2>/dev/null"
+       (format "find . \\( \\! -name . -prune \\) %s -print"
 	       (if (zerop (length filename)) ""
-		 (format "-name %s\\*" (tramp-shell-quote-argument filename)))))
+		 (format "-a \\( -name %s\\* -prune \\)"
+			 (tramp-shell-quote-argument filename)))))
       (tramp-wait-for-output)
       (goto-char (point-max))
       (while (zerop (forward-line -1))
@@ -1505,7 +1506,7 @@ is initially created and is kept cached by the remote shell."
       ;; I think this should not by using find(1) --daniel@danann.net
       (tramp-send-command
        multi-method method user host
-       (format "find  . %s -type d -maxdepth 1 \\! -name . -prune -print 2>/dev/null"
+       (format "find . \\( \\! -name . -prune \\) -a \\( %s -type d -prune \\) -print"
 	       (if (zerop (length filename)) ""
 		 (format "-name %s\\*" (tramp-shell-quote-argument filename)))))
       (tramp-wait-for-output)
