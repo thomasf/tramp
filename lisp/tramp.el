@@ -2445,8 +2445,12 @@ filename we are thinking about..."
   (let ((file (symbol-value 'file)))
     (if (and uid (/= uid (nth 2 (file-attributes file))))
         (error "rcp-handle-vc-user-login-name cannot map a uid to a name")
-      (let ((v (rcp-dissect-file-name (rcp-handle-expand-file-name file))))
-        (rcp-file-name-user v)))))
+      (let* ((v (rcp-dissect-file-name (rcp-handle-expand-file-name file)))
+             (u (rcp-file-name-user v)))
+        (if (stringp u) u
+          (unless (vectorp u)
+            (error "This cannot happen, please submit a bug report"))
+          (elt u (1- (length u))))))))
 
 (defadvice vc-user-login-name
   (around rcp-vc-user-login-name activate)
