@@ -184,8 +184,6 @@ xemacs:
 
 savannah: tar cvstag
 	$(FTP_UPLOAD) $(TARNAME).tar.gz*
-	./configure --with-japanese-manual
-	$(MAKE) -C texi savannah
 
 cvs-update:
 	cvs update -dP
