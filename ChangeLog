@@ -1,3 +1,13 @@
+2005-03-20  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.48 released.
+
+	* configure.ac: Bump version.
+
+	* Makefile.in (FTP_UPLOAD): Change upload address to
+	"ftp://ftp-upload.gnu.org/incoming/ftp".
+	(tar): Handle "$(TARNAME).tar.gz.directive".
+
 2005-02-09  Kim F. Storm  <storm@cua.dk>
 
 	Change release version from 21.4 to 22.1 throughout.
