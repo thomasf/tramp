@@ -1162,7 +1162,8 @@ on the same remote host."
     (unless nomessage
       (message "Loading %s..." file))
     (let ((local-copy (file-local-copy file)))
-      (load local-copy noerror t t nil)
+      ;; MUST-SUFFIX doesn't exist on XEmacs, so let it default to nil.
+      (load local-copy noerror t t)
       (delete-file local-copy))
     (unless nomessage
       (message "Loading %s...done" file))
