@@ -652,7 +652,8 @@ The `sudo' program appears to insert a `^@' character into the prompt."
 
 (defcustom rcp-wrong-passwd-regexp
   (concat "^.*\\(Permission denied.\\|Login [Ii]ncorrect\\|"
-          "Received signal [0-9]+\\|Connection \\(refused\\|closed\\)\\).*$")
+          "Received signal [0-9]+\\|Connection \\(refused\\|closed\\)\\|"
+          "Sorry, try again.\\).*$")
   "*Regexp matching a `login failed' message.
 The regexp should match the whole line."
   :group 'rcp
