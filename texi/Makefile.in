@@ -51,7 +51,7 @@ INFO_FILES	= $(localinfodir)/tramp \
 CLEAN_FILES	= @TRAMP_CLEAN_FILES@ $(wildcard $(localinfodir)/*)
 
 # To be used by maintainer only
-NONGNU		= ../../tramp-web/non-gnu/tramp
+NONGNU		= ../../tramp-web
 
 .PHONY: all install clean distclean tramp dvi html savannah \
 	$(localinfodir)/dir $(infodir)/dir
