@@ -921,7 +921,7 @@ BODY is evaluated like `progn'."
 
        ;; Establish the remote connection, if needed.
        (unless (eq tramp2-state 'connected)
-	 (tramp2-establish-connection ,path with-connection-buffer))
+	 (tramp2-establish-connection ,path))
        
        ;; Run the body of the thing...
        (progn . ,body))))
