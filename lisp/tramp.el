@@ -79,7 +79,7 @@
 ;; Also see the todo list at the bottom of this file.
 ;;
 ;; The current version of rcp.el can be retrieved from the following
-;; URL:  ftp://ls6-ftp.cs.uni-dortmund.de/pub/src/emacs/rcp.el
+;; URL:  ftp://ls6-ftp.cs.uni-dortmund.de/pub/src/emacs/rcp.tar.gz
 ;;
 ;; There's a mailing list for this, as well.  Its name is:
 ;;                emacs-rcp@ls6.cs.uni-dortmund.de
