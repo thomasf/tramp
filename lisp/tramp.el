@@ -3014,6 +3014,10 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 
 ;; * `vc-directory' does not work.  It never displays any files, even
 ;;   if it does show files when run locally.
+;; * Should we make the shell setup stuff smarter?  For example,
+;;   we could try to intercept prompts from the `tset' program
+;;   and enter `dumb' as terminal type.
+;;   "Edward J. Sabol" <sabol@alderaan.gsfc.nasa.gov>
 ;; * Do not unconditionally use /bin/sh for local shell commands.
 ;;   Instead, try to find out a local shell which groks tilde
 ;;   expansion.  (Mario DeWeerd)
