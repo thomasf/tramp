@@ -4025,7 +4025,7 @@ locale to C and sets up the remote shell search path."
     (when (and decoding encoding)
       (tramp-message
        5
-       "Checking to see if encoding and decoding commands work on remote host.")
+       "Checking to see if encoding/decoding commands work on remote host...")
       (tramp-send-command
        multi-method method user host
        (format "echo %s | %s | %s"
@@ -4034,7 +4034,9 @@ locale to C and sets up the remote shell search path."
       (unless (looking-at (regexp-quote magic-string))
 	(tramp-kill-process multi-method method user host)
 	(error "Remote host cannot execute de/encoding commands.  See buffer `%s' for details"
-	       (buffer-name))))))
+	       (buffer-name)))
+      (tramp-message
+       5 "Checking to see if encoding/decoding commands work on remote host...done"))))
 
 
 (defun tramp-maybe-open-connection (multi-method method user host)
