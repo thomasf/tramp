@@ -1644,13 +1644,18 @@ Bug: output of COMMAND must end with a newline."
                        (newline)))
                  (rcp-message-for-buffer method user host
                                          6 "Encoding region using command...")
-                 (call-process
-                  "/bin/sh"
-                  tmpfil                ;input = local tmp file
-                  t                     ;output is current buffer
-                  nil                   ;don't redisplay
-                  "-c"
-                  encoding-command))
+                 (unless (equal 0
+                                (call-process
+                                 "/bin/sh"
+                                 tmpfil ;input = local tmp file
+                                 t      ;output is current buffer
+                                 nil    ;don't redisplay
+                                 "-c"
+                                 encoding-command))
+                   (pop-to-buffer rcpbuf)
+                   (error (concat "rcp-handle-write-region: local encoding "
+                                  "command %s failed for file %s")
+                          encoding-command filename)))
                ;; Send tmpbuf into remote decoding command which
                ;; writes to remote file.  Because this happens on the
                ;; remote host, we cannot use the function.
@@ -1675,6 +1680,11 @@ Bug: output of COMMAND must end with a newline."
                ;;(rcp-send-command method user host "echo hello")
                ;;(set-buffer (rcp-get-buffer method user host))
                (rcp-wait-for-output)
+               (rcp-send-command method user host "echo $?")
+               (rcp-barf-unless-okay
+                (concat "rcp-handle-write-region: couldn't decode on "
+                        "remote host using %s for file %s")
+                decoding-command filename)
                (rcp-message 5 "Decoding region into remote file %s...done"
                             filename)
                (kill-buffer tmpbuf))))
