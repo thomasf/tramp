@@ -1,3 +1,9 @@
+2004-08-10  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.44 released.
+
+	* configure.ac: Bump version.
+
 2004-07-17  Kai Grossjohann  <kai.grossjohann@gmx.net>
 
 	* configure.ac: Bump version (to 2.0.44-pre).  Update merge

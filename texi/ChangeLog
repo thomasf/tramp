@@ -1,3 +1,7 @@
+2004-08-10  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.44 released.
+
 2004-07-17  Kai Grossjohann  <kai.grossjohann@gmx.net>
 
 	* Makefile.in (NONGNU): Kai uses a new directory structure in his
