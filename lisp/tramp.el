@@ -2886,8 +2886,40 @@ Uses program PROGRAM to issue a `telnet' command to log in as USER to HOST."
       (pop-to-buffer (buffer-name))
       (error "Login to %s failed: %s" (match-string 2)))))
 
-(defun rcp-multi-connect-rlogin (method user host program)
-  )
+(defun rcp-multi-connect-rlogin (p method user host program)
+  "Issue `rlogin' command.
+Uses program PROGRAM to issue an `rlogin' command to log in as USER to HOST."
+  (let (found pw)
+    (erase-buffer)
+    (rcp-message 9 "Sending rlogin command `%s %s -l %s'" program host user)
+    (process-send-string p (format "%s %s -l %s\n" program host user))
+    (rcp-message 9 "Waiting 60s for shell or passwd prompt from %s" host)
+    (unless (setq found
+                  (rcp-wait-for-regexp p 60
+                                       (format "\\(%s\\)\\|\\(%s\\)"
+                                               shell-prompt-pattern
+                                               rcp-password-prompt-regexp)))
+      (pop-to-buffer (buffer-name))
+      (error "Couldn't find remote shell or passwd prompt"))
+    (when (match-string 2)
+      (when (rcp-method-out-of-band-p multi-method method)
+        (pop-to-buffer (buffer-name))
+        (error (concat "Out of band method `%s' not applicable"
+                         " for remote shell asking for a password")
+                 method))
+        (rcp-message 9 "Sending password...")
+        (rcp-enter-password p (match-string 2))
+        (rcp-message 9 "Sent password, waiting 60s for remote shell prompt")
+        (setq found (rcp-wait-for-regexp p 60
+                                         (format "\\(%s\\)\\|\\(%s\\)"
+                                                 shell-prompt-pattern
+                                                 rcp-wrong-passwd-regexp))))
+      (unless found
+        (pop-to-buffer (buffer-name))
+        (error "Couldn't find remote shell prompt"))
+      (when (match-string 2)
+        (pop-to-buffer (buffer-name))
+        (error "Login failed: %s" (match-string 2)))))
 
 ;; Utility functions.
 
