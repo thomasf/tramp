@@ -2517,7 +2517,10 @@ is true)."
                (accept-process-output proc 1)
                (goto-char (point-max))
                (forward-line -1)
-               (setq found (looking-at (regexp-quote rcp-end-of-output))))))
+               (setq found
+                     (looking-at (concat "^"
+                                         (regexp-quote rcp-end-of-output)
+                                         "$"))))))
           (t
            (while (not found)
              (accept-process-output proc 1)
