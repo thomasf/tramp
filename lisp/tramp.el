@@ -3148,13 +3148,25 @@ to set up.  METHOD, USER and HOST specify the connection."
   (save-excursion
     (goto-char (point-min))
     (when (search-forward "\r" nil t)
-      ;; We have found a ^M, so we need to set the coding
-      ;; system for output conversion to *-dos, I guess.
-      (rcp-message 9 "Frobbing coding system")
-      (let ((cs (process-coding-system p)))
-        (set-buffer-process-coding-system
-         (coding-system-change-eol-conversion (car cs) 'dos)
-         (cdr cs)))))
+      (if (fboundp 'process-coding-system)
+          ;; We have found a ^M, so we need to set the coding
+          ;; system for output conversion to *-dos, I guess.
+          (progn
+            (rcp-message 9 "Frobbing coding system")
+            (let ((cs (process-coding-system p)))
+              (set-buffer-process-coding-system
+               (coding-system-change-eol-conversion (car cs) 'dos)
+               (cdr cs))))
+        ;; We have found a ^M but cannot frob the process coding system
+        ;; because we're running on a non-MULE Emacs.  Let's try
+        ;; stty, instead.
+        (rcp-message 9 "Trying `stty -onlcr'")
+        (process-send-string nil "stty -onlcr\n")
+        (unless (rcp-wait-for-regexp
+                 p 30
+                 (format "\\(\\$\\|%s\\)" shell-prompt-pattern))
+          (pop-to-buffer (buffer-name))
+          (error "Couldn't `stty -onlcr', see buffer `%s'" (buffer-name))))))
   (erase-buffer)
   (rcp-send-command
    multi-method method user host
