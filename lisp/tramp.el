@@ -65,6 +65,12 @@
 
 ;;; TODO:
 
+;; * Use more variables for program names.
+;; * Remote programs in regex alist to match host names?
+;; * Use get-buffer-process rather than a buffer-local variable for
+;;   the process.
+
+;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
 ;; directory-file-name -- use primitive?
 ;; dired-compress-file
