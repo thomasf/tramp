@@ -4662,10 +4662,13 @@ T1 and T2 are time values (as returned by `current-time' for example).
 NOTE: This function will fail if the time difference is too large to
 fit in an integer."
   ;; Pacify byte-compiler with `symbol-function'.
-  (cond ((fboundp 'itimer-time-difference)
-         (floor (funcall (symbol-function 'itimer-time-difference) t1 t2)))
-        ((fboundp 'subtract-time)
+  (cond ((fboundp 'subtract-time)
          (cadr (funcall (symbol-function 'subtract-time) t1 t2)))
+        ((fboundp 'itimer-time-difference)
+         (floor (funcall
+		 (symbol-function 'itimer-time-difference)
+		 (if (< (length t1) 3) (append t1 '(0)) t1)
+		 (if (< (length t2) 3) (append t2 '(0)) t2))))
         (t
          ;; snarfed from Emacs 21 time-date.el
          (cadr (let ((borrow (< (cadr t1) (cadr t2))))
