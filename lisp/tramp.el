@@ -870,7 +870,7 @@ Operations not mentioned here will be handled by the normal Emacs functions.")
                  newname)))
       (error "add-name-to-file: file %s already exists" newname))
     (rcp-send-command meth1 user1 host1
-                      (format "mv %s %s ; echo $?"
+                      (format "ln %s %s ; echo $?"
                               (shell-quote-argument path1)
                               (shell-quote-argument path2)))
     (rcp-barf-unless-okay
