@@ -104,7 +104,7 @@
   "Edit remote files with a combination of rsh and rcp or similar programs."
   :group 'files)
 
-(defcustom tramp-verbose 3
+(defcustom tramp-verbose 10
   "*Verbosity level for tramp.el.  0 means be silent, 10 is most verbose."
   :group 'tramp
   :type 'integer)
