@@ -3287,6 +3287,11 @@ locale to C and sets up the remote shell search path."
   (tramp-send-command multi-method method user host
                     "biff n ; echo huhu")
   (tramp-wait-for-output)
+  ;; Unalias ls(1) to work around issues with those silly people who make it
+  ;; spit out ANSI escapes or whatever.
+  (tramp-send-command multi-method method user host
+                    "unalias ls; echo huhu")
+  (tramp-wait-for-output)
   ;; Does `test A -nt B' work?  Use abominable `find' construct if it
   ;; doesn't.
   (erase-buffer)
