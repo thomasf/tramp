@@ -397,8 +397,4 @@ This makes remote VC work correctly at the cost of some processing time."
     (setq vc-rcs-release  nil)))
 (add-hook 'find-file-hooks 'tramp-vc-setup-for-remote t)
 
-
-
-
-
 ;;; tramp-vc.el ends here
