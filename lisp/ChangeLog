@@ -1,3 +1,7 @@
+2005-03-20  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.48 released.
+
 2005-02-27  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-append-tramp-buffers): New defun.
