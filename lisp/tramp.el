@@ -4829,7 +4829,7 @@ Only works for Bourne-like shells."
 	    (if (string-match "[[*?]" (tramp-file-name-path v))
 		(let ((res ad-do-it))
 		  (setq ad-return-value (or res (list name))))
-	      (setq ad-return-value name)))
+	      (setq ad-return-value (list name))))
 	;; If it is not a Tramp file, just run the original function.
 	(let ((res ad-do-it))
 	  (setq ad-return-value (or res (list name))))))))
