@@ -2294,7 +2294,7 @@ replaced with the given replacement string."
 For Emacs, this is the variable `temporary-file-directory', for XEmacs
 this is the function `temp-directory'."
   (cond ((boundp 'temporary-file-directory) temporary-file-directory)
-        ((fboundp 'temp-directory) (apply #'temp-directory))
+        ((fboundp 'temp-directory) (apply #'temp-directory nil))
         (t (message (concat "Neither `temporary-file-directory' nor "
                             "`temp-directory' is defined -- using /tmp."))
            (file-name-as-directory "/tmp"))))
