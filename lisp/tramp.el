@@ -4910,7 +4910,10 @@ USER the array of user names, HOST the array of host names."
 
 (defun tramp-get-buffer (multi-method method user host)
   "Get the connection buffer to be used for USER at HOST using METHOD."
-  (get-buffer-create (tramp-buffer-name multi-method method user host)))
+  (with-current-buffer
+      (get-buffer-create (tramp-buffer-name multi-method method user host))
+    (setq buffer-undo-list t)
+    (current-buffer)))
 
 (defun tramp-debug-buffer-name (multi-method method user host)
   "A name for the debug buffer for USER at HOST using METHOD."
@@ -4924,7 +4927,11 @@ USER the array of user names, HOST the array of host names."
 
 (defun tramp-get-debug-buffer (multi-method method user host)
   "Get the debug buffer for USER at HOST using METHOD."
-  (get-buffer-create (tramp-debug-buffer-name multi-method method user host)))
+  (with-current-buffer
+      (get-buffer-create
+       (tramp-debug-buffer-name multi-method method user host))
+    (setq buffer-undo-list t)
+    (current-buffer)))
 
 (defun tramp-find-executable (multi-method method user host
                                          progname dirlist ignore-tilde)
