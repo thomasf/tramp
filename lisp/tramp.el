@@ -1142,7 +1142,8 @@ rather than as numbers."
 
 (defun rcp-handle-file-symlink-p (filename)
   "Like `file-symlink-p' for rcp files."
-  (stringp (car (rcp-handle-file-attributes filename))))
+  (let ((x (car (rcp-handle-file-attributes filename))))
+    (when (stringp x) x)))
 
 (defun rcp-handle-file-writable-p (filename)
   "Like `file-writable-p' for rcp files."
@@ -1160,10 +1161,6 @@ rather than as numbers."
       (zerop (rcp-run-test "-O" filename))))
 
 ;; Other file name ops.
-
-(defun rcp-handle-file-truename (filename &optional counter prev-dirs)
-  "Like `file-truename' for rcp files."
-  filename)                             ;CCC what to do?
 
 ;; Matthias KÅˆppe <mkoeppe@mail.math.uni-magdeburg.de>
 (defun rcp-handle-directory-file-name (directory)
@@ -3908,8 +3905,6 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 ;;   host', then wait a while for the passwd or passphrase prompt.  If
 ;;   there is one, remember the passwd/phrase.
 ;; * Find out atime, mtime and ctime of remote file?
-;; * Is the dummy `file-truename' function we've got really sufficient?
-;;   NO! -- see 'realpath(3)' for what we need to do. -- <daniel@danann.net>
 ;; * How to deal with MULE in `insert-file-contents' and `write-region'?
 ;; * Do asynchronous `shell-command's.
 ;; * Grok `append' and `lockname' parameters for `write-region'.
