@@ -1949,14 +1949,15 @@ If KEEP-DATE is non-nil, preserve the time stamp when copying."
   "Like `delete-file' for tramp files."
   (let ((v (tramp-dissect-file-name (tramp-handle-expand-file-name filename))))
     (save-excursion
-      (tramp-send-command
-       (tramp-file-name-multi-method v)
-       (tramp-file-name-method v)
-       (tramp-file-name-user v)
-       (tramp-file-name-host v)
-       (format "rm -f %s ; echo ok"
-               (tramp-shell-quote-argument (tramp-file-name-path v))))
-      (tramp-wait-for-output))))
+      (unless (zerop (tramp-send-command-and-check
+                      (tramp-file-name-multi-method v)
+                      (tramp-file-name-method v)
+                      (tramp-file-name-user v)
+                      (tramp-file-name-host v)
+                      (format "rm -f %s"
+                              (tramp-shell-quote-argument
+                               (tramp-file-name-path v)))))
+        (signal 'file-error "Couldn't delete Tramp file")))))
 
 ;; Dired.
 
