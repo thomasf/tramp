@@ -1694,9 +1694,7 @@ Doesn't do anything if the NAME does not start with a drive letter."
                (format "cd %s; pwd" uname))
               (rcp-wait-for-output)
               (goto-char (point-min))
-              ;; Use of (progn (end-of-line) (point)) instead of
-              ;; (line-end-position) not necessary?
-              (setq uname (buffer-substring (point) (line-end-position)))
+              (setq uname (buffer-substring (point) (rcp-line-end-position)))
               (setq path (concat uname fname)))) ;)
           ;; No tilde characters in file name, do normal
           ;; expand-file-name (this does "/./" and "/../").
@@ -3776,6 +3774,19 @@ Invokes `read-passwd' if that is defined, else `ange-ftp-read-passwd'."
   (apply
    (if (fboundp 'read-passwd) #'read-passwd #'ange-ftp-read-passwd)
    (list prompt)))
+
+(defsubst rcp-line-end-position ()
+  "Return position of end of line (compat function).
+Invokes `line-end-position' if that is defined, else uses a kluge."
+  (if (fboundp 'line-end-position)
+      (funcall 'line-end-position)
+    (save-excursion
+      (end-of-line)
+      (point))))
+
+;; ------------------------------------------------------------ 
+;; -- Kludges section -- 
+;; ------------------------------------------------------------ 
 
 ;; Currently (as of Emacs 20.5), the function `shell-quote-argument'
 ;; does not deal well with newline characters.  Newline is replaced by
