@@ -924,12 +924,6 @@ upon opening the connection.")
 ;; Perl script to implement `file-attributes' in a Lisp `read'able output.
 ;; If you are hacking on this, note that you get *no* output unless this
 ;; spits out a complete line, including the '\n' at the end.
-;;
-;; REVISIT: -- 2000-05-29 
-;; Also, this seems to have a (minor) bug WRT block devices and sockets. On my
-;; box, they report 'file' in the first value with the internal function, but
-;; as directories with this code. I still need to dig out why that is.
-;; --daniel@danann.net
 (defconst tramp-perl-file-attributes (concat
  "$f = $ARGV[0];
 @s = lstat($f);
