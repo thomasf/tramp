@@ -961,20 +961,20 @@ on the remote file system.")
 ; These values conform to `file-attributes' from XEmacs 21.2.
 ; GNU Emacs and other tools not checked.
 (defconst tramp-file-mode-type-map '((0  . "-")  ; Normal file (SVID-v2 and XPG2)
-				   (1  . "p")  ; fifo
-				   (2  . "c")  ; character device
-				   (3  . "m")  ; multiplexed character device (v7)
-				   (4  . "d")  ; directory
-				   (5  . "?")  ; Named special file (XENIX)
-				   (6  . "b")  ; block device
-				   (7  . "?")  ; multiplexed block device (v7)
-				   (8  . "-")  ; regular file
-				   (9  . "n")  ; network special file (HP-UX)
-				   (10 . "l")  ; symlink
-				   (11 . "?")  ; ACL shadow inode (Solaris, not userspace)
-				   (12 . "s")  ; socket
-				   (13 . "D")  ; door special (Solaris)
-				   (14 . "w")) ; whiteout(?) (BSD)
+				     (1  . "p")  ; fifo
+				     (2  . "c")  ; character device
+				     (3  . "m")  ; multiplexed character device (v7)
+				     (4  . "d")  ; directory
+				     (5  . "?")  ; Named special file (XENIX)
+				     (6  . "b")  ; block device
+				     (7  . "?")  ; multiplexed block device (v7)
+				     (8  . "-")  ; regular file
+				     (9  . "n")  ; network special file (HP-UX)
+				     (10 . "l")  ; symlink
+				     (11 . "?")  ; ACL shadow inode (Solaris, not userspace)
+				     (12 . "s")  ; socket
+				     (13 . "D")  ; door special (Solaris)
+				     (14 . "w")) ; whiteout (BSD)
   "A list of file types returned from the `stat' system call.
 This is used to map a mode number to a permission string.")
 
@@ -2714,12 +2714,12 @@ file exists and nonzero exit status otherwise."
                                    shell-prompt-pattern)
         (pop-to-buffer (buffer-name))
         (error "Couldn't find remote `%s' prompt." shell))
-      ;(sit-for 1)                       ;why is this needed?
       (process-send-string nil (format "PS1='%s%s%s'; PS2=''; PS3=''%s"
                                        tramp-rsh-end-of-line
                                        tramp-end-of-output
                                        tramp-rsh-end-of-line
                                        tramp-rsh-end-of-line))
+      (tramp-wait-for-output)
       (tramp-send-command multi-method method user host "echo hello")
       (tramp-message 5 "Waiting for remote `%s' to start up..." shell)
       (unless (tramp-wait-for-output 5)
