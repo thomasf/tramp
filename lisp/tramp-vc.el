@@ -383,10 +383,10 @@ filename we are thinking about..."
 	(error "tramp-handle-vc-user-login-name cannot map a uid to a name")
       (let* ((v (tramp-dissect-file-name (tramp-handle-expand-file-name file)))
 	     (u (tramp-file-name-user v)))
-        (cond ((null u) user-login-name) ;CCC this is wrong?
-              ((stringp u) u)
-              ((vectorp u) (elt u (1- (length u))))
-              (t (error "This cannot happen, please submit a bug report")))))))
+	(cond ((stringp u) u)
+	      ((vectorp u) (elt u (1- (length u))))
+	      ((null    u) (user-login-name))
+	      (t	   (error "tramp-handle-vc-user-login-name cannot cope!")))))))
 
 
 (defadvice vc-user-login-name
