@@ -95,6 +95,7 @@
 (require 'comint)
 (require 'vc)                           ;for doing remote vc
 (require 'timezone)
+(require 'dired)
 ;; Emacs 19.34 compatibility hack -- is this needed?
 (or (>= emacs-major-version 20)
     (load "cl-seq"))
