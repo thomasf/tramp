@@ -1617,6 +1617,8 @@ mailing list.
 @c * Explain how tramp.el works in principle: open a shell on a remote
 @c   host and then send commands to it.
 @c * Mention that bookmarks are a cool feature to go along with Tramp.
+@c * Make terminology "inline" vs "out-of-band" consistent.
+@c   It seems that "external" is also used instead of "out-of-band".
 
 @c Local Variables:
 @c eval: (add-hook 'write-file-hooks 'time-stamp)
