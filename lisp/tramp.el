@@ -2839,10 +2839,7 @@ to enter a password for the `rcp-rcp-program'."
                                (":" . "_b")
                                ("|" . "__"))
                              fn)
-   rcp-auto-save-directory)
-    (expand-file-name
-     (rcp-subst-char-in-string ?/ ?| fn)
-     rcp-auto-save-directory))
+   rcp-auto-save-directory))
 
 (defadvice make-auto-save-file-name
   (around rcp-advice-make-auto-save-file-name () activate)
