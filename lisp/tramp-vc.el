@@ -258,7 +258,14 @@ See `vc-do-command' for more information."
           (filename &optional want-differences-if-changed)
           activate)
   "Invoke rcp-vc-workfile-unchanged-p for rcp files."
-  (if (and (stringp filename) (rcp-rcp-file-p filename))
+  (if (and (stringp filename)
+	   (rcp-rcp-file-p filename)
+	   (not
+	    (let ((v	(rcp-dissect-file-name filename)))
+	      (rcp-get-remote-perl (rcp-file-name-multi-method v)
+				   (rcp-file-name-method v)
+				   (rcp-file-name-user v)
+				   (rcp-file-name-host v)))))
       (setq ad-return-value
             (rcp-vc-workfile-unchanged-p filename want-differences-if-changed))
     ad-do-it)))
