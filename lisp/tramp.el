@@ -370,8 +370,8 @@
 
 (defun rssh-handle-expand-file-name (name &optional default-directory)
   "Like `expand-file-name' for rssh files."
-  (rssh-run-real-handler 'expand-file-name
-                         (list name default-directory)))
+  (let ((file-name-handler-alist nil))
+    (expand-file-name name default-directory)))
 
 ;; File Editing.
 
