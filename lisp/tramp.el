@@ -3924,6 +3924,8 @@ locale to C and sets up the remote shell search path."
                           "ln" tramp-remote-path nil)
    multi-method method user host)
   ;; If encoding/decoding command are given, test to see if they work.
+  ;; CCC: Maybe it would be useful to run the encoder both locally and
+  ;; remotely to see if they produce the same result.
   (let ((decoding (tramp-get-decoding-command multi-method method))
 	(encoding (tramp-get-encoding-command multi-method method))
 	(magic-string "xyzzy"))
