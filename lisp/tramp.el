@@ -87,6 +87,11 @@
 ;; * Automatically see whether remote /bin/sh groks tilde expansion,
 ;;   look for ksh if it doesn't.
 ;; * Util function for creating an rcp/scp file name argument.
+;; * Dired header line contains duplicated directory name.
+;; * Use rsync if available.  Fall back to rcp if scp isn't available.
+;;   (Francesco PotortÅÏ <F.Potorti@cnuce.cnr.it>)
+;; * scp program name should be customizable on per-host basis?
+;;   (Francesco PotortÅÏ <F.Potorti@cnuce.cnr.it>)
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
