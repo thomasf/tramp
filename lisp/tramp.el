@@ -1472,9 +1472,6 @@ Bug: output of COMMAND must end with a newline."
 (defun rcp-handle-insert-file-contents
   (filename &optional visit beg end replace)
   "Like `insert-file-contents' for rcp files."
-  ;; REVISIT: Is this XEmacs only? We should signal 'file-error' if the file
-  ;; does not exist. This allows things like VC checking out a revision. :/
-  ;; -- <daniel@danann.net>
   (if (not (rcp-handle-file-exists-p filename))
       (progn
         (when visit
@@ -1486,8 +1483,6 @@ Bug: output of COMMAND must end with a newline."
             (when rcp-auto-save-directory
               (setq buffer-auto-save-file-name
                     (rcp-make-auto-save-name filename)))))
-	;; file did not exist, signal an error
-	;; The arguments are from the XEmacs C code :)
 	(signal 'file-error
                 (format "File %s not found on remote host" filename))
         (list (rcp-handle-expand-file-name filename) 0))
