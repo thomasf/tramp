@@ -1751,8 +1751,8 @@ See `vc-do-command' for more information."
       ;; documentation to check :(
       ;;
       ;; Daniel Pittman <daniel@danann.net>
-      (save-window-excursion
-	(save-excursion
+      (save-excursion
+	(save-window-excursion
 	  ;; Actually execute remote command
 	  (rcp-handle-shell-command
 	   (mapconcat 'shell-quote-argument
@@ -1834,8 +1834,8 @@ See `vc-do-command' for more information."
       ;; identical...
       ;;
       ;; Daniel Pittman <daniel@danann.net>
-      (save-window-excursion
-	(save-excursion
+      (save-excursion
+	(save-window-excursion
 	  ;; Actually execute remote command
 	  (rcp-handle-shell-command
 	   (mapconcat 'shell-quote-argument
