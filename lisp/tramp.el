@@ -3347,10 +3347,10 @@ to set up.  METHOD, USER and HOST specify the connection."
           (setq cs-encode (cdr cs))
           (unless cs-decode (setq cs-decode 'undecided))
           (unless cs-encode (setq cs-encode 'undecided))
-          (setq cs-encode (coding-system-change-eol-conversion
+          (setq cs-encode (tramp-coding-system-change-eol-conversion
                            cs-encode 'unix))
           (when (search-forward "\r" nil t)
-            (setq cs-decode (coding-system-change-eol-conversion
+            (setq cs-decode (tramp-coding-system-change-eol-conversion
                              cs-decode 'dos)))
           (set-buffer-process-coding-system cs-decode cs-encode))
       ;; Look for ^M and do something useful if found.
@@ -4166,6 +4166,25 @@ fit in an integer."
    ((fboundp 'line-end-position) 'line-end-position)
    ((fboundp 'point-at-eol) 	 'point-at-eol)
    (t (lambda () (save-excursion (end-of-line) (point))))))
+
+(defun tramp-coding-system-change-eol-conversion (coding-system eol-type)
+  "Return a coding system like CODING-SYSTEM but with given EOL-TYPE.
+EOL-TYPE can be one of `dos', `unix', or `mac'."
+  (cond ((fboundp 'coding-system-change-eol-conversion)
+         (apply #'coding-system-change-eol-conversion
+                (list coding-system eol-type)))
+        ((fboundp 'subsidiary-coding-system)
+         (apply
+          #'subsidiary-coding-system
+          (list coding-system
+                (cond ((eq eol-type 'dos) 'crlf)
+                      ((eq eol-type 'unix) 'lf)
+                      ((eq eol-type 'mac) 'cr)
+                      (t
+                       (error "Unknown EOL-TYPE `%s', must be %s"
+                              eol-type
+                              "`dos', `unix', or `mac'"))))))
+        (t (error "Can't change EOL conversion -- is MULE missing?"))))
 
 ;; ------------------------------------------------------------ 
 ;; -- Kludges section -- 
