@@ -1516,7 +1516,9 @@ is initially created and is kept cached by the remote shell."
                                 (tramp-line-end-position))
               dirs)))
     ;; Now annotate all dirs in list of file names with a slash,
-    ;; at the same time checking for 
+    ;; at the same time checking for `completion-ignored-extensions'.
+    ;; CCC: make this faster by not recomputing the mapconcat
+    ;; every time?
     (mapcar
      (function (lambda (x)
                  (if (member x dirs)
