@@ -1359,7 +1359,8 @@ Bug: output of COMMAND must end with a newline."
          (list start end tmpfil append 'no-message lockname confirm)
        (list start end tmpfil append 'no-message lockname)))
     ;; Now, `last-coding-system-used' has the right value.  Remember it.
-    (setq coding-system-used last-coding-system-used)
+    (when (featurep 'mule)
+      (setq coding-system-used last-coding-system-used))
     ;; This is a bit lengthy due to the different methods possible for
     ;; file transfer.  First, we check whether the method uses an rcp
     ;; program.  If so, we call it.  Otherwise, both encoding and
@@ -1450,7 +1451,8 @@ Bug: output of COMMAND must end with a newline."
           (setq buffer-auto-save-file-name
                 (rcp-make-auto-save-name filename)))))
     ;; Make `last-coding-system-used' have the right value.
-    (setq last-coding-system-used coding-system-used)
+    (when (featurep 'mule)
+      (setq last-coding-system-used coding-system-used))
     (when (or (eq visit t)
               (eq visit nil)
               (stringp visit))
@@ -2276,10 +2278,6 @@ this is the function `temp-directory'."
 Invokes `read-passwd' if that is defined, else `ange-ftp-read-passwd'."
   (if (fboundp 'read-passwd) (read-passwd prompt)
     (ange-ftp-read-passwd prompt)))
-
-(unless (boundp 'last-coding-system-used)
-  (defvar last-coding-system-used nil
-    "Emacs compatibility variable, defined by rcp.el."))
 
 ;;; TODO:
 
