@@ -3022,10 +3022,6 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 ;;   Instead, try to find out a local shell which groks tilde
 ;;   expansion.  (Mario DeWeerd)
 ;; * Bug with file name completion if `@user' part is omitted.
-;; * Add rcp-message for rcp calls, as well.
-;; * Mark Galassi <rosalia@lanl.gov>: Barf on unknown methods.
-;; * Mario DeWeerd: rcp-handle-copy-file should not switch the current
-;;   buffer.
 ;; * Unify rcp-handle-file-attributes and rcp-file-owner.
 ;; * Greg Stark: save a read-only file, Emacs asks whether to save
 ;;   anyway, then tries to chmod the file, which fails.
@@ -3062,17 +3058,11 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 ;;      -- <daniel@danann.net>
 ;; * Provide a local cache of old versions of remote files for the rsync
 ;;   transfer method to use.  (Greg Stark)
-;; * Do not require the user to know beforehand whether a particular
-;;   connection attempt requires passwd entry.  (Greg Stark)
-;;   Maybe support passwd entry for scp?
 ;; * Remove unneeded parameters from methods.
 ;; * Invoke rsync once for copying a whole directory hierarchy.
 ;;   (Francesco PotortÅÏ)
-;; * Maybe extract remote environment from shell startup scripts: instead
-;;   of "rsh -l USER HOST /bin/sh", say "rsh -l USER HOST", then wait
-;;   a bit, then say "exec /bin/sh".
-;; * The above is pretty much done, but maybe we should not set PATH
-;;   ourselves?
+;; * Should we set PATH ourselves or should we rely on the remote end
+;;   to do it?
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
