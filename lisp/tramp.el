@@ -1448,15 +1448,15 @@ is initially created and is kept cached by the remote shell."
       ;; Now get a list of directories in a similar way.
       (tramp-send-command
        multi-method method user host
-       (format "%s -d .*/ */ 2>/dev/null | cat"
+       (format "find . -type d \\! -name . -prune -print 2>/dev/null"
                (tramp-get-ls-command multi-method method user host)
                (tramp-shell-quote-argument filename)))
       (tramp-wait-for-output)
       (goto-char (point-max))
       (while (zerop (forward-line -1))
-        (push (buffer-substring (point)
+        (push (buffer-substring (progn (forward-char 2)
+                                       (point))
                                 (progn (end-of-line)
-                                       (skip-chars-backward "/")
                                        (point)))
               dirs)))
     ;; Now annotate all dirs in list of file names with a slash,
