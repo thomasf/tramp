@@ -4020,7 +4020,11 @@ Only works for Bourne-like shells."
        tramp-end-of-output
 
        ;; Non-tramp variables of interest
-       shell-prompt-pattern)
+       shell-prompt-pattern
+       backup-by-copying
+       backup-by-copying-when-linked
+       backup-by-copying-when-mismatch
+       backup-by-copying-when-privileged-mismatch)
      nil				; pre-hook
      nil				; post-hook
      "Enter your bug report in this message, including as much detail as you
