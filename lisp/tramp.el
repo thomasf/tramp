@@ -1514,7 +1514,7 @@ is initially created and is kept cached by the remote shell."
 	 (user 		(tramp-file-name-user v))
 	 (host 		(tramp-file-name-host v))
 	 (path 		(tramp-file-name-path v))
-	 dirs result)
+         result)
     (save-excursion
       (tramp-barf-unless-okay
        multi-method method user host
