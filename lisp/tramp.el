@@ -682,7 +682,7 @@ Returns the exit code of test."
   "Open a connection to HOST, logging in as USER, using ssh."
   (set-buffer (rssh-get-buffer user host))
   (erase-buffer)
-  (apply 'start-process
+  (apply #'start-process
          (rssh-buffer-name user host)
          (rssh-get-buffer user host) 
          rssh-ssh-program
