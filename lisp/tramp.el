@@ -72,7 +72,7 @@
 
 (defconst tramp-version "$Id$"
   "This version of tramp.")
-(defconst tramp-bug-report-address "tramp-devel@lists.sourceforge.net"
+(defconst tramp-bug-report-address "tramp-devel@mail.freesoftware.fsf.org"
   "Email address to send bug reports to.")
 
 (require 'timer)
@@ -5048,6 +5048,7 @@ TRAMP.
 
 ;;; TODO:
 
+;; * Allow /[method/user@host:port] syntax for the ssh "-p" argument.
 ;; * Rewrite `tramp-shell-quote-argument' to abstain from using
 ;; `shell-quote-argument'.
 ;; * Completion gets confused when you leave out the method name.
