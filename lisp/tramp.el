@@ -4194,6 +4194,8 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 ;; * Do the autoconf thing.
 ;; * Make it work for XEmacs 20, which is missing `with-timeout'.
 ;; * Allow non-Unix remote systems.  (More a long-term thing.)
+;; * Make it work for different encodings, and for different file name
+;;   encodings, too.  (Daniel Pittman)
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
