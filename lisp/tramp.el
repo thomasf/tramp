@@ -1479,7 +1479,6 @@ is initially created and is kept cached by the remote shell."
 	 (user 		(tramp-file-name-user v))
 	 (host 		(tramp-file-name-host v))
 	 (path 		(tramp-file-name-path v))
-	 (remote-fgrep	(tramp-get-remote-fgrep multi-method method user host))
 	 dirs result)
     (save-excursion
       (tramp-send-command multi-method method user host
@@ -1489,14 +1488,11 @@ is initially created and is kept cached by the remote shell."
        "tramp-handle-file-name-all-completions: Couldn't `cd %s'"
        (tramp-shell-quote-argument path))
       ;; Get list of file names by calling ls.
-      ;; We now use fgrep on the remote machine, if found, to filter the
-      ;; list of files remotely. This is a performance trick. --daniel@danann.net
       (tramp-send-command
        multi-method method user host
-       (format "find . \\! -name . -prune -print 2>/dev/null | %s"
-	       (if remote-fgrep
-		   (format "%s %s" remote-fgrep (concat "./" filename))
-		 "cat")))
+       (format "find . %s -maxdepth 1 \\! -name . -prune -print 2>/dev/null"
+	       (if (zerop (length filename)) ""
+		 (format "-name %s\\*" (tramp-shell-quote-argument filename)))))
       (tramp-wait-for-output)
       (goto-char (point-max))
       (while (zerop (forward-line -1))
@@ -1507,10 +1503,9 @@ is initially created and is kept cached by the remote shell."
       ;; I think this should not by using find(1) --daniel@danann.net
       (tramp-send-command
        multi-method method user host
-       (format "find . -type d \\! -name . -prune -print 2>/dev/null | %s"
-	       (if remote-fgrep
-		   (format "%s %s" remote-fgrep (concat "./" filename))
-		 "cat")))
+       (format "find  . %s -type d -maxdepth 1 \\! -name . -prune -print 2>/dev/null"
+	       (if (zerop (length filename)) ""
+		 (format "-name %s\\*" (tramp-shell-quote-argument filename)))))
       (tramp-wait-for-output)
       (goto-char (point-max))
       (while (zerop (forward-line -1))
@@ -3334,11 +3329,6 @@ locale to C and sets up the remote shell search path."
 		 " -e '" tramp-perl-file-attributes "' $1" tramp-rsh-end-of-line
 		 "}"))
 	(tramp-wait-for-output))))
-  ;; Find as fgrep(1)
-  (erase-buffer)
-  (let ((tramp-remote-fgrep (tramp-find-executable multi-method method user host
-						  "fgrep" tramp-remote-path nil)))
-    (tramp-set-connection-property "fgrep" tramp-remote-fgrep multi-method method user host))
   ;; Find ln(1)
   (erase-buffer)
   (tramp-set-connection-property "ln"
@@ -3714,9 +3704,6 @@ to enter a password for the `tramp-rcp-program'."
 
 (defun tramp-get-remote-perl (multi-method method user host)
   (tramp-get-connection-property "perl" nil multi-method method user host))
-
-(defun tramp-get-remote-fgrep (multi-method method user host)
-  (tramp-get-connection-property "fgrep" nil multi-method method user host))
 
 (defun tramp-get-remote-ln (multi-method method user host)
   (tramp-get-connection-property "ln" nil multi-method method user host))
