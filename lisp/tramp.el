@@ -2206,6 +2206,9 @@ Maybe the different regular expressions need to be tuned.
 
 * Actually, the telnet program to be used can be specified in the
   method parameters."
+  (when (rcp-method-out-of-band-p method)
+    (error "Cannot use out-of-band method `%s' with telnet connection method."
+           method))
   (rcp-pre-connection method user host)
   (rcp-message 7 "Opening connection for %s@%s using %s..." user host method)
   (let ((p (start-process (rcp-buffer-name method user host)
