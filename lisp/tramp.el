@@ -4526,6 +4526,21 @@ Only works for Bourne-like shells."
       nil
     ad-do-it))
 
+;; We currently use "[" and "]" in the filename format.  In Emacs
+;; 20.x, this means that Emacs wants to expand wildcards if
+;; `find-file-wildcards' is non-nil, and then barfs because no
+;; expansion could be found.  We detect this situation and do
+;; something really awful: we have `file-expand-wildcards' return the
+;; original filename if it can't expand anything.  Let's just hope
+;; that this doesn't break anything else.
+;;
+;; Another problem is that the check is done by Emacs version, which
+;; is really not what we want to do.  Oh, well.
+(when (and (not (featurep 'xemacs))
+	   (= emacs-major-version 20))
+  (defadvice file-expand-wildcards (around tramp-fix activate)
+    (let ((res ad-do-it))
+      (setq ad-return-value (or res (list (ad-get-arg 0)))))))
 
 ;; Make the `reporter` functionality available for making bug reports about
 ;; the package. A most useful piece of code.
