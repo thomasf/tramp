@@ -3698,7 +3698,7 @@ If the value is not set for the connection, return `default'"
                      (or multi-method method)))))
 
 (defun tramp-get-rcp-keep-date-arg (multi-method method)
-  (second (or (assoc 'tramp-tramp-keep-date-arg
+  (second (or (assoc 'tramp-rcp-keep-date-arg
                      (assoc (or multi-method method tramp-default-method)
                             tramp-methods))
               (error "Method `%s' didn't specify `keep-date' arg for tramp"
