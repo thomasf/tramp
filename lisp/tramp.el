@@ -4560,7 +4560,8 @@ Only works for Bourne-like shells."
        backup-by-copying-when-linked
        backup-by-copying-when-mismatch
        ,(when (boundp 'backup-by-copying-when-privileged-mismatch)
-          'backup-by-copying-when-privileged-mismatch))
+          'backup-by-copying-when-privileged-mismatch)
+       file-name-handler-alist)
      nil				; pre-hook
      nil				; post-hook
      "\
