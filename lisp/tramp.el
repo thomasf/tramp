@@ -105,6 +105,10 @@
 ;;; Code:
 
 (require 'cl)
+;; Emacs 19.34 compatibility hack -- is this needed?
+(or (>- emacs-major-version 20)
+    (load "cl-seq"))
+
 (provide 'rssh)
 
 ;;; User Customizable Internal Variables:
