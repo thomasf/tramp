@@ -4023,6 +4023,8 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 
 ;;; TODO:
 
+;; * Find `perl' (if present) on the remote host.  Use it if present
+;;   for `file-attributes', for example, to find out mtime and ctime.
 ;; * Implement `load' operation.
 ;; * Find out about the new auto-save mechanism in Emacs 21 and
 ;;   do the right thing.
