@@ -88,12 +88,6 @@
 (if (fboundp 'efs-file-handler-function)
     (require 'efs))
 
-;; Make sure that we get integration with the VC package.
-;; When it is loaded, we need to pull in the integration module.
-(eval-after-load "vc"
-  '(require 'tramp-vc))
-
-
 (eval-when-compile
   (require 'cl)
   (require 'custom)
@@ -4360,6 +4354,15 @@ TRAMP.
 
 (defalias 'tramp-submit-bug 'tramp-bug)
 
+(provide 'tramp)
+
+;; Make sure that we get integration with the VC package.
+;; When it is loaded, we need to pull in the integration module.
+;; This must come after (provide 'tramp) because tramp-vc.el
+;; requires tramp.
+(eval-after-load "vc"
+  '(require 'tramp-vc))
+
 ;;; TODO:
 
 ;; * When logging in, keep looking for questions according to an alist
@@ -4446,7 +4449,5 @@ TRAMP.
 ;; unhandled-file-name-directory
 ;; vc-registered
 ;; verify-visited-file-modtime
-
-(provide 'tramp)
 
 ;;; tramp.el ends here
