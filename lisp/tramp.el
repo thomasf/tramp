@@ -1370,6 +1370,9 @@ on the same remote host."
 	 (host         (tramp-file-name-host v))
 	 (path         (tramp-file-name-path v))
 	 (steps        (tramp-split-string path "/"))
+	 (pathdir (let ((directory-sep-char ?/))
+		    (file-name-as-directory path)))
+	 (is-dir (string= path pathdir))
 	 (thisstep nil)
 	 (numchase 0)
 	 (numchase-limit 100)
@@ -1423,7 +1426,8 @@ on the same remote host."
      filename (mapconcat 'identity (cons "" result) "/"))
     (tramp-make-tramp-file-name
      multi-method method user host
-     (mapconcat 'identity (cons "" result) "/"))))
+     (concat (mapconcat 'identity (cons "" result) "/")
+	     (if is-dir "/" "")))))
 
 ;; Basic functions.
 
@@ -2290,9 +2294,6 @@ Doesn't do anything if the NAME does not start with a drive letter."
 	   (user (tramp-file-name-user v))
 	   (host (tramp-file-name-host v))
 	   (path (tramp-file-name-path v)))
-      (tramp-message-for-buffer multi-method method user host
-				10 "Expand file name `%s' in dir `%s'"
-				name dir)
       (unless (file-name-absolute-p path)
 	(setq path (concat "~/" path)))
       (save-excursion
@@ -2312,11 +2313,14 @@ Doesn't do anything if the NAME does not start with a drive letter."
 	    (setq uname (buffer-substring (point) (tramp-line-end-position)))
 	    (setq path (concat uname fname))))
 	;; No tilde characters in file name, do normal
-	;; expand-file-name (this does "/./" and "/../").
-	(tramp-make-tramp-file-name
-	 multi-method method user host
-	 (tramp-drop-volume-letter
-	  (tramp-run-real-handler 'expand-file-name (list path))))))))
+	;; expand-file-name (this does "/./" and "/../").  We bind
+	;; directory-sep-char here for XEmacs on Windows, which would
+	;; otherwise use backslash.
+	(let ((directory-sep-char ?/))
+	  (tramp-make-tramp-file-name
+	   multi-method method user host
+	   (tramp-drop-volume-letter
+	    (tramp-run-real-handler 'expand-file-name (list path)))))))))
 
 ;; Remote commands.
 
