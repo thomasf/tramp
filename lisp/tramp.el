@@ -1626,6 +1626,12 @@ is initially created and is kept cached by the remote shell."
 				       (progn (end-of-line) (point)))))
 	(equal tramp-buffer-file-attributes attr)))))
 
+(defadvice clear-visited-file-modtime (after tramp activate)
+  "Set `tramp-buffer-file-attributes' back to nil.
+Tramp uses this variable as an emulation for the actual modtime of the file,
+if the remote host can't provide the modtime."
+  (setq tramp-buffer-file-attributes nil))
+
 (defun tramp-handle-set-file-modes (filename mode)
   "Like `set-file-modes' for tramp files."
   (let ((v (tramp-dissect-file-name filename)))
