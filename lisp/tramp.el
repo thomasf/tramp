@@ -3095,20 +3095,19 @@ character."
                                         (cons ?n rcp-rsh-end-of-line))))
         (cmd1 (format-spec command (list (cons ?u user)
                                          (cons ?n ""))))
-        found pw)
+        found)
     (erase-buffer)
     (rcp-message 9 "Sending su command `%s'" cmd1)
     (process-send-string p cmd)
     (rcp-message 9 "Waiting 60s for shell or passwd prompt for %s" user)
-    (unless (setq found
-                  (rcp-wait-for-regexp p 60
-                                       (format "\\(%s\\)\\|\\(%s\\)"
-                                               rcp-password-prompt-regexp
-                                               shell-prompt-pattern)))
+    (unless (rcp-wait-for-regexp p 60 (format "\\(%s\\)\\|\\(%s\\)"
+                                              rcp-password-prompt-regexp
+                                              shell-prompt-pattern))
       (pop-to-buffer (buffer-name))
       (kill-process p)
       (error "Couldn't find shell or passwd prompt for %s" user))
-    (when (match-string 1)
+    (if (not (match-string 1))
+        (setq found t)
       (rcp-message 9 "Sending password...")
       (rcp-enter-password p (match-string 1))
       (rcp-message 9 "Send password, waiting 60s for remote shell prompt")
