@@ -1,3 +1,17 @@
+2004-12-22  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp-smb.el (tramp-smb-file-name-handler-alist): Add entry for
+	`substitute-in-file-name.
+	(tramp-smb-handle-substitute-in-file-name): New defun.
+	(tramp-smb-advice-PC-do-completion): Delete advice.
+
+2004-07-06  Kai Grossjohann  <kgrossjo@eu.uu.net>
+
+	Sync with trunk (Michael Albinus <michael.albinus@gmx.de>).
+
+	* tramp.el (tramp-handle-file-newer-than-file-p): Reverse logic.
+	From Andrew J. Korty <ajk@iu.edu>.
+
 2004-12-16  Michael Albinus  <michael.albinus@gmx.de>
 
 	Version 2.0.46 released.
@@ -11,7 +25,7 @@
 
 2004-11-26  Lars Hansen  <larsh@math.ku.dk>
 
-	Sync with Emacs CVS (Michael Albinus <michael.albinus@gmx.de>)
+	Sync with Emacs CVS (Michael Albinus <michael.albinus@gmx.de>).
 	
 	* tramp.el (tramp-handle-directory-files-and-attributes): New function.
 	(tramp-perl-directory-files-and-attributes): New constant.

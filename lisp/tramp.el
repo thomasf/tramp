@@ -2500,7 +2500,7 @@ if the remote host can't provide the modtime."
 		 (fa2 (file-attributes file2)))
 	     (if (and (not (equal (nth 5 fa1) '(0 0)))
 		      (not (equal (nth 5 fa2) '(0 0))))
-		 (> 0 (tramp-time-diff (nth 5 fa1) (nth 5 fa2)))
+		 (> 0 (tramp-time-diff (nth 5 fa2) (nth 5 fa1)))
 	       ;; If one of them is the dont-know value, then we can
 	       ;; still try to run a shell command on the remote host.
 	       ;; However, this only works if both files are Tramp
