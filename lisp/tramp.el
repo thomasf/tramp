@@ -1064,6 +1064,11 @@ FILE and NEWNAME must be absolute file names."
         (require 'dired)
         (dired-insert-set-properties (point) (mark t))))))
 
+;; Continuation of kluge to pacify byte-compiler.
+(eval-when-compile
+  (when (eq (symbol-function 'dired-insert-set-properties) 'ignore)
+    (fmakunbound 'dired-insert-set-properties)))
+
 ;; Canonicalization of file names.
 
 (defun rcp-handle-expand-file-name (name &optional dir)
@@ -2183,6 +2188,10 @@ replaced with the given replacement string."
     (while (string-match (regexp-quote (char-to-string from)) string)
       (setq string (replace-match (char-to-string to) t t string)))
     string))
+
+(eval-when-compile
+  (when (eq (symbol-function 'subst-char-in-string) 'ignore)
+    (fmakunbound 'subst-char-in-string)))
 
 ;;; TODO:
 
