@@ -2245,10 +2245,7 @@ Maybe the different regular expressions need to be tuned.
            method))
   (rcp-pre-connection method user host)
   (rcp-message 7 "Opening connection for %s@%s using %s..." user host method)
-  (let* ((default-directory (if (and default-directory
-                                     (file-exists-p default-directory))
-                                default-directory
-                              "/"))
+  (let* ((default-directory (rcp-temporary-file-directory))
          (p (start-process (rcp-buffer-name method user host)
                            (rcp-get-buffer method user host)
                            (rcp-get-telnet-program method) host))
@@ -2302,10 +2299,7 @@ must specify the right method in the file name.
   method parameters."
   (rcp-pre-connection method user host)
   (rcp-message 7 "Opening connection for %s@%s using %s..." user host method)
-  (let* ((default-directory (if (and default-directory
-                                     (file-exists-p default-directory))
-                                default-directory
-                              "/"))
+  (let* ((default-directory (rcp-temporary-file-directory))
          (p (start-process (rcp-buffer-name method user host)
                            (rcp-get-buffer method user host)
                            (rcp-get-rsh-program method) host "-l" user))
