@@ -2928,7 +2928,7 @@ Recognition of the remote shell prompt is based on the variable
 `shell-prompt-pattern' which must be set up correctly.
 
 Please note that it is NOT possible to use this connection method with
-an inline transfer method if this function asks the user for a
+an out-of-band transfer method if this function asks the user for a
 password!  You must use an inline transfer method in this case.
 Sadly, the transfer method cannot be switched on the fly, instead you
 must specify the right method in the file name.
