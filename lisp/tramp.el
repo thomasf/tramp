@@ -900,8 +900,7 @@ rather than as numbers."
 ;; directories), and `ls -ad */' to get a list of directories.
 (defun rcp-handle-file-name-all-completions (filename directory)
   "Like `file-name-all-completions' for rcp files."
-  (let ((v (rcp-dissect-file-name
-            (rcp-handle-expand-file-name filename directory)))
+  (let ((v (rcp-dissect-file-name (rcp-handle-expand-file-name directory)))
         method user host path dirs result)
     (setq method (rcp-file-name-method v))
     (setq user (rcp-file-name-user v))
