@@ -2890,7 +2890,7 @@ at all unlikely that this variable is set up wrongly!"
                      (rcp-get-buffer multi-method method user host)
                      (rcp-get-su-program multi-method method)
                      (mapcar '(lambda (x)
-                                (format-spec x (list (cons u user))))
+                                (format-spec x (list (cons ?u user))))
                              (rcp-get-su-args multi-method method))))
            (found nil)
            (pw nil))
