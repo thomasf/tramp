@@ -529,6 +529,39 @@ use for the remote host."
 	      (tramp-decoding-function    base64-decode-region)
 	      (tramp-telnet-program       nil)
               (tramp-telnet-args          nil))
+     ("plinku"
+              (tramp-connection-function  tramp-open-connection-rsh)
+	      (tramp-rsh-program          "plink")
+	      (tramp-rcp-program          nil)
+	      (tramp-remote-sh            "/bin/sh")
+	      (tramp-rsh-args             ("-ssh")) ;optionally add "-v"
+	      (tramp-rcp-args             nil)
+	      (tramp-rcp-keep-date-arg    nil)
+	      (tramp-su-program           nil)
+	      (tramp-su-args              nil)
+              (tramp-encoding-command     "uuencode xxx")
+              (tramp-decoding-command
+               "( uudecode -o - 2>/dev/null || uudecode -p 2>/dev/null )")
+	      (tramp-encoding-function    nil)
+	      (tramp-decoding-function    uudecode-decode-region)
+	      (tramp-telnet-program       nil)
+              (tramp-telnet-args          nil))
+     ("plinkm"
+              (tramp-connection-function  tramp-open-connection-rsh)
+	      (tramp-rsh-program          "plink")
+	      (tramp-rcp-program          nil)
+	      (tramp-remote-sh            "/bin/sh")
+	      (tramp-rsh-args             ("-ssh")) ;optionally add "-v"
+	      (tramp-rcp-args             nil)
+	      (tramp-rcp-keep-date-arg    nil)
+	      (tramp-su-program           nil)
+	      (tramp-su-args              nil)
+	      (tramp-encoding-command     "mimencode -b")
+	      (tramp-decoding-command     "mimencode -u -b")
+	      (tramp-encoding-function    base64-encode-region)
+	      (tramp-decoding-function    base64-decode-region)
+	      (tramp-telnet-program       nil)
+              (tramp-telnet-args          nil))
      )
   "*Alist of methods for remote files.
 This is a list of entries of the form (NAME PARAM1 PARAM2 ...).
@@ -1344,7 +1377,7 @@ on the same remote host."
 	 (user   (tramp-file-name-user v))
 	 (host   (tramp-file-name-host v))
 	 (path   (tramp-file-name-path v)))
-    (if (string= path "")
+    (if (or (string= path "") (string= path "/"))
 	;; For a filename like "/[foo]", we return "/".  The `else'
 	;; case would return "/[foo]" unchanged.  But if we do that,
 	;; then `file-expand-wildcards' ceases to work.  It's not
@@ -4849,21 +4882,24 @@ Only works for Bourne-like shells."
 ;;
 ;; Another problem is that the check is done by Emacs version, which
 ;; is really not what we want to do.  Oh, well.
-(when (and (not (featurep 'xemacs))
-	   (= emacs-major-version 20))
-  (defadvice file-expand-wildcards (around tramp-fix activate)
-    (let ((name (ad-get-arg 0)))
-      (if (tramp-tramp-file-p name)
-	  ;; If it's a Tramp file, dissect it and look if wildcards
-	  ;; need to be expanded at all.
-	  (let ((v (tramp-dissect-file-name name)))
-	    (if (string-match "[[*?]" (tramp-file-name-path v))
-		(let ((res ad-do-it))
-		  (setq ad-return-value (or res (list name))))
-	      (setq ad-return-value (list name))))
-	;; If it is not a Tramp file, just run the original function.
-	(let ((res ad-do-it))
-	  (setq ad-return-value (or res (list name))))))))
+
+;;(when (and (not (featurep 'xemacs))
+;;	   (= emacs-major-version 20))
+;; It seems that this advice is needed in Emacs 21, too.
+(defadvice file-expand-wildcards (around tramp-fix activate)
+  (let ((name (ad-get-arg 0)))
+    (if (tramp-tramp-file-p name)
+	;; If it's a Tramp file, dissect it and look if wildcards
+	;; need to be expanded at all.
+	(let ((v (tramp-dissect-file-name name)))
+	  (if (string-match "[[*?]" (tramp-file-name-path v))
+	      (let ((res ad-do-it))
+		(setq ad-return-value (or res (list name))))
+	    (setq ad-return-value (list name))))
+      ;; If it is not a Tramp file, just run the original function.
+      (let ((res ad-do-it))
+	(setq ad-return-value (or res (list name)))))))
+;;  )
 
 ;; Make the `reporter` functionality available for making bug reports about
 ;; the package. A most useful piece of code.
