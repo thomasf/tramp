@@ -4668,6 +4668,8 @@ TRAMP.
 
 ;;; TODO:
 
+;; * In Emacs 21, `insert-directory' shows total number of bytes used
+;;   by the files in that directory.  Add this here.
 ;; * Avoid screen blanking when hitting `g' in dired.  (Eli Tziperman)
 ;; * Make ffap.el grok Tramp filenames.  (Eli Tziperman)
 ;; * When logging in, keep looking for questions according to an alist
