@@ -1249,6 +1249,9 @@ rather than as numbers."
 
 (defun rcp-handle-file-directory-p (filename)
   "Like `file-directory-p' for rcp files."
+  ;; Care must be taken that this function returns `t' for symlinks
+  ;; pointing to directories.  Surely the most obvious implementation
+  ;; would be `test -d', but that returns false for such symlinks.
   (let ((v (rcp-dissect-file-name filename)))
     (rcp-send-command
      (rcp-file-name-multi-method v) (rcp-file-name-method v)
