@@ -80,9 +80,10 @@
 (require 'timer)
 (require 'format-spec)                  ;from Gnus 5.8, also in tar ball
 
-;; It does not work to load EFS after loading RCP.
-(when (fboundp 'efs-file-handler-function)
-  (require 'efs))
+;; It does not work to load EFS after loading RCP.  Don't use `when'
+;; here, since that requires CL.
+(if (fboundp 'efs-file-handler-function)
+    (require 'efs))
 
 ;; CCC: The following require should be removed once the integration
 ;; with VC is clear.  Talking to Andre Spiegel about this.
