@@ -1,3 +1,7 @@
+2005-02-09  Kim F. Storm  <storm@cua.dk>
+
+	Change release version from 21.4 to 22.1 throughout.
+
 2005-02-05  Michael Albinus  <michael.albinus@gmx.de>
 
 	* INSTALL: Change bug report address to [tramp-devel@gnu.org].
@@ -203,7 +207,7 @@
 	* INSTALL (Installation Names): Describe what to do in case of
 	errors and warnings.
 	(Load Path): Add XEmacs example.
-	
+
 2004-03-28  Michael Albinus  <Michael.Albinus@alcatel.de>
 
 	* configure.ac: Check existence of "install-info".  Taken from
@@ -229,7 +233,7 @@
 
 	* configure.ac: Apply `AC_CONTRIB_FILES' for all Lisp files of
 	contrib directory.
-	
+
 2004-03-05  Michael Albinus  <Michael.Albinus@alcatel.de>
 
 	* configure.ac: Write "${MAKE}" if appropriate (but "make").
@@ -284,8 +288,8 @@
 	* aclocal.m4 (AC_JA_MANUAL): New function.
 
 	* configure.ac: Move AC_EMACS_INSTALL.  Call AC_JA_MANUAL.
-	
-2003-10-01  Michael Albinus  <Michael.Albinus@alcatel.de>	
+
+2003-10-01  Michael Albinus  <Michael.Albinus@alcatel.de>
 
 	* aclocal.m4 (AC_PATH_INFODIR): Fix path to xemacs site-packages.
 	From Norbert Koch <viteno@xemacs.org>.
@@ -397,7 +401,7 @@
 	* aclocal.m4 (AC_EMACS_INSTALL): New macro.  Depending on
 	configure option `--with-packaging', Tramp installation chapter
 	will be part of the manual, or not.
-	
+
 	* configure.ac (top-level): Apply `AC_EMACS_INSTALL'.
 
 	* Makefile.in (xemacs, emacs): Call `./configure --with-packaging'
@@ -574,7 +578,7 @@
 	* Makefile (VERSION): Bump.
 
 2002-08-05  Kai Groﬂjohann  <Kai.Grossjohann@CS.Uni-Dortmund.DE>
-	
+
 	Version 2.0.11 released.
 
 	* Makefile (xemacs): Adjust to new directory names after moving
@@ -636,13 +640,13 @@
 2002-07-19  Kai Groﬂjohann  <Kai.Grossjohann@CS.Uni-Dortmund.DE>
 
 	Version 2.0.2 released.
-	
+
 	* Makefile (VERSION): New version 2.0.2.
 
 2002-06-25  Kai Groﬂjohann  <Kai.Grossjohann@CS.Uni-Dortmund.DE>
 
 	Version 2.0.1 released.
-	
+
 	* Makefile (VERSION): New version 2.0.1.
 
 2002-06-19  Kai Groﬂjohann  <grossjoh@ls6.informatik.uni-dortmund.de>

@@ -381,7 +381,7 @@ behind the scenes when you open a file with @value{tramp}.
 release may be downloaded from
 @uref{http://ftp.gnu.org/gnu/tramp/}. This release includes the full
 documentation and code for @value{tramp}, suitable for installation.
-But Emacs (21.4 or later) includes @value{tramp} already, and there is
+But Emacs (22 or later) includes @value{tramp} already, and there is
 a @value{tramp} package for XEmacs, as well.  So maybe it is easier to
 just use those.  But if you want the bleeding edge, read on@dots{...}
 
@@ -1966,9 +1966,10 @@ There is also a Savannah project page.
 @item
 Which systems does it work on?
 
-The package has been used successfully on Emacs 20 and Emacs 21, as well
-as XEmacs 21.  XEmacs 20 is more problematic, see the notes in
-@file{tramp.el}.  I don't think anybody has really tried it on Emacs 19.
+The package has been used successfully on Emacs 20, Emacs 21 and Emacs
+22, as well as XEmacs 21.  XEmacs 20 is more problematic, see the
+notes in @file{tramp.el}.  I don't think anybody has really tried it
+on Emacs 19.
 
 The package was intended to work on Unix, and it really expects a
 Unix-like system on the remote end (except the @option{smb} method),

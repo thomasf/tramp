@@ -1,3 +1,7 @@
+2005-02-09  Kim F. Storm  <storm@cua.dk>
+
+	Change release version from 21.4 to 22.1 throughout.
+
 2005-02-02  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.texi (all): Change all addresses to .gnu.org.
