@@ -3012,6 +3012,8 @@ please include those.  Thank you for helping kill bugs in RCP.")))
 
 ;;; TODO:
 
+;; * `vc-directory' does not work.  It never displays any files, even
+;;   if it does show files when run locally.
 ;; * Do not unconditionally use /bin/sh for local shell commands.
 ;;   Instead, try to find out a local shell which groks tilde
 ;;   expansion.  (Mario DeWeerd)
