@@ -1633,6 +1633,8 @@ replaced with the given replacement string."
 ;; * grok ~ in rcp-remote-path  (Henrik Holm <henrikh@tele.ntnu.no>)
 ;; * do the base64 thing by using Lisp function on local side
 ;; * `C' in dired gives error `not rcp file name'.
+;; * instead of putting in user-login-name as remote login, rely
+;;   on ssh/scp to fill these in.  Make this controllable with a variable.
 
 ;; Functions for file-name-handler-alist:
 ;; diff-latest-backup-file -- in diff.el
