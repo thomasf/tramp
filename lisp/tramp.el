@@ -3079,6 +3079,18 @@ nil."
              (goto-char (point-min))
              (setq found (when (re-search-forward regexp nil t)
                            (match-string 0))))))
+    (when rcp-debug-buffer
+      (append-to-buffer
+       (rcp-get-debug-buffer rcp-current-multi-method rcp-current-method
+                             rcp-current-user rcp-current-host)
+       (point-min) (point-max))
+      (when (not found)
+        (save-excursion
+          (set-buffer
+           (rcp-get-debug-buffer rcp-current-multi-method rcp-current-method
+                             rcp-current-user rcp-current-host))
+          (goto-char (point-max))
+          (insert "[[INCOMPLETE!]]"))))
     found))
 
 (defun rcp-enter-password (p prompt)
@@ -3104,6 +3116,11 @@ Mainly sets the prompt and the echo correctly.  P is the shell process
 to set up.  METHOD, USER and HOST specify the connection."
   (process-send-string nil (format "exec %s\n" (rcp-get-remote-sh
                                                 multi-method method)))
+  (when rcp-debug-buffer
+    (save-excursion
+      (set-buffer (rcp-get-debug-buffer multi-method method user host))
+      (goto-char (point-max))
+      (insert "$ exec " (rcp-get-remote-sh multi-method method) "\n")))
   (rcp-message 9 "Waiting 30s for remote `%s' to come up..."
                (rcp-get-remote-sh multi-method method))
   (unless (rcp-wait-for-regexp p 30
