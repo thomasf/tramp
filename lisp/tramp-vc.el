@@ -320,7 +320,7 @@ Since TRAMP doesn't do async commands yet, this function doesn't, either."
                              (not want-differences-if-changed))))
         (zerop status))
     ;; New VC.  Call `vc-default-workfile-unchanged-p'.
-    (vc-default-workfile-unchanged-p filename)))
+    (vc-default-workfile-unchanged-p (vc-backend file) filename)))
 
 (defadvice vc-workfile-unchanged-p
   (around tramp-advice-vc-workfile-unchanged-p
