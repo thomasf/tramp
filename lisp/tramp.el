@@ -2224,11 +2224,13 @@ must specify the right method in the file name.
                           (rcp-get-rsh-program method) "-l" user host))
         (found nil))
     (process-kill-without-query p)
-    (setq found (rcp-wait-for-regexp
-                 p 30
-                 ;; CCC adjust regexp here?
-                 (format "\\(%s\\)\\|\\(.*[pP]assword: *$\\)"
-                         shell-prompt-pattern)))
+    (setq found
+          (rcp-wait-for-regexp
+           p 30
+           ;; CCC adjust regexp here?
+           (format
+            "\\(%s\\)\\|\\(.*\\([pP]assword\\|[pP]assphrase.*\\): *$\\)"
+            shell-prompt-pattern)))
     (unless found
       (pop-to-buffer (buffer-name))
       (error "Couldn't find remote shell or passwd prompt."))
