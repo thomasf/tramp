@@ -2346,9 +2346,9 @@ target of the symlink differ."
 			    "file attributes with perl: %s"
 			    (tramp-make-tramp-file-name
 			     multi-method method user host localname))
-  (tramp-maybe-send-perl-script tramp-perl-file-attributes
-                                "tramp_file_attributes"
-                                multi-method method user host)
+  (tramp-maybe-send-perl-script multi-method method user host
+				tramp-perl-file-attributes
+                                "tramp_file_attributes")
   (tramp-send-command multi-method method user host
                       (format "tramp_file_attributes %s %s"
                               (tramp-shell-quote-argument localname) id-format))
@@ -2693,9 +2693,9 @@ if the remote host can't provide the modtime."
     (save-excursion
       (setq directory (tramp-handle-expand-file-name directory))
       (with-parsed-tramp-file-name directory nil
-        (tramp-maybe-send-perl-script tramp-perl-directory-files-and-attributes
-                                      "tramp_directory_files_and_attributes"
-                                      multi-method method user host)
+        (tramp-maybe-send-perl-script multi-method method user host
+				      tramp-perl-directory-files-and-attributes
+                                      "tramp_directory_files_and_attributes")
         (tramp-send-command multi-method method user host
                             (format "tramp_directory_files_and_attributes %s %s"
                                     (tramp-shell-quote-argument localname)
@@ -4779,7 +4779,7 @@ User may be nil."
 
 ;;; Internal Functions:
 
-(defun tramp-maybe-send-perl-script (script name multi-method method user host)
+(defun tramp-maybe-send-perl-script (multi-method method user host script name)
   "Define in remote shell function NAME implemented as perl SCRIPT.
 Only send the definition if it has not already been done.
 Function may have 0-3 parameters."
