@@ -1779,6 +1779,8 @@ See `vc-do-command' for more information."
 	  ;; Get status from command
 	  (rcp-send-command method user host "echo $?")
 	  (rcp-wait-for-output)
+          ;; Make sure to get status from last line of output.
+          (goto-char (point-max)) (forward-line -1)
 	  (setq status (read (current-buffer)))
 	  (message "Command %s returned status %d." command status)))
       (goto-char (point-max))
