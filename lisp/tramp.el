@@ -103,6 +103,9 @@
 
 ;;; Code:
 
+(defconst rcp-version "$Id$"
+  "This version of rcp.")
+
 (require 'timer)
 
 ;; CCC: The following require should be removed once the integration
@@ -597,6 +600,13 @@ upon opening the connection.")
     (dired-recursive-delete-directory . rcp-handle-dired-recursive-delete-directory))
         "Alist of handler functions.
 Operations not mentioned here will be handled by the normal Emacs functions.")
+
+;;; For better error reporting.
+
+(defun rcp-version (arg)
+  "Print version number of rcp.el in minibuffer or current buffer."
+  (interactive "P")
+  (if arg (insert rcp-version) (message rcp-version)))
 
 ;;; Internal functions which must come first.
 
