@@ -3960,9 +3960,9 @@ fit in an integer."
          (cadr (funcall (symbol-function 'subtract-time) t1 t2)))
         (t
          ;; snarfed from Emacs 21 time-date.el
-         (let ((borrow (< (cadr t1) (cadr t2))))
-           (list (- (car t1) (car t2) (if borrow 1 0))
-                 (- (+ (if borrow 65536 0) (cadr t1)) (cadr t2)))))))
+         (cadr (let ((borrow (< (cadr t1) (cadr t2))))
+                 (list (- (car t1) (car t2) (if borrow 1 0))
+                       (- (+ (if borrow 65536 0) (cadr t1)) (cadr t2))))))))
 
 ;; ------------------------------------------------------------ 
 ;; -- Kludges section -- 
