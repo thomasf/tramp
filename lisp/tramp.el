@@ -3080,8 +3080,8 @@ otherwise."
                      cmd)))
       (tramp-message 7 "Testing remote command `%s' for -n...%s"
                    cmd
-                   (if result "okay" "failed"))
-      result)))
+                   (if (zerop result) "okay" "failed"))
+      (zerop result))))
 
 (defun tramp-check-ls-commands (multi-method method user host cmd dirlist)
   "Checks whether the given `ls' executable in one of the dirs groks `-n'.
