@@ -2902,11 +2902,6 @@ Uses program PROGRAM to issue an `rlogin' command to log in as USER to HOST."
       (pop-to-buffer (buffer-name))
       (error "Couldn't find remote shell or passwd prompt"))
     (when (match-string 2)
-      (when (rcp-method-out-of-band-p multi-method method)
-        (pop-to-buffer (buffer-name))
-        (error (concat "Out of band method `%s' not applicable"
-                         " for remote shell asking for a password")
-                 method))
         (rcp-message 9 "Sending password...")
         (rcp-enter-password p (match-string 2))
         (rcp-message 9 "Sent password, waiting 60s for remote shell prompt")
