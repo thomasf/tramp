@@ -1829,10 +1829,11 @@ and `rename'.  FILENAME and NEWNAME must be absolute file names."
           (set-buffer trampbuf) (erase-buffer)
           (insert-file-contents-literally filename)
 	  (let ((coding-system-for-write 'no-conversion))
-	    (write-region (point-min) (point-max) newname)))
-        ;; If the operation was `rename', delete the original file.
-        (unless (eq op 'copy)
-          (delete-file filename))))))
+	    (write-region (point-min) (point-max) newname))))
+
+      ;; If the operation was `rename', delete the original file.
+      (unless (eq op 'copy)
+        (delete-file filename)))))
 
 (defun tramp-do-copy-or-rename-file-directly
   (op multi-method method user host path1 path2 keep-date)
