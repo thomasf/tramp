@@ -3750,30 +3750,34 @@ locale to C and sets up the remote shell search path."
                  tramp-rsh-end-of-line
 		 "}"))
 	(tramp-wait-for-output)
-	(tramp-message 5 "Sending the Perl `mime-encode' implementation.")
-	(tramp-send-command
-	 multi-method method user host
-	 (concat "tramp_mimencode () {" tramp-rsh-end-of-line
-		 (if (tramp-find-executable multi-method method user host
-                                     "mimencode"  tramp-remote-path t)
-		     "mimencode -b $1" 
-		   (concat tramp-remote-perl
-			   " -e '" tramp-perl-mime-encode "' $1 2>/dev/null"))
-		 tramp-rsh-end-of-line
-		 "}"))
-	(tramp-wait-for-output)
-	(tramp-message 5 "Sending the Perl `mime-decode' implementation.")
-	(tramp-send-command
-	 multi-method method user host
-	 (concat "tramp_mimedecode () {" tramp-rsh-end-of-line
-		 (if (tramp-find-executable multi-method method user host
-                                     "mimencode"  tramp-remote-path t)
-		     "mimencode -u -b $1" 
-		   (concat tramp-remote-perl
-			   " -e '" tramp-perl-mime-decode "' $1 2>/dev/null"))
-		 tramp-rsh-end-of-line
-		 "}"))
-	(tramp-wait-for-output))))
+	(when (string= (tramp-get-encoding-command multi-method method)
+		       "tramp_mimencode")
+	  (tramp-message 5 "Sending the Perl `mime-encode' implementation.")
+	  (tramp-send-command
+	   multi-method method user host
+	   (concat "tramp_mimencode () {" tramp-rsh-end-of-line
+		   (if (tramp-find-executable multi-method method user host
+					      "mimencode"  tramp-remote-path t)
+		       "mimencode -b $1" 
+		     (concat tramp-remote-perl
+			     " -e '" tramp-perl-mime-encode "' $1 2>/dev/null"))
+		   tramp-rsh-end-of-line
+		   "}"))
+	  (tramp-wait-for-output))
+	(when (string= (tramp-get-decoding-command multi-method method)
+		       "tramp_mimedecode")
+	  (tramp-message 5 "Sending the Perl `mime-decode' implementation.")
+	  (tramp-send-command
+	   multi-method method user host
+	   (concat "tramp_mimedecode () {" tramp-rsh-end-of-line
+		   (if (tramp-find-executable multi-method method user host
+					      "mimencode"  tramp-remote-path t)
+		       "mimencode -u -b $1" 
+		     (concat tramp-remote-perl
+			     " -e '" tramp-perl-mime-decode "' $1 2>/dev/null"))
+		   tramp-rsh-end-of-line
+		   "}"))
+	  (tramp-wait-for-output)))))
   ;; Find ln(1)
   (erase-buffer)
   (tramp-set-connection-property
