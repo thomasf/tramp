@@ -234,7 +234,7 @@ Also see `rssh-rssh-file-name-structure' and `rssh-rssh-file-name-regexp'.")
     (setq path (rssh-file-name-path v))
     (save-excursion
       (rssh-send-command user host
-                         (format "%s -d '%s' 2>&1 > /dev/null"
+                         (format "%s -d '%s' >/dev/null 2>&1"
                                  (rssh-ls-command-get host) path))
       (rssh-send-command user host "echo $?")
       (rssh-wait-for-output)
