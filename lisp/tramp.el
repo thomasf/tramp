@@ -505,6 +505,14 @@ Please notify me about other semi-standard directories to include here."
   :group 'rcp
   :type '(repeat string))
 
+(defcustom rcp-password-prompt-regexp
+  "^.*\\([pP]assword\\|passphrase.*\\): *$"
+  "*Regexp matching password-like prompts.  Not used for telnet.
+The regexp should match the whole line.
+\(The prompt for telnet is hard-wired.)"
+  :group 'rcp
+  :type :string)
+
 (defcustom rcp-temp-name-prefix "rcp."
   "*Prefix to use for temporary files.
 If this is a relative file name (such as \"rcp.\"), it is considered relative
@@ -2249,8 +2257,9 @@ must specify the right method in the file name.
            p 30
            ;; CCC adjust regexp here?
            (format
-            "\\(%s\\)\\|\\(^.*\\([pP]assword\\|passphrase.*\\): *$\\)"
-            shell-prompt-pattern)))
+            "\\(%s\\)\\|\\(%s\\)"
+            shell-prompt-pattern
+            rcp-password-prompt-regexp)))
     (unless found
       (pop-to-buffer (buffer-name))
       (error "Couldn't find remote shell or passwd prompt."))
