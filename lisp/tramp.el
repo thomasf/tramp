@@ -3149,6 +3149,13 @@ to set up.  METHOD, USER and HOST specify the connection."
                                (format "\\(\\$\\|%s\\)" shell-prompt-pattern))
     (pop-to-buffer (buffer-name))
     (error "Couldn't `stty -echo', see buffer `%s'" (buffer-name)))
+  (erase-buffer)
+  (process-send-string nil (format "TERM=dumb; export TERM%s"
+                                   tramp-rsh-end-of-line))
+  (unless (tramp-wait-for-regexp p 30
+                                 (format "\\(\\$\\|%s\\)" shell-prompt-pattern))
+    (pop-to-buffer (buffer-name))
+    (error "Couldn't `TERM=dumb; export TERM', see buffer `%s'" (buffer-name)))
   ;; Try to set up the coding system correctly.
   ;; CCC this can't be the right way to do it.  Hm.
   (save-excursion
