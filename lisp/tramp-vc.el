@@ -4,7 +4,6 @@
 
 ;; Author: Daniel Pittman <daniel@danann.net>
 ;; Keywords: comm, processes
-;; Version: $Id$
 
 ;; This file is part of GNU Emacs.
 

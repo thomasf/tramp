@@ -4,7 +4,6 @@
 
 ;; Author: Kai.Grossjohann@CS.Uni-Dortmund.DE 
 ;; Keywords: comm, processes
-;; Version: $Id$
 
 ;; This file is part of GNU Emacs.
 
@@ -70,7 +69,7 @@
 
 ;;; Code:
 
-(defconst tramp-version "$Id$"
+(defconst tramp-version "2.0.0"
   "This version of tramp.")
 (defconst tramp-bug-report-address "tramp-devel@mail.freesoftware.fsf.org"
   "Email address to send bug reports to.")
