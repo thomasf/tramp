@@ -2573,7 +2573,7 @@ hosts, or files, disagree."
          (host2 (tramp-file-name-host v2))
          (path1 (tramp-file-name-path v1))
          (path2 (tramp-file-name-path v2)))
-    (unless (and method1 method2 user1 user2 host1 host2
+    (unless (and method1 method2 host1 host2
                  (equal mmethod1 mmethod2)
                  (equal method1 method2)
                  (equal user1 user2)
