@@ -933,8 +933,8 @@ upon opening the connection.")
 (defconst tramp-perl-file-attributes (concat
  "$f = $ARGV[0];
 @s = lstat($f);
-if (($s[2] & 0120000) == 0120000) { $l = readlink($f); $l = \"\\\"$l\\\"\"; }
-elsif (($s[2] & 040000) == 040000) { $l = \"t\"; }
+if (($s[2] & 0170000) == 0120000) { $l = readlink($f); $l = \"\\\"$l\\\"\"; }
+elsif (($s[2] & 0170000) == 040000) { $l = \"t\"; }
 else { $l = \"nil\" };
 printf(\"(%s %u %u %u (%u %u) (%u %u) (%u %u) %u %u t %u (%u %u))\\n\",
 $l, $s[3], $s[4], $s[5], $s[8] >> 16 & 0xffff, $s[8] & 0xffff,
