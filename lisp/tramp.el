@@ -416,7 +416,7 @@ use for the remote host."
               (rcp-rsh-args             nil)
               (rcp-rcp-args             nil)
               (rcp-rcp-keep-date-arg    nil)
-              (rcp-su-program           "su")
+              (rcp-su-program           "sudo")
               (rcp-su-args              ("-u" "%u" "-s"))
               (rcp-encoding-command     "uuencode xxx")
               (rcp-decoding-command
