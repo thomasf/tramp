@@ -72,6 +72,7 @@
       (setq default-directory d)))
   (tramp-handle-shell-command command (get-buffer "*Compilation*"))
   (pop-to-buffer (get-buffer "*Compilation*"))
+  (tramp-minor-mode 1)
   (compilation-minor-mode 1))
 
 (defun tramp-recompile ()
@@ -80,6 +81,7 @@
   (save-some-buffers (not compilation-ask-about-save) nil)
   (tramp-handle-shell-command compile-command (get-buffer "*Compilation*"))
   (pop-to-buffer (get-buffer "*Compilation*"))
+  (tramp-minor-mode 1)
   (compilation-minor-mode 1))
 
 (provide 'tramp-util)
