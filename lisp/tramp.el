@@ -2804,7 +2804,7 @@ to enter a password for the `rcp-rcp-program'."
         (delete-char 2)
         (let ((x (assoc code escapes)))
           (unless x (message "Unknown format code: %s" code))
-          (insert (cdr x)))
+          (when (cdr x) (insert (cdr x))))
         (skip-chars-forward "^%")
         (condition-case err (forward-char 2) (end-of-buffer nil)))
       (goto-char (point-max))
