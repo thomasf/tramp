@@ -2766,9 +2766,9 @@ file exists and nonzero exit status otherwise."
       (tramp-send-command
        multi-method method user host
        (concat "PS1='$ ' ; exec " shell))
-      (unless (tramp-wait-for-regexp (get-buffer-process (current-buffer))
-                                   60
-                                   shell-prompt-pattern)
+      (unless (tramp-wait-for-regexp
+               (get-buffer-process (current-buffer))
+               60 (format "\\(\\$\\|%s\\)" shell-prompt-pattern))
         (pop-to-buffer (buffer-name))
         (error "Couldn't find remote `%s' prompt." shell))
       (process-send-string nil (format "PS1='%s%s%s'; PS2=''; PS3=''%s"
