@@ -3178,8 +3178,10 @@ to set up.  METHOD, USER and HOST specify the connection."
         ;; Use MULE to select the right EOL convention for communicating
         ;; with the process.
         (let* ((cs (or (process-coding-system p) (cons 'undecided 'undecided)))
-               (cs-decode (car cs))
-               (cs-encode (cdr cs)))
+               cs-decode cs-encode)
+          (when (symbolp cs) (setq cs (cons cs cs)))
+          (setq cs-decode (car cs))
+          (setq cs-encode (cdr cs))
           (setq cs-encode (coding-system-change-eol-conversion
                            cs-encode 'unix))
           (when (search-forward "\r" nil t)
