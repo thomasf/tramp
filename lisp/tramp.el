@@ -2794,11 +2794,9 @@ This function expects to be in the right *tramp* buffer."
                      "break; fi; done <<'EOF'")
              progname progname progname))
     (mapcar (lambda (d)
-              (tramp-send-command multi-method method user host
-                                  (concat d tramp-rsh-end-of-line)))
+              (tramp-send-command multi-method method user host d))
             dirlist)
-    (tramp-send-command multi-method method user host
-                        (concat "EOF" tramp-rsh-end-of-line))
+    (tramp-send-command multi-method method user host "EOF")
     (tramp-wait-for-output)
     (goto-char (point-max))
     (when (search-backward "tramp_executable " nil t)
