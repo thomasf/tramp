@@ -578,6 +578,22 @@ use for the remote host."
 	      (tramp-decoding-function    nil)
 	      (tramp-telnet-program       nil)
               (tramp-telnet-args          nil))
+     ("fcp"   
+	      (tramp-connection-function  tramp-open-connection-rsh)
+              (tramp-rsh-program          "fsh")
+              (tramp-rcp-program          "fcp")
+              (tramp-remote-sh            "/bin/sh -i")
+              (tramp-rsh-args             ("sh" "-i"))
+              (tramp-rcp-args             nil)
+              (tramp-rcp-keep-date-arg    "-p")
+              (tramp-su-program           nil)
+              (tramp-su-args              nil)
+              (tramp-encoding-command     nil)
+              (tramp-decoding-command     nil)
+              (tramp-encoding-function    nil)
+              (tramp-decoding-function    nil)
+              (tramp-telnet-program       nil)
+              (tramp-telnet-args          nil))
      )
   "*Alist of methods for remote files.
 This is a list of entries of the form (NAME PARAM1 PARAM2 ...).
