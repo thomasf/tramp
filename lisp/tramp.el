@@ -3104,6 +3104,7 @@ to set up.  METHOD, USER and HOST specify the connection."
     (error "Remote `%s' didn't come up.  See buffer `%s' for details"
            (tramp-get-remote-sh multi-method method) (buffer-name)))
   (tramp-message 9 "Setting up remote shell environment")
+  (erase-buffer)
   (process-send-string nil (format "stty -echo%s" tramp-rsh-end-of-line))
   (unless (tramp-wait-for-regexp p 30
                                (format "\\(\\$\\|%s\\)" shell-prompt-pattern))
