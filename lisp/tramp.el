@@ -4552,6 +4552,10 @@ Only works for Bourne-like shells."
        tramp-temp-name-prefix
        tramp-file-name-structure
        tramp-file-name-regexp
+       tramp-multi-file-name-structure
+       tramp-multi-file-name-hop-structure
+       tramp-multi-methods
+       tramp-multi-connection-function-alist
        tramp-make-tramp-file-format
        tramp-end-of-output
 
