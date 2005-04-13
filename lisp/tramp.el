@@ -3561,7 +3561,13 @@ This will break if COMMAND prints a newline, followed by the value of
 	    (unless asynchronous
 	      (tramp-wait-for-output)))
 	  (unless asynchronous
-	    (insert-buffer (tramp-get-buffer multi-method method user host)))
+	    ;; We cannot use `insert-buffer' because the tramp buffer
+	    ;; changes its contents before insertion due to calling
+	    ;; `expand-file' and alike.
+	    (insert
+	     (with-current-buffer
+		 (tramp-get-buffer multi-method method user host)
+	       (buffer-string))))
 	  (when error-buffer
 	    (save-excursion
 	      (unless (bufferp error-buffer)
@@ -3571,7 +3577,11 @@ This will break if COMMAND prints a newline, followed by the value of
 	       "cat /tmp/tramp.$$.err")
 	      (tramp-wait-for-output)
 	      (set-buffer error-buffer)
-	      (insert-buffer (tramp-get-buffer multi-method method user host))
+	      ;; Same comment as above
+	      (insert
+	       (with-current-buffer
+		   (tramp-get-buffer multi-method method user host)
+		 (buffer-string)))
 	      (tramp-send-command-and-check
 	       multi-method method user host "rm -f /tmp/tramp.$$.err")))
 	  (save-excursion
