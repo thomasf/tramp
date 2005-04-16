@@ -1352,7 +1352,9 @@ autocorrect\" to the remote host."
 
 ;; Chunked sending kluge.  We set this to 500 for black-listed constellations
 ;; known to have a bug in `process-send-string'; some ssh connections appear
-;; to drop bytes when data is sent too quickly.
+;; to drop bytes when data is sent too quickly.  There is also a connection
+;; buffer local variable, which is computed depending on remote host properties
+;; when `tramp-chunksize' is zero or nil.
 (defcustom tramp-chunksize
   (when (and (not (featurep 'xemacs))
 	     (memq system-type '(hpux)))
@@ -5430,7 +5432,7 @@ Maybe the different regular expressions need to be tuned.
              method))
     (when multi-method
       (error "Cannot multi-connect using telnet connection method"))
-    (tramp-pre-connection multi-method method user host)
+    (tramp-pre-connection multi-method method user host tramp-chunksize)
     (tramp-message 7 "Opening connection for %s@%s using %s..."
 		   (or user (user-login-name)) host method)
     (let ((process-environment (copy-sequence process-environment)))
@@ -5488,7 +5490,7 @@ arguments, and xx will be used as the host name to connect to.
   (save-match-data
     (when multi-method
       (error "Cannot multi-connect using rsh connection method"))
-    (tramp-pre-connection multi-method method user host)
+    (tramp-pre-connection multi-method method user host tramp-chunksize)
     (if (and user (not (string= user "")))
 	(tramp-message 7 "Opening connection for %s@%s using %s..."
 		       user host method)
@@ -5557,7 +5559,7 @@ prompt than you do, so it is not at all unlikely that the variable
       (error
        "Cannot connect to different host `%s' with `su' connection method"
        host))
-    (tramp-pre-connection multi-method method user host)
+    (tramp-pre-connection multi-method method user host tramp-chunksize)
     (tramp-message 7 "Opening connection for `%s' using `%s'..."
 		   (or user "<root>") method)
     (let ((process-environment (copy-sequence process-environment)))
@@ -5622,7 +5624,7 @@ log in as u2 to h2."
     (unless (and (= (length method) (length user))
                  (= (length method) (length host)))
       (error "Arrays METHOD, USER, HOST must have equal length"))
-    (tramp-pre-connection multi-method method user host)
+    (tramp-pre-connection multi-method method user host tramp-chunksize)
     (tramp-message 7 "Opening `%s' connection..." multi-method)
     (let ((process-environment (copy-sequence process-environment)))
       (setenv "TERM" tramp-terminal-type)
@@ -5823,7 +5825,7 @@ Uses PROMPT as a prompt and sends the password to process P."
 ;; HHH: Not Changed.  This might handle the case where USER is not
 ;;      given in the "File name" very poorly.  Then, the local
 ;;      variable tramp-current-user will be set to nil.
-(defun tramp-pre-connection (multi-method method user host)
+(defun tramp-pre-connection (multi-method method user host chunksize)
   "Do some setup before actually logging in.
 METHOD, USER and HOST specify the connection."
   (set-buffer (tramp-get-buffer multi-method method user host))
@@ -5831,6 +5833,7 @@ METHOD, USER and HOST specify the connection."
   (set (make-local-variable 'tramp-current-method) method)
   (set (make-local-variable 'tramp-current-user)   user)
   (set (make-local-variable 'tramp-current-host)   host)
+  (set (make-local-variable 'tramp-chunksize)      chunksize)
   (set (make-local-variable 'inhibit-eol-conversion) nil)
   (erase-buffer))
 
@@ -5882,6 +5885,20 @@ to set up.  METHOD, USER and HOST specify the connection."
   (erase-buffer)
   (tramp-send-command-internal multi-method method user host
 			       "TERM=dumb; export TERM")
+  (erase-buffer)
+  ;; Check whether the remote host suffers from buggy `send-process-string'.
+  ;; This is known for FreeBSD (see comment in `send_process', file process.c).
+  ;; I've tested sending 624 bytes successfully, sending 625 bytes failed.
+  ;; Emacs makes a hack when this host type is detected locally.  It cannot
+  ;; handle remote hosts, though.
+  (when (or (not tramp-chunksize) (zerop tramp-chunksize))
+    (tramp-message 9 "Checking remote host type for `send-process-string' bug")
+    (tramp-send-command-internal multi-method method user host
+				 "(uname -sr) 2>/dev/null")
+    (goto-char (point-min))
+    (when (looking-at "FreeBSD")
+      (setq tramp-chunksize 500)))
+
   ;; Try to set up the coding system correctly.
   ;; CCC this can't be the right way to do it.  Hm.
   (save-excursion
