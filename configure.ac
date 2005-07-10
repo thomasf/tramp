@@ -19,8 +19,8 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with GNU Emacs; see the file COPYING.  If not, write to the
-#  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-#  Boston, MA 02111-1307, USA.
+#  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+#  Boston, MA 02110-1301, USA.
 
 ### Code:
 
@@ -30,12 +30,12 @@ AC_PREREQ([2.50])
 
 # Initialize configure script.  This is the only point Tramp revision
 # needs to be set.
-AC_INIT([Tramp], [2.0.49], [tramp-devel@gnu.org])
+AC_INIT([Tramp], [2.0.50-pre], [tramp-devel@gnu.org])
 AC_MSG_NOTICE([$PACKAGE_STRING])
 
 # The last version of Tramp that was merged into the Emacs CVS
 # repository.  This will usually be the Tramp version minus one.
-TRAMP_EMACS_MERGE_VERSION=2.0.48
+TRAMP_EMACS_MERGE_VERSION=2.0.49
 AC_SUBST(TRAMP_EMACS_MERGE_VERSION)
 
 # Check suitable make version.

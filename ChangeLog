@@ -1,3 +1,10 @@
+2005-07-10  Michael Albinus  <michael.albinus@gmx.de>
+
+	Update FSF's address in GPL notices.
+
+	* configure.ac: Bump version (to 2.0.50-pre).  Update merge
+	version to 2.0.49.
+
 2005-05-14  Michael Albinus  <michael.albinus@gmx.de>
 
 	Version 2.0.49 released.
