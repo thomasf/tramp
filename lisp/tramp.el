@@ -3137,8 +3137,7 @@ be a local filename.  The method used must be an out-of-band method."
 	    tramp-current-method method
 	    tramp-current-user user
 	    tramp-current-host host)
-      (tramp-message
-       5 "Transferring %s to file %s..." filename newname)
+      (message "Transferring %s to %s..." filename newname)
 
       ;; Use rcp-like program for file transfer.
       (let ((p (apply 'start-process (buffer-name trampbuf) trampbuf
@@ -3147,8 +3146,7 @@ be a local filename.  The method used must be an out-of-band method."
 	(tramp-process-actions p multi-method method user host
 			       tramp-actions-copy-out-of-band))
       (kill-buffer trampbuf)
-      (tramp-message
-       5 "Transferring %s to file %s...done" filename newname)
+      (message "Transferring %s to %s...done" filename newname)
 
       ;; Set the mode.
       (unless keep-date
@@ -3319,7 +3317,7 @@ This is like `dired-recursive-delete-directory' for tramp files."
   (filename switches &optional wildcard full-directory-p)
   "Like `insert-directory' for tramp files."
   (if (and (boundp 'ls-lisp-use-insert-directory-program)
-           (not ls-lisp-use-insert-directory-program))
+           (not (symbol-value 'ls-lisp-use-insert-directory-program)))
       (tramp-run-real-handler 'insert-directory
                               (list filename switches wildcard full-directory-p))
     ;; For the moment, we assume that the remote "ls" program does not
@@ -4301,7 +4299,7 @@ necessary anymore."
         (symbol-function 'PC-expand-many-files))
   (defun PC-expand-many-files (name)
     (if (tramp-tramp-file-p name)
-        (expand-many-files name)
+        (funcall (symbol-function 'expand-many-files) name)
       (tramp-save-PC-expand-many-files name))))
 
 ;; Why isn't eval-after-load sufficient?
@@ -7116,10 +7114,11 @@ it does the right thing."
   "Specify if query is needed for process when Emacs is exited.
 If the second argument flag is non-nil, Emacs will query the user before
 exiting if process is running."
+ (funcall
   (if (fboundp 'set-process-query-on-exit-flag)
-      (set-process-query-on-exit-flag process flag)
-    (funcall (symbol-function 'process-kill-without-query)
-	     process flag)))
+      (symbol-function 'set-process-query-on-exit-flag)
+    (symbol-function 'process-kill-without-query))
+  process flag))
 
 
 ;; ------------------------------------------------------------
@@ -7232,69 +7231,74 @@ Only works for Bourne-like shells."
   (interactive)
   (require 'reporter)
   (catch 'dont-send
-    (let ((reporter-prompt-for-summary-p	t))
+    (let ((reporter-prompt-for-summary-p t))
       (reporter-submit-bug-report
        tramp-bug-report-address		; to-address
        (format "tramp (%s)" tramp-version) ; package name and version
-       `(;; Current state
-	 tramp-ls-command
-	 tramp-test-groks-nt
-	 tramp-file-exists-command
-	 tramp-current-multi-method
-	 tramp-current-method
-	 tramp-current-user
-	 tramp-current-host
+       (delq nil
+	     `(;; Current state
+	       tramp-ls-command
+	       tramp-test-groks-nt
+	       tramp-file-exists-command
+	       tramp-current-multi-method
+	       tramp-current-method
+	       tramp-current-user
+	       tramp-current-host
 
-	 ;; System defaults
-	 tramp-auto-save-directory        ; vars to dump
-	 tramp-default-method
-	 tramp-rsh-end-of-line
-	 tramp-default-password-end-of-line
-	 tramp-remote-path
-	 tramp-login-prompt-regexp
-	 tramp-password-prompt-regexp
-	 tramp-wrong-passwd-regexp
-	 tramp-yesno-prompt-regexp
-	 tramp-yn-prompt-regexp
-	 tramp-terminal-prompt-regexp
-	 tramp-temp-name-prefix
-	 tramp-file-name-structure
-	 tramp-file-name-regexp
-	 tramp-multi-file-name-structure
-	 tramp-multi-file-name-hop-structure
-	 tramp-multi-methods
-	 tramp-multi-connection-function-alist
-	 tramp-methods
-	 tramp-end-of-output
-	 tramp-coding-commands
-	 tramp-actions-before-shell
-	 tramp-actions-copy-out-of-band
-	 tramp-multi-actions
-	 tramp-terminal-type
-	 tramp-shell-prompt-pattern
-	 tramp-chunksize
-	 ,(when (boundp 'tramp-backup-directory-alist)
-	    'tramp-backup-directory-alist)
-	 ,(when (boundp 'tramp-bkup-backup-directory-info)
-	    'tramp-bkup-backup-directory-info)
+	       ;; System defaults
+	       tramp-auto-save-directory        ; vars to dump
+	       tramp-default-method
+	       tramp-rsh-end-of-line
+	       tramp-default-password-end-of-line
+	       tramp-remote-path
+	       tramp-login-prompt-regexp
+	       ;; Mask non-7bit characters
+	       (tramp-password-prompt-regexp . tramp-reporter-dump-variable)
+	       tramp-wrong-passwd-regexp
+	       tramp-yesno-prompt-regexp
+	       tramp-yn-prompt-regexp
+	       tramp-terminal-prompt-regexp
+	       tramp-temp-name-prefix
+	       tramp-file-name-structure
+	       tramp-file-name-regexp
+	       tramp-multi-file-name-structure
+	       tramp-multi-file-name-hop-structure
+	       tramp-multi-methods
+	       tramp-multi-connection-function-alist
+	       tramp-methods
+	       tramp-end-of-output
+	       tramp-coding-commands
+	       tramp-actions-before-shell
+	       tramp-actions-copy-out-of-band
+	       tramp-multi-actions
+	       tramp-terminal-type
+	       ;; Mask non-7bit characters
+	       (tramp-shell-prompt-pattern . tramp-reporter-dump-variable)
+	       tramp-chunksize
+	       ,(when (boundp 'tramp-backup-directory-alist)
+		  'tramp-backup-directory-alist)
+	       ,(when (boundp 'tramp-bkup-backup-directory-info)
+		  'tramp-bkup-backup-directory-info)
 
-	 ;; Non-tramp variables of interest
-	 shell-prompt-pattern
-	 backup-by-copying
-	 backup-by-copying-when-linked
-	 backup-by-copying-when-mismatch
-	 ,(when (boundp 'backup-by-copying-when-privileged-mismatch)
-	    'backup-by-copying-when-privileged-mismatch)
-	 ,(when (boundp 'password-cache)
-	    'password-cache)
-	 ,(when (boundp 'password-cache-expiry)
-	    'password-cache-expiry)
-	 ,(when (boundp 'backup-directory-alist)
-	    'backup-directory-alist)
-	 ,(when (boundp 'bkup-backup-directory-info)
-	    'bkup-backup-directory-info)
-	 file-name-handler-alist)
-       nil				; pre-hook
+	       ;; Non-tramp variables of interest
+	       ;; Mask non-7bit characters
+	       (shell-prompt-pattern . tramp-reporter-dump-variable)
+	       backup-by-copying
+	       backup-by-copying-when-linked
+	       backup-by-copying-when-mismatch
+	       ,(when (boundp 'backup-by-copying-when-privileged-mismatch)
+		  'backup-by-copying-when-privileged-mismatch)
+	       ,(when (boundp 'password-cache)
+		  'password-cache)
+	       ,(when (boundp 'password-cache-expiry)
+		  'password-cache-expiry)
+	       ,(when (boundp 'backup-directory-alist)
+		  'backup-directory-alist)
+	       ,(when (boundp 'bkup-backup-directory-info)
+		  'bkup-backup-directory-info)
+	       file-name-handler-alist))
+
+       'tramp-load-report-modules	; pre-hook
        'tramp-append-tramp-buffers	; post-hook
        "\
 Enter your bug report in this message, including as much detail as you
@@ -7313,8 +7317,43 @@ report.
 --bug report follows this line--
 "))))
 
-(defun tramp-append-tramp-buffers ()
-  "Append Tramp buffers into the bug report."
+(defun tramp-reporter-dump-variable (varsym mailbuf)
+  "Pretty-print the value of the variable in symbol VARSYM.
+Used for non-7bit chars in strings."
+  (let* ((reporter-eval-buffer (symbol-value 'reporter-eval-buffer))
+	 (val (with-current-buffer reporter-eval-buffer
+		(symbol-value varsym))))
+
+    ;; There are characters to be masked.
+    (when (and (boundp 'mm-7bit-chars)
+	       (string-match
+		(concat "[^" (symbol-value 'mm-7bit-chars) "]") val))
+      (with-current-buffer reporter-eval-buffer
+	(set varsym (concat "(base64-decode-string \""
+			    (base64-encode-string val)
+			    "\")"))))
+
+    ;; Dump variable.
+    (funcall (symbol-function 'reporter-dump-variable) varsym mailbuf)
+
+    ;; Remove string quotation.
+    (forward-line -1)
+    (when (looking-at
+	   (concat "\\(^.*\\)" "\""                       ;; \1 "
+		   "\\((base64-decode-string \\)" "\\\\"  ;; \2 \
+		   "\\(\".*\\)" "\\\\"                    ;; \3 \
+		   "\\(\")\\)" "\"$"))                    ;; \4 "
+      (replace-match "\\1\\2\\3\\4")
+      (beginning-of-line)
+      (insert " ;; variable encoded due to non-printable characters\n"))
+    (forward-line 1)
+
+    ;; Reset VARSYM to old value.
+    (with-current-buffer reporter-eval-buffer
+      (set varsym val))))
+
+(defun tramp-load-report-modules ()
+  "Load needed modules for reporting."
 
   ;; We load message.el and mml.el from Gnus.
   (if (featurep 'xemacs)
@@ -7324,9 +7363,12 @@ report.
     (require 'message nil 'noerror)
     (require 'mml nil 'noerror))
   (when (functionp 'message-mode)
-    (funcall 'message-mode))
+    (funcall (symbol-function 'message-mode)))
   (when (functionp 'mml-mode)
-    (funcall 'mml-mode t))
+    (funcall (symbol-function 'mml-mode) t)))
+
+(defun tramp-append-tramp-buffers ()
+  "Append Tramp buffers into the bug report."
 
   (when (and
 	 (eq major-mode 'message-mode)
@@ -7380,10 +7422,10 @@ Therefore, the contents of files might be included in the debug buffer(s).")
 	      (goto-char (point-max))
 	      (insert "\n\n")
 	      (dolist (buffer buffer-list)
-		(mml-insert-empty-tag
-		 'part 'type "text/plain" 'encoding "base64"
-		 'disposition "attachment" 'buffer (buffer-name buffer)
-		 'description (buffer-name buffer)))
+		(funcall (symbol-function 'mml-insert-empty-tag)
+			 'part 'type "text/plain" 'encoding "base64"
+			 'disposition "attachment" 'buffer (buffer-name buffer)
+			 'description (buffer-name buffer)))
 	      (set-buffer-modified-p nil))
 
 	  ;; Don't send.  Delete the message buffer.
