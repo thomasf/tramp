@@ -1031,7 +1031,7 @@ Derived from `tramp-postfix-multi-hop-format'."
   :type 'regexp)
 
 (defcustom tramp-user-regexp
-  "[^:@/ \t]*"
+  "[^:/ \t]*"
   "*Regexp matching user names."
   :group 'tramp
   :type 'regexp)
@@ -3503,7 +3503,7 @@ the result will be a local, non-Tramp, filename."
 ;; Remote commands.
 
 (defvar tramp-async-proc nil
-  "Global variable keeping asyncronous process object.
+  "Global variable keeping asynchronous process object.
 Used in `tramp-handle-shell-command'")
 
 (defun tramp-handle-shell-command (command &optional output-buffer error-buffer)
@@ -3843,7 +3843,7 @@ This will break if COMMAND prints a newline, followed by the value of
   ;;              (string= lockname filename))
   ;;    (error
   ;;     "tramp-handle-write-region: LOCKNAME must be nil or equal FILENAME"))
-  ;; XEmacs takes a coding system as the sevent argument, not `confirm'
+  ;; XEmacs takes a coding system as the seventh argument, not `confirm'
   (when (and (not (featurep 'xemacs))
 	     confirm (file-exists-p filename))
     (unless (y-or-n-p (format "File %s exists; overwrite anyway? "
