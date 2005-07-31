@@ -1,3 +1,10 @@
+2005-07-31  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-message): Insert "\n" if not being at beginning
+	of line.
+	(tramp-find-shell): Use `tramp-barf-if-no-shell-prompt' for code
+	sequence with same logic.
+
 2005-07-26  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-user-regexp): Allow "@" as part of user name.

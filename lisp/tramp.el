@@ -1914,7 +1914,9 @@ This function expects to be called from the tramp buffer only!"
 	  tramp-current-multi-method tramp-current-method
 	  tramp-current-user tramp-current-host))
         (goto-char (point-max))
-        (tramp-insert-with-face
+	(unless (bolp)
+	  (insert "\n"))
+	(tramp-insert-with-face
          'italic
          (concat "# " (apply #'format fmt-string args) "\n"))))))
 
@@ -5124,12 +5126,9 @@ file exists and nonzero exit status otherwise."
       (tramp-send-command
        multi-method method user host
        (concat "PS1='$ ' exec " shell)) ;
-      (unless (tramp-wait-for-regexp
-               (get-buffer-process (current-buffer))
-               60 (format "\\(\\(%s\\)\\|\\(%s\\)\\)\\'"
-			  tramp-shell-prompt-pattern shell-prompt-pattern))
-        (pop-to-buffer (buffer-name))
-        (error "Couldn't find remote `%s' prompt" shell))
+      (tramp-barf-if-no-shell-prompt
+       (get-buffer-process (current-buffer))
+       60 "Couldn't find remote `%s' prompt" shell)
       (tramp-message
        9 "Setting remote shell prompt...")
       ;; Douglas Gray Stephens <DGrayStephens@slb.com> says that we
