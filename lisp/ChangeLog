@@ -1,3 +1,30 @@
+2005-08-07  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.50 released.
+
+	* tramp.el: Remove defvar of `last-coding-system-used' in the
+	XEmacs case; not necessary anymore.
+	(tramp-handle-set-visited-file-modtime)
+	(tramp-handle-insert-file-contents)
+	(tramp-handle-write-region): No special handling for
+	`last-coding-system-used, because this is done in
+	`tramp-accept-process-output' now.
+	(tramp-accept-process-output): New defun.
+	(tramp-process-one-action, tramp-process-one-multi-action)
+	(tramp-wait-for-regexp, tramp-wait-for-output)
+	(tramp-discard-garbage-erase-buffer): Call it.  Reported by David
+	Howells <dhowells@redhat.com>.
+	(clear-visited-file-modtime): Defadvice removed.  The check for
+	unset buffer's modtime does not need to be based on
+	`tramp-buffer-file-attributes'.  Suggested by RMS.
+
+	* tramp-smb.el: Remove defvar of `last-coding-system-used' in the
+	XEmacs case; not necessary anymore.
+	(tramp-smb-handle-write-region): No special handling for
+	`last-coding-system-used, because this is done in
+	`tramp-accept-process-output' now.
+	(tramp-smb-wait-for-output): Call `tramp-accept-process-output'.
+
 2005-08-01  Thien-Thi Nguyen  <ttn@gnu.org>
 
 	Update years in copyright notice.
@@ -1846,7 +1873,7 @@
 
 	* tramp.el (tramp-advice-find-file-name-handler): Remove defadvice
 	because it might be not a good idea to hook into Emacs built-in
-	subroutiones. Suggested by RMS.
+	subroutiones.  Suggested by RMS.
 	(tramp-primitive-file-name): Handle all primitives now.
 	(tramp-file-name-handler): Allow call of
 	`tramp-ftp-file-name-handler' only for functions defined in
