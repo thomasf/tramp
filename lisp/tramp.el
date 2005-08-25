@@ -842,7 +842,7 @@ which should work well in many cases."
   :type 'regexp)
 
 (defcustom tramp-password-prompt-regexp
-  "^.*\\([pP]assword\\|passphrase.*\\):\^@? *"
+  "^.*\\([pP]assword\\|passphrase\\).*:\^@? *"
   "*Regexp matching password-like prompts.
 The regexp should match at end of buffer.
 
@@ -1404,6 +1404,11 @@ If your Emacs is buggy, the code stops and gives you an indication
 about the value `tramp-chunksize' should be set.  Maybe you could just
 experiment a bit, e.g. changing the values of `init' and `step'
 in the third line of the code.
+
+When it is necessary to set `tramp-chunksize', you might consider to
+use an out-of-the-band method (like \"scp\") instead of an internal one
+(like \"ssh\"), because setting `tramp-chunksize' to non-nil decreases
+performance.
 
 Please raise a bug report via \"M-x tramp-bug\" if your system needs
 this variable to be set as well."
@@ -6971,7 +6976,7 @@ as default."
       ;; auto-saved file belonging to another original file.  This could
       ;; be a security threat.
       (set-file-modes buffer-auto-save-file-name
-		      (or (file-modes bfn) #o600)))))
+		      (or (file-modes bfn) (tramp-octal-to-decimal "0600"))))))
 
 (unless (or (> emacs-major-version 21)
 	    (and (featurep 'xemacs)
