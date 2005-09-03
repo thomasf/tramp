@@ -1,3 +1,12 @@
+2005-09-03  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-handle-set-visited-file-modtime)
+	(tramp-handle-insert-file-contents)
+	(tramp-handle-write-region): Insert special handling for
+	`last-coding-system-used' again, it still seems to be
+	necessary (unlike stated before).  Reported by Toshinori Sugita
+	<sugita@d-pad.co.jp>
+
 2005-08-31  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-file-name-handler-alist)
@@ -31,7 +40,7 @@
 	(tramp-handle-set-visited-file-modtime)
 	(tramp-handle-insert-file-contents)
 	(tramp-handle-write-region): No special handling for
-	`last-coding-system-used, because this is done in
+	`last-coding-system-used', because this is done in
 	`tramp-accept-process-output' now.
 	(tramp-accept-process-output): New defun.
 	(tramp-process-one-action, tramp-process-one-multi-action)

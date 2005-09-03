@@ -2396,11 +2396,14 @@ target of the symlink differ."
 	   (buffer-name)))
   (if time-list
       (tramp-run-real-handler 'set-visited-file-modtime (list time-list))
-    (let ((f (buffer-file-name)))
+    (let ((f (buffer-file-name))
+	  coding-system-used)
       (with-parsed-tramp-file-name f nil
 	(let* ((attr (file-attributes f))
 	       ;; '(-1 65535) means file doesn't exists yet.
 	       (modtime (or (nth 5 attr) '(-1 65535))))
+	  (when (boundp 'last-coding-system-used)
+	    (setq coding-system-used (symbol-value 'last-coding-system-used)))
 	  ;; We use '(0 0) as a don't-know value.  See also
 	  ;; `tramp-handle-file-attributes-with-ls'.
 	  (if (not (equal modtime '(0 0)))
@@ -2415,6 +2418,8 @@ target of the symlink differ."
 	      (setq attr (buffer-substring (point)
 					   (progn (end-of-line) (point)))))
 	    (setq tramp-buffer-file-attributes attr))
+	  (when (boundp 'last-coding-system-used)
+	    (set 'last-coding-system-used coding-system-used))
 	  nil)))))
 
 ;; CCC continue here
@@ -3775,7 +3780,7 @@ This will break if COMMAND prints a newline, followed by the value of
 			      'insert-file-contents)
 		      'file-local-copy)))
 	       (file-local-copy filename)))
-	    (result nil))
+	    coding-system-used result)
 	(when visit
 	  (setq buffer-file-name filename)
 	  (set-visited-file-modtime)
@@ -3784,10 +3789,15 @@ This will break if COMMAND prints a newline, followed by the value of
 	 multi-method method user host
 	 9 "Inserting local temp file `%s'..." local-copy)
 	(setq result (insert-file-contents local-copy nil beg end replace))
+	;; Now `last-coding-system-used' has right value.  Remember it.
+	(when (boundp 'last-coding-system-used)
+	  (setq coding-system-used (symbol-value 'last-coding-system-used)))
 	(tramp-message-for-buffer
 	 multi-method method user host
 	 9 "Inserting local temp file `%s'...done" local-copy)
 	(delete-file local-copy)
+	(when (boundp 'last-coding-system-used)
+	  (set 'last-coding-system-used coding-system-used))
 	(list (expand-file-name filename)
 	      (second result))))))
 
@@ -3901,6 +3911,13 @@ Returns a file name in `tramp-auto-save-directory' for autosaving this file."
 	  (loc-dec (tramp-get-local-decoding multi-method method user host))
 	  (trampbuf (get-buffer-create "*tramp output*"))
 	  (modes (file-modes filename))
+	  ;; We use this to save the value of `last-coding-system-used'
+	  ;; after writing the tmp file.  At the end of the function,
+	  ;; we set `last-coding-system-used' to this saved value.
+	  ;; This way, any intermediary coding systems used while
+	  ;; talking to the remote shell or suchlike won't hose this
+	  ;; variable.  This approach was snarfed from ange-ftp.el.
+	  coding-system-used
 	  tmpfil)
       ;; Write region into a tmp file.  This isn't really needed if we
       ;; use an encoding function, but currently we use it always
@@ -3917,6 +3934,9 @@ Returns a file name in `tramp-auto-save-directory' for autosaving this file."
        (if confirm ; don't pass this arg unless defined for backward compat.
 	   (list start end tmpfil append 'no-message lockname confirm)
 	 (list start end tmpfil append 'no-message lockname)))
+      ;; Now, `last-coding-system-used' has the right value.  Remember it.
+      (when (boundp 'last-coding-system-used)
+	(setq coding-system-used (symbol-value 'last-coding-system-used)))
       ;; The permissions of the temporary file should be set.  If
       ;; filename does not exist (eq modes nil) it has been renamed to
       ;; the backup file.  This case `save-buffer' handles
@@ -4023,6 +4043,9 @@ Returns a file name in `tramp-auto-save-directory' for autosaving this file."
 	 ;; We must pass modtime explicitely, because filename can be different
 	 ;; from (buffer-file-name), f.e. if `file-precious-flag' is set.
 	 (nth 5 (file-attributes filename))))
+      ;; Make `last-coding-system-used' have the right value.
+      (when (boundp 'last-coding-system-used)
+	(set 'last-coding-system-used coding-system-used))
       (when (or (eq visit t)
 		(eq visit nil)
 		(stringp visit))
