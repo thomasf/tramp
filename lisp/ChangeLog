@@ -1,3 +1,7 @@
+2005-10-09  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-md5-function): Fix typo in error message.
+
 2005-10-08  Michael Albinus  <michael.albinus@gmx.de>
 
 	Version 2.0.51 released.

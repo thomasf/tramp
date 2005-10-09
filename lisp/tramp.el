@@ -1442,7 +1442,7 @@ the visited file modtime.")
 	((fboundp 'md5-encode)
 	 (lambda (x) (base64-encode-string
 		      (funcall (symbol-function 'md5-encode) x))))
-	(t (error "Coulnd't find an `md5' function")))
+	(t (error "Couldn't find an `md5' function")))
   "Function to call for running the MD5 algorithm.")
 
 (defvar tramp-end-of-output
