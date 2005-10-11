@@ -68,7 +68,10 @@
 ;; The Tramp version number and bug report address, as prepared by configure.
 (require 'trampver)
 
-(require 'timer)
+(if (featurep 'xemacs)
+    (require 'timer-funcs)
+  (require 'timer))
+
 (require 'format-spec)                  ;from Gnus 5.8, also in tar ball
 ;; As long as password.el is not part of (X)Emacs, it shouldn't
 ;; be mandatory

@@ -1,3 +1,8 @@
+2005-10-11  Steve Youngs  <steve@sxemacs.org>
+
+	* tramp.el: Require `timer-funcs' instead of `timer' if in
+	XEmacs.
+
 2005-10-09  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-md5-function): Fix typo in error message.
