@@ -2012,6 +2012,7 @@ The intent is to protect against `obsolete variable' warnings."
      (let ((,variable ,value))
        ,@body)))
 (put 'tramp-let-maybe 'lisp-indent-function 2)
+(put 'tramp-let-maybe 'edebug-form-spec t)
 
 ;;; Config Manipulation Functions:
 
@@ -3501,15 +3502,18 @@ the result will be a local, non-Tramp, filename."
 	    (erase-buffer)))
 	;; No tilde characters in file name, do normal
 	;; expand-file-name (this does "/./" and "/../").  We bind
-	;; directory-sep-char here for XEmacs on Windows, which
-	;; would otherwise use backslash.
+	;; directory-sep-char here for XEmacs on Windows, which would
+	;; otherwise use backslash.  `default-directory' is bound to
+	;; "/", because on Windows there would be problems with UNC
+	;; shares or Cygwin mounts.
 	(tramp-let-maybe directory-sep-char ?/
-	  (tramp-make-tramp-file-name
-	   multi-method (or method (tramp-find-default-method user host))
-	   user host
-	   (tramp-drop-volume-letter
-	    (tramp-run-real-handler 'expand-file-name
-				    (list localname)))))))))
+	  (let ((default-directory "/"))
+	    (tramp-make-tramp-file-name
+	     multi-method (or method (tramp-find-default-method user host))
+	     user host
+	     (tramp-drop-volume-letter
+	      (tramp-run-real-handler 'expand-file-name
+				      (list localname))))))))))
 
 ;; old version follows.  it uses ".." to cross file handler
 ;; boundaries.
