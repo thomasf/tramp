@@ -5368,6 +5368,9 @@ The terminal type can be configured with `tramp-terminal-type'."
 	       (tramp-message 10 "'set mode' error ignored.")
 	       (tramp-message 9 "Process has finished.")
 	       (throw 'tramp-action 'ok))
+	   (goto-char (point-min))
+	   (when (re-search-forward "^.cp.?: \\(.+: Permission denied.?\\)$" nil t)
+	     (error "Remote host: %s" (match-string 1)))
 	   (tramp-message 9 "Process has died.")
 	   (throw 'tramp-action 'process-died)))
 	(t nil)))
@@ -5536,6 +5539,7 @@ Maybe the different regular expressions need to be tuned.
 		   (or user (user-login-name)) host method)
     (let ((process-environment (copy-sequence process-environment)))
       (setenv "TERM" tramp-terminal-type)
+      (setenv "PS1" "$ ")
       (let* ((default-directory (tramp-temporary-file-directory))
 	     ;; If we omit the conditional here, then we would use
 	     ;; `undecided-dos' in some cases.  With the conditional,
@@ -5612,6 +5616,7 @@ arguments, and xx will be used as the host name to connect to.
 	(setq login-args (cons "-p" (cons (match-string 2 host) login-args)))
 	(setq real-host (match-string 1 host)))
       (setenv "TERM" tramp-terminal-type)
+      (setenv "PS1" "$ ")
       (let* ((default-directory (tramp-temporary-file-directory))
 	     ;; If we omit the conditional, we would use
 	     ;; `undecided-dos' in some cases.  With the conditional,
@@ -5663,6 +5668,7 @@ prompt than you do, so it is not at all unlikely that the variable
 		   (or user "<root>") method)
     (let ((process-environment (copy-sequence process-environment)))
       (setenv "TERM" tramp-terminal-type)
+      (setenv "PS1" "$ ")
       (let* ((default-directory (tramp-temporary-file-directory))
 	     ;; If we omit the conditional, we use `undecided-dos' in
 	     ;; some cases.  With the conditional, we use nil in these
@@ -5727,6 +5733,7 @@ log in as u2 to h2."
     (tramp-message 7 "Opening `%s' connection..." multi-method)
     (let ((process-environment (copy-sequence process-environment)))
       (setenv "TERM" tramp-terminal-type)
+      (setenv "PS1" "$ ")
       (let* ((default-directory (tramp-temporary-file-directory))
 	     ;; If we omit the conditional, we use `undecided-dos' in
 	     ;; some cases.  With the conditional, we use nil in these

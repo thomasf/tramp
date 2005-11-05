@@ -1,9 +1,26 @@
+2005-11-05  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-open-connection-telnet)
+	(tramp-open-connection-rsh, tramp-open-connection-su)
+	(tramp-open-connection-multi): Set PS1 to "$ ".  Otherwise, a
+	local shell prompt could hurt.  Reported by Romain Francoise
+	<romain@orebokech.com>.
+
+2005-11-02  Lars Hansen  <larsh@soem.dk>
+
+	* tramp.el (tramp-action-out-of-band): Handle scp message
+	"Permission denied".
+
 2005-10-30  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-chunksize): Escape parentheses in docstring
 	starting at beginning of line.  Fontification is messed up when
 	`open-paren-in-column-0-is-defun-start' set to t.  Reported by
 	John Paul Wallington <jpw@pobox.com>.
+
+2005-10-28  Richard M. Stallman  <rms@gnu.org>
+
+	* tramp.el (tramp-completion-mode): defvar moved up.
 
 2005-10-23  Michael Albinus  <michael.albinus@gmx.de>
 
