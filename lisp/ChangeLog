@@ -1,3 +1,9 @@
+2005-11-09  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-handle-expand-file-name): Use "~root" for tilde
+	expansion in case of su(do)? methods.  The home directory of the
+	local user will be taken else.
+
 2005-11-05  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-open-connection-telnet)

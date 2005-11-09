@@ -3491,6 +3491,17 @@ the result will be a local, non-Tramp, filename."
 	(when (string-match "\\`\\(~[^/]*\\)\\(.*\\)\\'" localname)
 	  (let ((uname (match-string 1 localname))
 		(fname (match-string 2 localname)))
+	    ;; We cannot simply apply "~/", because under sudo "~/" is
+	    ;; expanded to the local user home directory but to the
+	    ;; root home directory.  On the other hand, using always
+	    ;; the default user name for tilde expansion is not
+	    ;; appropriate either, because ssh and companions might
+	    ;; use a user name from the config file.
+	    (when (and (string-equal uname "~")
+		       (string-match
+			"\\`su\\(do\\)?\\'"
+			(tramp-find-method multi-method method user host)))
+	      (setq uname (concat uname (or user "root"))))
 	    ;; CCC fanatic error checking?
 	    (set-buffer (tramp-get-buffer multi-method method user host))
 	    (erase-buffer)
