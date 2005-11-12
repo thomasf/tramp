@@ -2374,8 +2374,8 @@ target of the symlink differ."
      ;; 8. File modes, as a string of ten letters or dashes as in ls -l.
      res-filemodes
      ;; 9. t iff file's gid would change if file were deleted and
-     ;; recreated.
-     nil				;hm?
+     ;; recreated.  Will be set in `tramp-convert-file-attributes'
+     t
      ;; 10. inode number.
      res-inode
      ;; 11. Device number.  Will be replaced by a virtual device number.
@@ -2631,9 +2631,12 @@ of."
 (defun tramp-handle-file-ownership-preserved-p (filename)
   "Like `file-ownership-preserved-p' for tramp files."
   (with-parsed-tramp-file-name filename nil
-    (or (not (file-exists-p filename))
-	;; Existing files must be writable.
-	(zerop (tramp-run-test "-O" filename)))))
+    (let ((attributes (file-attributes filename)))
+      ;; Return t if the file doesn't exist, since it's true that no
+      ;; information would be lost by an (attempted) delete and create.
+      (or (null attributes)
+	  (= (nth 2 attributes)
+	     (tramp-get-remote-uid multi-method method user host))))))
 
 ;; Other file name ops.
 
@@ -6225,8 +6228,17 @@ locale to C and sets up the remote shell search path."
 				   "ln" tramp-remote-path nil)))
     (when ln
       (tramp-set-connection-property "ln" ln multi-method method user host)))
+  ;; Set uid and gid.
   (erase-buffer)
+  (tramp-send-command multi-method method user host "id -u; id -g")
+  (tramp-wait-for-output)
+  (goto-char (point-min))
+  (tramp-set-connection-property
+   "uid" (read (current-buffer)) multi-method method user host)
+  (tramp-set-connection-property
+   "gid" (read (current-buffer)) multi-method method user host)
   ;; Find the right encoding/decoding commands to use.
+  (erase-buffer)
   (unless (tramp-method-out-of-band-p multi-method method user host)
     (tramp-find-inline-encoding multi-method method user host))
   ;; If encoding/decoding command are given, test to see if they work.
@@ -6722,6 +6734,10 @@ Return ATTR."
   (unless (stringp (nth 8 attr))
     ;; Convert file mode bits to string.
     (setcar (nthcdr 8 attr) (tramp-file-mode-from-int (nth 8 attr))))
+  ;; Set file's gid change bit.
+  (setcar (nthcdr 9 attr)
+	  (not (= (nth 2 attr)
+		  (tramp-get-remote-gid multi-method method user host))))
   ;; Set virtual device number.
   (setcar (nthcdr 11 attr)
           (tramp-get-device multi-method method user host))
@@ -6978,6 +6994,12 @@ If both MULTI-METHOD and METHOD are nil, do a lookup in
 
 (defun tramp-get-remote-ln (multi-method method user host)
   (tramp-get-connection-property "ln" nil multi-method method user host))
+
+(defun tramp-get-remote-uid (multi-method method user host)
+  (tramp-get-connection-property "uid" nil multi-method method user host))
+
+(defun tramp-get-remote-gid (multi-method method user host)
+  (tramp-get-connection-property "gid" nil multi-method method user host))
 
 ;; Get a property of a TRAMP connection.
 (defun tramp-get-connection-property
