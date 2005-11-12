@@ -6736,7 +6736,7 @@ Return ATTR."
     (setcar (nthcdr 8 attr) (tramp-file-mode-from-int (nth 8 attr))))
   ;; Set file's gid change bit.
   (setcar (nthcdr 9 attr)
-	  (not (= (nth 2 attr)
+	  (not (= (nth 3 attr)
 		  (tramp-get-remote-gid multi-method method user host))))
   ;; Set virtual device number.
   (setcar (nthcdr 11 attr)
