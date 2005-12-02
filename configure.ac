@@ -134,12 +134,6 @@ AC_SUBST(datadir)
 AC_PATH_LISPDIR
 AC_PATH_INFODIR
 
-# Create local info directory.
-if test ! -d info; then
-   AC_MSG_NOTICE([creating info/])
-   AS_MKDIR_P([info])
-fi
-
 # Check whether ftp-upload is available.  Necessary for maintainers only;
 # therefore there is no error or warning.
 AC_CHECK_PROG([FTP_UPLOAD], [ftp-upload], [yes], [no])
