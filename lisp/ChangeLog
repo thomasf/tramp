@@ -1,3 +1,7 @@
+2005-12-18  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-handle-expand-file-name): Remove double slash.
+
 2005-11-13  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp-util.el (top): Fix compilation warning.

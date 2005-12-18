@@ -3517,6 +3517,10 @@ the result will be a local, non-Tramp, filename."
 	    (setq uname (buffer-substring (point) (tramp-line-end-position)))
 	    (setq localname (concat uname fname))
 	    (erase-buffer)))
+	;; There might be a double slash, for example when "~/"
+	;; expands to "/". Remove this.
+	(while (string-match "//" localname)
+	  (setq localname (replace-match "/" t t localname)))
 	;; No tilde characters in file name, do normal
 	;; expand-file-name (this does "/./" and "/../").  We bind
 	;; directory-sep-char here for XEmacs on Windows, which would
