@@ -111,7 +111,7 @@ Japanese translation}.
 @end ifset
 
 The latest release of @value{tramp} is available for
-@uref{http://ftp.gnu.org/gnu/tramp/, download}, or you may see
+@uref{ftp://ftp.gnu.org/gnu/tramp/, download}, or you may see
 @ref{Obtaining Tramp} for more details, including the CVS server
 details.
 
@@ -378,7 +378,7 @@ behind the scenes when you open a file with @value{tramp}.
 
 @value{tramp} is freely available on the Internet and the latest
 release may be downloaded from
-@uref{http://ftp.gnu.org/gnu/tramp/}. This release includes the full
+@uref{ftp://ftp.gnu.org/gnu/tramp/}. This release includes the full
 documentation and code for @value{tramp}, suitable for installation.
 But GNU Emacs (22 or later) includes @value{tramp} already, and there
 is a @value{tramp} package for XEmacs, as well.  So maybe it is easier
@@ -1946,7 +1946,9 @@ will automatically generate a buffer with the details of your system and
 
 When submitting a bug report, please try to describe in excruciating
 detail the steps required to reproduce the problem, the setup of the
-remote machine and any special conditions that exist.
+remote machine and any special conditions that exist.  You should also
+check that your problem is not described already in @xref{Frequently
+Asked Questions}.
 
 If you can identify a minimal test case that reproduces the problem,
 include that with your bug report. This will make it much easier for the
@@ -1964,7 +1966,7 @@ Where can I get the latest @value{tramp}?
 @value{tramp} is available under the URL below.
 
 @noindent
-@uref{http://ftp.gnu.org/gnu/tramp/}
+@uref{ftp://ftp.gnu.org/gnu/tramp/}
 
 @noindent
 There is also a Savannah project page.
@@ -2000,6 +2002,35 @@ Web page with instructions:
 
 ??? Can somebody provide some information for getting it to work on NT
 Emacs?  I think there was some issue with @command{ssh}?
+
+
+@item
+@value{tramp} does not connect to the remote host
+
+When @value{tramp} does not connect to the remote host, there are two
+reasons heading the bug mailing list:
+
+@itemize @minus
+
+@item
+Unknown characters in the prompt
+
+@value{tramp} needs to recognize the prompt on the remote machine
+after execution any command.  This is not possible, when the prompt
+contains unknown characters like escape sequences for coloring.  This
+should be avoided on the remote side.  @xref{Remote shell setup}. for
+setting the regular expression detecting the prompt.
+
+@item
+@value{tramp} doesn't transfer strings with more than 500 characters
+correctly
+
+On some few systems, the implementation of @code{process-send-string}
+seems to be broken for longer strings.  This case, you should
+customize the variable @code{tramp-chunksize} to 500.  For a
+description how to determine whether this is necessary see the
+documentation of @code{tramp-chunksize}.
+@end itemize
 
 
 @item
@@ -2129,17 +2160,6 @@ if [ "$@{HISTSIZE-unset@}" != "unset" ] ; then
    unset HISTSIZE
 fi
 @end example
-
-
-@item
-@value{tramp} doesn't transfer strings with more than 500 characters
-correctly
-
-On some few systems, the implementation of @code{process-send-string}
-seems to be broken for longer strings.  This case, you should
-customize the variable @code{tramp-chunksize} to 500.  For a
-description how to determine whether this is necessary see the
-documentation of @code{tramp-chunksize}.
 @end itemize
 
 
