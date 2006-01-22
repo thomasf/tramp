@@ -1,3 +1,22 @@
+2006-01-22  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.52 released.
+
+	* tramp.el, tramp-ftp.el, tramp-util.el, tramp-vc.el: Add code for
+	unloading Tramp.  See comment before `tramp-unload-tramp' for
+	checklist.
+
+	* tramp.el (tramp-unload-file-name-handler-alist)
+	(tramp-unload-tramp): New defuns.
+	(tramp-advice-PC-expand-many-files): New defadvice.
+	(tramp-save-PC-expand-many-files, tramp-setup-complete) Defuns
+	removed.
+
+	* tramp-ftp.el (tramp-ftp-enable-ange-ftp): New defun.
+
+	* tramp-util.el (top): Apply `ignore' instead of `identity' for
+	byte-compiler pacification.
+
 2005-12-18  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-handle-expand-file-name): Remove double slash.

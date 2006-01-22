@@ -1,3 +1,9 @@
+2006-01-22  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.52 released.
+
+	* configure.ac: Bump version.
+
 2005-12-02  Michael Albinus  <michael.albinus@gmx.de>
 
 	* configure.ac: Remove creation of info directory.
