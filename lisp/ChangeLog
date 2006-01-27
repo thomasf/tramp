@@ -1,5 +1,8 @@
 2006-01-27  Michael Albinus  <michael.albinus@gmx.de>
 
+	* tramp.el: Add autoload for adding
+	`tramp-completion-file-name-handler' to `file-name-handler-alist'.
+
 	* tramp-vc.el (vc-user-login-name): Wrap defadvice with a test for
 	`process-file', in order to let it work for older Emacsen too.
 
