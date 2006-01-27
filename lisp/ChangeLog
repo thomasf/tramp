@@ -13,7 +13,7 @@
 
 	* tramp.el (tramp-unload-file-name-handler-alist)
 	(tramp-unload-tramp): New defuns.
-	(tramp-advice-PC-expand-many-files): New defadvice.
+	(tramp-advice-PC-expand-many-files): New defadvices.
 	(tramp-save-PC-expand-many-files, tramp-setup-complete) Defuns
 	removed.
 
