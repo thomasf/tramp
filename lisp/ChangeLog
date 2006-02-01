@@ -1,3 +1,9 @@
+2006-02-01  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-convert-file-attributes): Set file's gid change
+	bit only when id-format is 'integer.  Reported by Matt Hodges
+	<M.P.Hodges@rl.ac.uk>.
+
 2006-01-30  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp-smb.el (tramp-smb-wait-for-output): Wait always for the
