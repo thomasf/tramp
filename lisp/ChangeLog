@@ -1,3 +1,17 @@
+2006-02-12  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-remote-path): Add "/usr/xpg4/bin" on top,
+	because on Solaris a POSIX compatible "id" is needed.  Reported by
+	Magnus Henoch <mange@freemail.hu>.
+	(tramp-perl-encode, tramp-perl-decode): Adapt copyright years.
+
+	* tramp-uu.el, trampver.el.in: Adapt copyright years.
+
+2006-02-08  Sam Steingold  <sds@gnu.org>
+
+	* tramp.el (tramp-maybe-open-connection): Do not wait for
+	output from a dead connection.
+
 2006-02-01  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-convert-file-attributes): Set file's gid change
