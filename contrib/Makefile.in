@@ -30,11 +30,13 @@
 
 EMACS		= @EMACS@
 INSTALL		= install -m644
+MKDIR		= @mkdir -p
 RM		= -rm -f
 
 prefix		= @prefix@
 datadir		= @datadir@
 lispdir		= @lispdir@
+DESTDIR		=
 
 CLEAN_FILES	= @TRAMP_CLEAN_FILES@
 
@@ -44,7 +46,8 @@ all: $(addsuffix .elc, $(basename $(wildcard *.el)))
 	$(EMACS) --no-site-file -batch -f batch-byte-compile $?
 
 install: $(wildcard *.el *.elc)
-	$(INSTALL) $? $(lispdir)
+	$(MKDIR) $(DESTDIR)$(lispdir)
+	$(INSTALL) $? $(DESTDIR)$(lispdir)
 
 clean:
 	$(RM) $(CLEAN_FILES)

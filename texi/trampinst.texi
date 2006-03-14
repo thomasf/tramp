@@ -125,6 +125,13 @@ make
 make lispdir=~/elisp infodir=~/info install
 @end example
 
+@command{make} supports the @option{DESTDIR} variable for staged
+installation; @inforef{Command Variables, ,standards}:
+
+@example
+make DESTDIR=/tmp install
+@end example
+
 Running @command{configure} might result in errors or warnings.  The
 output explains in detail what's going wrong.
 

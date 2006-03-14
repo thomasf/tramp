@@ -83,6 +83,10 @@ in `$HOME/info', you would type:
 	make
 	make lispdir=$HOME/elisp infodir=$HOME/info install
 
+`make' supports the `DESTDIR' variable for staged installation:
+
+	make DESTDIR=/tmp install
+
 Running `configure' might result in errors or warnings.  The output
 explains in detail what's going wrong.
 
