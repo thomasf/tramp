@@ -1,3 +1,7 @@
+2006-04-17  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.53 released.
+
 2006-03-14  Michael Albinus  <michael.albinus@gmx.de>
 
 	* Makefile.in: Implement DESTDIR support.
