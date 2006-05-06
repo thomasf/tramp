@@ -1,3 +1,9 @@
+2006-05-06  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.texi (Filename completion): Completion of remote files'
+	method, user name and host name is active only in partial
+	completion mode.
+
 2006-04-17  Michael Albinus  <michael.albinus@gmx.de>
 
 	Version 2.0.53 released.

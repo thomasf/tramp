@@ -1,3 +1,8 @@
+2006-05-06  Michael Albinus  <michael.albinus@gmx.de>
+
+	* configure.ac: Bump version (to 2.0.54-pre).  Update merge
+	version to 2.0.53.
+
 2006-04-17  Michael Albinus  <michael.albinus@gmx.de>
 
 	Version 2.0.53 released.
