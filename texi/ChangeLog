@@ -1,3 +1,10 @@
+2006-08-29  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.54 released.
+
+	* tramp.texi (Bug Reports): The Tramp mailing list is moderated
+	now.  Suggested by Adrian Phillips <a.phillips@met.no>.
+
 2006-06-05  Romain Francoise  <romain@orebokech.com>
 
 	* tramp.texi (Inline methods, Password caching)

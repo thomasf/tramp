@@ -1,3 +1,11 @@
+2006-08-29  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.54 released.
+
+	* tramp.el (tramp-convert-file-attributes): Call `eql' instead of
+	`=', because `tramp-get-remote-gid' might not always return an
+	integer when expected.
+
 2006-07-02  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-handle-shell-command): Preserve current-buffer.

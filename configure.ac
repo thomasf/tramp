@@ -30,7 +30,7 @@ AC_PREREQ([2.50])
 
 # Initialize configure script.  This is the only point Tramp revision
 # needs to be set.
-AC_INIT([Tramp], [2.0.54-pre], [tramp-devel@gnu.org])
+AC_INIT([Tramp], [2.0.54], [tramp-devel@gnu.org])
 AC_MSG_NOTICE([$PACKAGE_STRING])
 
 # The last version of Tramp that was merged into the Emacs CVS
@@ -65,7 +65,7 @@ AC_CONTRIB_FILES([format_spec],            [format_spec.el])
 AC_CONTRIB_FILES([md5],                    [md5.el],         [optional])
 AC_CONTRIB_FILES([password_cache_add],     [password.el],    [optional])
 AC_CONTRIB_FILES([uudecode_decode_region], [uudecode.el])
-dnl run-at-time for XEmacs can be find in fsf-compat. Unfortunately,
+dnl run-at-time for XEmacs can be found in fsf-compat. Unfortunately,
 dnl password.el doesn't honor it, and it requires run-at-time mandatory.
 if test `echo "${EMACS}" | grep xemacs`; then
    AC_CONTRIB_FILES([],                     [run_at_time.el], [optional])
@@ -97,7 +97,7 @@ if test "${TEXI2DVI}" = no; then
    AC_MSG_WARN([texi2dvi not found])
 else
    AC_MSG_CHECKING([for reasonable texi2dvi version])
-   ${TEXI2DVI} -b -q -c texi/test.texi 2>/dev/null >/dev/null
+   ${TEXI2DVI} -b -q -c -o /dev/null texi/test.texi 2>/dev/null >/dev/null
    if test $? -eq 0; then
       AC_MSG_RESULT([ok])
    else
@@ -123,22 +123,27 @@ fi
 # Necessary for maintainers only.
 AC_EMACS_INSTALL
 
-# Check japanese manual
+# Check japanese manual.
 AC_JA_MANUAL
 
 # Check target installation directories.
-AC_SUBST(prefix)
-AC_SUBST(prefix_default, $ac_default_prefix)
-AC_SUBST(datadir)
-
 AC_PATH_LISPDIR
 AC_PATH_INFODIR
+
+AC_SUBST(prefix)
+AC_SUBST(prefix_default)
+AC_SUBST(datadir)
+AC_SUBST(datadir_default)
+AC_SUBST(lispdir)
+AC_SUBST(lispdir_default)
+AC_SUBST(infodir)
+AC_SUBST(infodir_default)
 
 # Check whether ftp-upload is available.  Necessary for maintainers only;
 # therefore there is no error or warning.
 AC_CHECK_PROG([FTP_UPLOAD], [ftp-upload], [yes], [no])
 
-# Define files to be cleaned up.  Applicable in all directories
+# Define files to be cleaned up.  Applicable in all directories.
 TRAMP_CLEAN_FILES=".\\\\\#* \\\\\#* .*~ *~"
 TRAMP_CLEAN_FILES="$TRAMP_CLEAN_FILES *.aux *.cp *.cps *.diff *.dvi *.elc"
 TRAMP_CLEAN_FILES="$TRAMP_CLEAN_FILES *.fn *.fns *.html *.info *.ky *.log"
@@ -148,7 +153,7 @@ AC_SUBST([TRAMP_CLEAN_FILES])
 # if they are created with the wrong Emacs flavor.
 rm -f lisp/*.elc contrib/*.elc
 
-# Produce the Makefiles
+# Produce the Makefiles.
 TRAMP_CONFIG_FILES="Makefile contrib/Makefile"
 TRAMP_CONFIG_FILES="$TRAMP_CONFIG_FILES lisp/Makefile lisp/trampver.el"
 TRAMP_CONFIG_FILES="$TRAMP_CONFIG_FILES texi/Makefile texi/trampver.texi"

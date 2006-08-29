@@ -6767,8 +6767,8 @@ Return ATTR."
   ;; Set file's gid change bit.  Possible only when id-format is 'integer.
   (when (numberp (nth 3 attr))
     (setcar (nthcdr 9 attr)
-	    (not (= (nth 3 attr)
-		    (tramp-get-remote-gid multi-method method user host)))))
+	    (not (eql (nth 3 attr)
+		      (tramp-get-remote-gid multi-method method user host)))))
   ;; Set virtual device number.
   (setcar (nthcdr 11 attr)
           (tramp-get-device multi-method method user host))
