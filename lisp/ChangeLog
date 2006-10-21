@@ -1,3 +1,12 @@
+2006-10-21  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-yn-prompt-regexp): Add question from plink.
+	(tramp-completion-mode): Remove clause (not
+	tramp-unified-filenames), because the function is called in other
+	context too, where this check results in wrong results in the
+	XEmacs case on Windows.
+	(tramp-touch): UTC handling is not possible for XEmacs.
+
 2006-08-29  Michael Albinus  <michael.albinus@gmx.de>
 
 	Version 2.0.54 released.

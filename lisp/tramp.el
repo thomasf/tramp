@@ -914,8 +914,10 @@ See also `tramp-yn-prompt-regexp'."
   :type 'regexp)
 
 (defcustom tramp-yn-prompt-regexp
-  (concat (regexp-opt '("Store key in cache? (y/n)") t)
-	  "\\s-*")
+  (concat "\\("
+	  (regexp-opt '("Store key in cache? (y/n)") t)
+	  (regexp-opt '("Update cached key? (y/n, Return cancels connection)") t)
+	  "\\)\\s-*")
   "Regular expression matching all y/n queries which need to be confirmed.
 The confirmation should be done with y or n.
 The regexp should match at end of buffer.
@@ -4463,7 +4465,6 @@ Falls back to normal file name handler if no tramp file name handler exists."
   "Checks whether method / user name / host name completion is active."
   (cond
    (tramp-completion-mode t)
-   ((not tramp-unified-filenames) t)
    ((string-match "^/.*:.*:$" file) nil)
    ((string-match
      (concat tramp-prefix-regexp
@@ -5037,13 +5038,23 @@ hosts, or files, disagree."
 (defun tramp-touch (file time)
   "Set the last-modified timestamp of the given file.
 TIME is an Emacs internal time value as returned by `current-time'."
-  (let ((touch-time (format-time-string "%Y%m%d%H%M.%S" time t)))
+  (let* ((utc
+	  ;; With GNU Emacs, `format-time-string' has an optional
+	  ;; parameter UNIVERSAL.  This is preferred.
+	  (and (functionp 'subr-arity)
+	       (= 3 (cdr (funcall (symbol-function 'subr-arity)
+				  (symbol-function 'format-time-string))))))
+	 (touch-time
+	  (if utc
+	      (format-time-string "%Y%m%d%H%M.%S" time t)
+	    (format-time-string "%Y%m%d%H%M.%S" time))))
     (if (tramp-tramp-file-p file)
 	(with-parsed-tramp-file-name file nil
 	  (let ((buf (tramp-get-buffer multi-method method user host)))
 	    (unless (zerop (tramp-send-command-and-check
 			    multi-method method user host
-			    (format "TZ=UTC; export TZ; touch -t %s %s"
+			    (format "%s touch -t %s %s"
+				    (if utc "TZ=UTC; export TZ;" "")
 				    touch-time
 				    localname)
 			    t))
