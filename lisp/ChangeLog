@@ -1,3 +1,15 @@
+2006-11-18  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (top): cl and custom are always required.
+
+2006-11-11  Glenn Morris  <rgm@gnu.org>
+
+	* tramp.el (tramp-unified-filenames): Improve previous doc fix.
+
+2006-11-10  Glenn Morris  <rgm@gnu.org>
+
+	* tramp.el (tramp-unified-filenames): Doc fix (Nil -> nil).
+
 2006-11-07  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-default-method): scp is the default method.
