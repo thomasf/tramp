@@ -673,8 +673,8 @@ various functions for details."
 
 (defcustom tramp-default-method
   (if (and (fboundp 'executable-find)
-	   (executable-find "plink"))
-      "plink"
+	   (executable-find "pscp"))
+      "pscp"
     "scp")
   "*Default method to use for transferring files.
 See `tramp-methods' for possibilities.
@@ -913,10 +913,10 @@ See also `tramp-yn-prompt-regexp'."
   :type 'regexp)
 
 (defcustom tramp-yn-prompt-regexp
-  (concat "\\("
-	  (regexp-opt '("Store key in cache? (y/n)") t)
-	  (regexp-opt '("Update cached key? (y/n, Return cancels connection)") t)
-	  "\\)\\s-*")
+  (concat
+   (regexp-opt '("Store key in cache? (y/n)"
+		 "Update cached key? (y/n, Return cancels connection)") t)
+   "\\s-*")
   "Regular expression matching all y/n queries which need to be confirmed.
 The confirmation should be done with y or n.
 The regexp should match at end of buffer.
@@ -942,6 +942,17 @@ The answer will be provided by `tramp-action-terminal', which see."
   "Regular expression matching keep-date problems in (s)cp operations.
 Copying has been performed successfully already, so this message can
 be ignored safely."
+  :group 'tramp
+  :type 'regexp)
+
+(defcustom tramp-copy-failed-regexp
+  (concat "\\(.+: "
+          (regexp-opt '("Permission denied"
+                        "not a regular file"
+                        "is a directory"
+                        "No such file or directory") t)
+          "\\)\\s-*")
+  "Regular expression matching copy problems in (s)cp operations."
   :group 'tramp
   :type 'regexp)
 
@@ -1342,6 +1353,7 @@ corresponding PATTERN matches, the ACTION function is called."
 (defcustom tramp-actions-copy-out-of-band
   '((tramp-password-prompt-regexp tramp-action-password)
     (tramp-wrong-passwd-regexp tramp-action-permission-denied)
+    (tramp-copy-failed-regexp tramp-action-copy-failed)
     (tramp-process-alive-regexp tramp-action-out-of-band))
   "List of pattern/action pairs.
 This list is used for copying/renaming with out-of-band methods.
@@ -3176,12 +3188,13 @@ be a local filename.  The method used must be an out-of-band method."
       (message "Transferring %s to %s..." filename newname)
 
       ;; Use rcp-like program for file transfer.
-      (let ((p (apply 'start-process (buffer-name trampbuf) trampbuf
-		      copy-program copy-args)))
-	(tramp-set-process-query-on-exit-flag p nil)
-	(tramp-process-actions p multi-method method user host
-			       tramp-actions-copy-out-of-band))
-      (kill-buffer trampbuf)
+      (unwind-protect
+          (let ((p (apply 'start-process (buffer-name trampbuf) trampbuf
+                          copy-program copy-args)))
+            (tramp-set-process-query-on-exit-flag p nil)
+            (tramp-process-actions p multi-method method user host
+                                   tramp-actions-copy-out-of-band))
+        (kill-buffer trampbuf))
       (message "Transferring %s to %s...done" filename newname)
 
       ;; Set the mode.
@@ -5364,6 +5377,11 @@ Returns nil if none was found, else the command is returned."
   (kill-process p)
   (throw 'tramp-action 'permission-denied))
 
+(defun tramp-action-copy-failed (p multi-method method user host)
+  "Signal copy failed."
+  (kill-process p)
+  (error "%s" (match-string 1)))
+
 (defun tramp-action-yesno (p multi-method method user host)
   "Ask the user for confirmation using `yes-or-no-p'.
 Send \"yes\" to remote process on confirmation, abort otherwise.
@@ -5420,9 +5438,6 @@ The terminal type can be configured with `tramp-terminal-type'."
 	       (tramp-message 10 "'set mode' error ignored.")
 	       (tramp-message 9 "Process has finished.")
 	       (throw 'tramp-action 'ok))
-	   (goto-char (point-min))
-	   (when (re-search-forward "^.cp.?: \\(.+: Permission denied.?\\)$" nil t)
-	     (error "Remote host: %s" (match-string 1)))
 	   (tramp-message 9 "Process has died.")
 	   (throw 'tramp-action 'process-died)))
 	(t nil)))
