@@ -1,3 +1,12 @@
+2006-12-04  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-methods): Add "ControlPath" and "ControlMaster"
+	to scp, scp1 and scp2 methods.  Suggested by Andreas Schwab
+	<schwab@suse.de>.
+	(tramp-do-copy-or-rename-file-out-of-band)
+	(tramp-open-connection-rsh): Compute format spec for ?t.
+	(tramp-process-actions): Trace command parameters.
+
 2006-11-24  Lars Hansen  <larsh@soem.dk>
 
 	* tramp.el (tramp-default-method): Under Windows, change from
