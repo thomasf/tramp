@@ -1,3 +1,10 @@
+2006-12-20  Michael Albinus  <albinus@arthur>
+
+	* tramp.el (tramp-handle-file-name-completion)
+	(tramp-completion-handle-file-name-completion): Handle optional
+	parameter PREDICATE.
+	(tramp-find-default-method): Add code for default values.
+
 2006-12-19  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-methods): Introduce new method `scpc'.  Remove
