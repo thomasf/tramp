@@ -4538,7 +4538,7 @@ Falls back to normal file name handler if no tramp file name handler exists."
     (member (match-string 1 file) (mapcar 'car tramp-methods)))
    ((or (equal last-input-event 'tab)
   	;; Emacs
-  	(and (integerp last-input-event)
+  	(and (wholenump last-input-event)
 	     (or
 	      ;; ?\t has event-modifier 'control
 	      (char-equal last-input-event ?\t)
