@@ -1,3 +1,9 @@
+2006-12-30  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.0.55 released.
+
+	* configure.ac: Bump version.
+
 2006-10-21  Michael Albinus  <michael.albinus@gmx.de>
 
 	* configure.ac: Bump version (to 2.0.55-pre).  Update merge
@@ -7,9 +13,9 @@
 
 	Version 2.0.54 released.
 
-	* configure.ac: Bump version. Backport from Tramp 2.1
+	* configure.ac: Bump version. Backport from Tramp 2.1.
 
-	* aclocal.m4: Backport from Tramp 2.1
+	* aclocal.m4: Backport from Tramp 2.1.
 
 2006-05-06  Michael Albinus  <michael.albinus@gmx.de>
 
