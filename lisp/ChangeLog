@@ -1,3 +1,10 @@
+2007-01-09  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el: (tramp-process-one-action): Remove `with-timeout'.
+	(tramp-process-actions): Add optional parameter TIMEOUT.
+	(tramp-open-connection-telnet, tramp-open-connection-rsh)
+	(tramp-open-connection-su): Add timeout of 60".
+
 2006-12-31  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-completion-mode): Use `natnump' instead of
