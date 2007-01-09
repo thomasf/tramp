@@ -2,6 +2,9 @@
 
 	* configure.ac: Bump version (to 2.0.56-pre).  Update merge
 	version to 2.0.55.
+	texi2dvi cannot be called with "-o /dev/null", this changes
+	permissions of /dev/null.  Reported by Hans Halvorson
+	<hhalvors@Princeton.EDU>
 
 2006-12-30  Michael Albinus  <michael.albinus@gmx.de>
 

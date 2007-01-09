@@ -54,7 +54,7 @@ fi
 
 AC_PROG_MAKE_SET
 
-# Find the Emacs program & flavor to be used.
+# Find the Emacs program & flavor to be used.  Check version.
 AC_EMACS_INFO
 
 # Handle contrib files. "-" must be encoded as "_".
@@ -97,7 +97,8 @@ if test "${TEXI2DVI}" = no; then
    AC_MSG_WARN([texi2dvi not found])
 else
    AC_MSG_CHECKING([for reasonable texi2dvi version])
-   ${TEXI2DVI} -b -q -c -o /dev/null texi/test.texi 2>/dev/null >/dev/null
+   # "-o /dev/null" changes permissions of /dev/null. Not applicable.
+   ${TEXI2DVI} -b -q -c texi/test.texi 2>/dev/null >/dev/null
    if test $? -eq 0; then
       AC_MSG_RESULT([ok])
    else
@@ -106,6 +107,7 @@ else
       TEXI2DVI="no"
    fi
    test -e test.log && rm -f test.log
+   test -e test.dvi && rm -f test.dvi
 fi
 
 # Check existence of install-info.  Again, we produce a warning only,
