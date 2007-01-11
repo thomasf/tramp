@@ -1,3 +1,9 @@
+2007-01-11  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-handle-file-local-copy): Set
+	`enable-multibyte-characters' to nil.  Reported by Chris Moore
+	<christopher.ian.moore@gmail.com>.
+
 2007-01-09  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el: (tramp-process-one-action): Remove `with-timeout'.
