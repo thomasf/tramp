@@ -1,8 +1,8 @@
 ;;; -*- mode: Emacs-Lisp; coding: iso-2022-7bit; -*-
 ;;; tramp.el --- Transparent Remote Access, Multiple Protocol
 
-;; Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004,
-;;   2005, 2006, 2007 Free Software Foundation, Inc.
+;; Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
+;;   2007 Free Software Foundation, Inc.
 
 ;; Author: Kai Gro,A_(Bjohann <kai.grossjohann@gmx.net>
 ;;         Michael Albinus <michael.albinus@gmx.de>
@@ -2073,7 +2073,9 @@ If VAR is nil, then we bind `v' to the structure and `multi-method',
 
 (put 'with-parsed-tramp-file-name 'lisp-indent-function 2)
 ;; Enable debugging.
-(def-edebug-spec with-parsed-tramp-file-name (form symbolp body))
+(eval-and-compile
+  (when (featurep 'edebug)
+    (def-edebug-spec with-parsed-tramp-file-name (form symbolp body))))
 ;; Highlight as keyword.
 (when (functionp 'font-lock-add-keywords)
   (funcall 'font-lock-add-keywords
