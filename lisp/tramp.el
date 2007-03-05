@@ -3773,10 +3773,12 @@ This will break if COMMAND prints a newline, followed by the value of
 
 ;; File Editing.
 
-(defsubst tramp-make-temp-file ()
-  (funcall (if (fboundp 'make-temp-file) 'make-temp-file 'make-temp-name)
-	   (expand-file-name tramp-temp-name-prefix
-			     (tramp-temporary-file-directory))))
+(defsubst tramp-make-temp-file (filename)
+  (concat
+   (funcall (if (fboundp 'make-temp-file) 'make-temp-file 'make-temp-name)
+	    (expand-file-name tramp-temp-name-prefix
+			      (tramp-temporary-file-directory)))
+   (file-name-extension filename t)))
 
 (defun tramp-handle-file-local-copy (filename)
   "Like `file-local-copy' for tramp files."
@@ -3796,7 +3798,7 @@ This will break if COMMAND prints a newline, followed by the value of
       (unless (file-exists-p filename)
 	(error "Cannot make local copy of non-existing file `%s'"
 	       filename))
-      (setq tmpfil (tramp-make-temp-file))
+      (setq tmpfil (tramp-make-temp-file filename))
 
       (cond ((tramp-method-out-of-band-p multi-method method user host)
 	     ;; `copy-file' handles out-of-band methods
@@ -3848,7 +3850,7 @@ This will break if COMMAND prints a newline, followed by the value of
 		     (kill-buffer tmpbuf))
 		 ;; If tramp-decoding-function is not defined for this
 		 ;; method, we invoke tramp-decoding-command instead.
-		 (let ((tmpfil2 (tramp-make-temp-file)))
+		 (let ((tmpfil2 (tramp-make-temp-file filename)))
 		   (write-region (point-min) (point-max) tmpfil2)
 		   (tramp-message
 		    6 "Decoding remote file %s with command %s..."
@@ -4055,7 +4057,7 @@ Returns a file name in `tramp-auto-save-directory' for autosaving this file."
       ;; Write region into a tmp file.  This isn't really needed if we
       ;; use an encoding function, but currently we use it always
       ;; because this makes the logic simpler.
-      (setq tmpfil (tramp-make-temp-file))
+      (setq tmpfil (tramp-make-temp-file filename))
       ;; Set current buffer.  If connection wasn't open, `file-modes' has
       ;; changed it accidently.
       (set-buffer curbuf)
