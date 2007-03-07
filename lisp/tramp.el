@@ -3428,10 +3428,10 @@ This is like `dired-recursive-delete-directory' for tramp files."
 (defun tramp-handle-insert-directory
   (filename switches &optional wildcard full-directory-p)
   "Like `insert-directory' for tramp files."
-  (if (and (boundp 'ls-lisp-use-insert-directory-program)
+  (if (and (featurep 'ls-lisp)
            (not (symbol-value 'ls-lisp-use-insert-directory-program)))
-      (tramp-run-real-handler 'insert-directory
-                              (list filename switches wildcard full-directory-p))
+      (tramp-run-real-handler
+       'insert-directory (list filename switches wildcard full-directory-p))
     ;; For the moment, we assume that the remote "ls" program does not
     ;; grok "--dired".  In the future, we should detect this on
     ;; connection setup.
