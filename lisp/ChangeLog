@@ -1,3 +1,16 @@
+2007-03-31  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-register-file-name-handler)
+	(tramp-register-completion-file-name-handler): New defsubst,
+	derived from `tramp-register-file-name-handlers'.  The split is
+	necessary because Tramp's file name handlers must be registered at
+	different startup places.
+
+2007-03-31  Joachim Schrod  <jschrod@acm.org>  (tiny change)
+
+	* tramp.el (tramp-completion-mode): `last-input-event' may have no
+	character approximation.
+
 2007-03-21  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-handle-make-auto-save-file-name): Apply
