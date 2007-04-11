@@ -3771,10 +3771,12 @@ This will break if COMMAND prints a newline, followed by the value of
 
 ;; File Editing.
 
-(defsubst tramp-make-temp-file ()
-  (funcall (if (fboundp 'make-temp-file) 'make-temp-file 'make-temp-name)
-	   (expand-file-name tramp-temp-name-prefix
-			     (tramp-temporary-file-directory))))
+(defsubst tramp-make-temp-file (filename)
+  (concat
+   (funcall (if (fboundp 'make-temp-file) 'make-temp-file 'make-temp-name)
+	    (expand-file-name tramp-temp-name-prefix
+			      (tramp-temporary-file-directory)))
+   (file-name-extension filename t)))
 
 (defun tramp-handle-file-local-copy (filename)
   "Like `file-local-copy' for tramp files."
@@ -3794,7 +3796,7 @@ This will break if COMMAND prints a newline, followed by the value of
       (unless (file-exists-p filename)
 	(error "Cannot make local copy of non-existing file `%s'"
 	       filename))
-      (setq tmpfil (tramp-make-temp-file))
+      (setq tmpfil (tramp-make-temp-file filename))
 
       (cond ((tramp-method-out-of-band-p multi-method method user host)
 	     ;; `copy-file' handles out-of-band methods
@@ -3846,7 +3848,7 @@ This will break if COMMAND prints a newline, followed by the value of
 		     (kill-buffer tmpbuf))
 		 ;; If tramp-decoding-function is not defined for this
 		 ;; method, we invoke tramp-decoding-command instead.
-		 (let ((tmpfil2 (tramp-make-temp-file)))
+		 (let ((tmpfil2 (tramp-make-temp-file filename)))
 		   (write-region (point-min) (point-max) tmpfil2)
 		   (tramp-message
 		    6 "Decoding remote file %s with command %s..."
@@ -4053,7 +4055,7 @@ Returns a file name in `tramp-auto-save-directory' for autosaving this file."
       ;; Write region into a tmp file.  This isn't really needed if we
       ;; use an encoding function, but currently we use it always
       ;; because this makes the logic simpler.
-      (setq tmpfil (tramp-make-temp-file))
+      (setq tmpfil (tramp-make-temp-file filename))
       ;; Set current buffer.  If connection wasn't open, `file-modes' has
       ;; changed it accidently.
       (set-buffer curbuf)
@@ -4420,10 +4422,20 @@ Falls back to normal file name handler if no tramp file name handler exists."
       (tramp-completion-run-real-handler operation args)))))
 
 ;;;###autoload
-(defsubst tramp-register-file-name-handlers ()
-  "Add tramp file name handlers to `file-name-handler-alist'."
+(defsubst tramp-register-file-name-handler ()
+  "Add tramp file name handler to `file-name-handler-alist'."
   (add-to-list 'file-name-handler-alist
 	       (cons tramp-file-name-regexp 'tramp-file-name-handler))
+  ;; If jka-compr is already loaded, move it to the front of
+  ;; `file-name-handler-alist'.
+  (let ((jka (rassoc 'jka-compr-handler file-name-handler-alist)))
+    (when jka
+      (setq file-name-handler-alist
+	    (cons jka (delete jka file-name-handler-alist))))))
+
+;;;###autoload
+(defsubst tramp-register-completion-file-name-handler ()
+  "Add tramp completion file name handler to `file-name-handler-alist'."
   ;; `partial-completion-mode' is unknown in XEmacs.  So we should
   ;; load it unconditionally there.  In the GNU Emacs case, method/
   ;; user/host name completion shall be bound to `partial-completion-mode'.
@@ -4441,13 +4453,18 @@ Falls back to normal file name handler if no tramp file name handler exists."
       (setq file-name-handler-alist
 	    (cons jka (delete jka file-name-handler-alist))))))
 
+;; `tramp-file-name-handler' must be registered before evaluation of
+;; site-start and init files, because there might exist remote files
+;; already, f.e. files kept via recentf-mode.
+;;;###autoload(tramp-register-file-name-handler)
 ;; During autoload, it shall be checked whether
-;; `partial-completion-mode' is active.  Therefore registering will be
-;; delayed.
+;; `partial-completion-mode' is active.  Therefore registering of
+;; `tramp-completion-file-name-handler' will be delayed.
 ;;;###autoload(add-hook
 ;;;###autoload 'after-init-hook
-;;;###autoload '(lambda () (tramp-register-file-name-handlers)))
-(tramp-register-file-name-handlers)
+;;;###autoload '(lambda () (tramp-register-completion-file-name-handler)))
+(tramp-register-file-name-handler)
+(tramp-register-completion-file-name-handler)
 
 ;;;###autoload
 (defun tramp-unload-file-name-handlers ()
