@@ -175,6 +175,11 @@ Otherwise, use a separate filename syntax for Tramp.")
   (when (boundp 'byte-compile-not-obsolete-var)
     (setq byte-compile-not-obsolete-var 'directory-sep-char)))
 
+;; `set-buffer-multibyte' comes from Emacs Leim.
+(eval-and-compile
+  (unless (fboundp 'set-buffer-multibyte)
+    (defalias 'set-buffer-multibyte 'ignore)))
+
 ;;; User Customizable Internal Variables:
 
 (defgroup tramp nil

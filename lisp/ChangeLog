@@ -1,3 +1,8 @@
+2007-04-16  Michael Albinus  <albinus@arthur>
+
+	* tramp.el (top): Make `set-buffer-multibyte' an alias if it
+	doesn't exist.
+
 2007-04-08  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-completion-mode): `last-input-event' is nil when
