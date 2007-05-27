@@ -7011,8 +7011,6 @@ Not actually used.  Use `(format \"%o\" i)' instead?"
   "Return LOCALNAME component of TRAMP-FILE-NAME."
   (and (tramp-file-name-p obj) (aref obj 4)))
 
-;;;
-
 (defun tramp-tramp-file-p (name)
   "Return t iff NAME is a tramp file."
   (save-match-data
