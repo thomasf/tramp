@@ -1,4 +1,23 @@
-2007-04-16  Michael Albinus  <albinus@arthur>
+2007-05-27  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el:
+	* tramp-ftp.el:
+	* tramp-smb.el:
+	* tramp-util.el:
+	* tramp-vc.el:
+	Don't load cl.el, because that pollutes the namespace.  Replace cl
+	macros by their implementations where necessary.  Requested by
+	Richard Stallman <rms@gnu.org>.
+
+	* tramp.el (tramp-file-name-p, tramp-file-name-multi-method)
+	(tramp-file-name-method, tramp-file-name-user)
+	(tramp-file-name-host, tramp-file-name-localname): New defuns,
+	replacing defstruct `tramp-file-name'.
+	(tramp-handle-file-remote-p, tramp-completion-dissect-file-name1)
+	(tramp-dissect-file-name, tramp-dissect-multi-file-name): Apply
+	`vector' instead of `make-tramp-file-name'.
+
+2007-04-16  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (top): Make `set-buffer-multibyte' an alias if it
 	doesn't exist.

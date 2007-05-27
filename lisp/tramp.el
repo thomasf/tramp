@@ -151,11 +151,7 @@ Otherwise, use a separate filename syntax for Tramp.")
 		    (when (featurep 'tramp-smb)
 		      (unload-feature 'tramp-smb 'force)))))))
 
-(require 'cl)
 (require 'custom)
-;; Emacs 19.34 compatibility hack -- is this needed?
-(or (>= emacs-major-version 20)
-    (load "cl-seq"))
 
 (unless (boundp 'custom-print-functions)
   (defvar custom-print-functions nil))	; not autoloaded before Emacs 20.4
@@ -2391,10 +2387,10 @@ target of the symlink differ."
 			       "Integer constant overflow in reader")
 			(string-match
 			 "^[0-9]+\\([0-9][0-9][0-9][0-9][0-9]\\)\\'"
-			 (caddr err)))
-	       (let* ((big (read (substring (caddr err) 0
+			 (car (cddr err))))
+	       (let* ((big (read (substring (car (cddr err)) 0
 					    (match-beginning 1))))
-		      (small (read (match-string 1 (caddr err))))
+		      (small (read (match-string 1 (car (cddr err)))))
 		      (twiddle (/ small 65536)))
 		 (cons (+ big twiddle)
 		       (- small (* twiddle 65536))))))))
@@ -2814,7 +2810,7 @@ of."
                                  object)))
                (cell root))
           (while (cdr cell)
-            (if (and match (not (string-match match (caadr cell))))
+            (if (and match (not (string-match match (car (cadr cell)))))
                 ;; Remove from list
                 (setcdr cell (cddr cell))
               ;; Include in list
@@ -3876,12 +3872,7 @@ This will break if COMMAND prints a newline, followed by the value of
   "Like `file-remote-p' for tramp files."
   (when (tramp-tramp-file-p filename)
     (with-parsed-tramp-file-name filename nil
-      (make-tramp-file-name
-       :multi-method multi-method
-       :method method
-       :user user
-       :host host
-       :localname ""))))
+      (vector multi-method method user host ""))))
 
 (defun tramp-handle-insert-file-contents
   (filename &optional visit beg end replace)
@@ -3926,7 +3917,7 @@ This will break if COMMAND prints a newline, followed by the value of
 	(when (boundp 'last-coding-system-used)
 	  (set 'last-coding-system-used coding-system-used))
 	(list (expand-file-name filename)
-	      (second result))))))
+	      (cadr result))))))
 
 
 (defun tramp-handle-find-backup-file-name (filename)
@@ -4783,24 +4774,14 @@ remote host and localname (filename on remote host)."
 			  (match-string (nth 1 structure) name)))
 	(if (and method (member method tramp-multi-methods))
 	    ;; Not handled (yet).
-	    (make-tramp-file-name
-	     :multi-method method
-	     :method nil
-	     :user nil
-	     :host nil
-	     :localname nil)
+	    (vector method nil nil nil nil)
 	  (let ((user   (and (nth 2 structure)
 			     (match-string (nth 2 structure) name)))
 		(host   (and (nth 3 structure)
 			     (match-string (nth 3 structure) name)))
 		(localname   (and (nth 4 structure)
 			     (match-string (nth 4 structure) name))))
-	    (make-tramp-file-name
-	     :multi-method nil
-	     :method method
-	     :user user
-	     :host host
-	     :localname localname)))))))
+	    (vector nil method user host localname)))))))
 
 ;; This function returns all possible method completions, adding the
 ;; trailing method delimeter.
@@ -5203,7 +5184,7 @@ USER the array of user names, HOST the array of host names."
                               (aref user i) (aref host i))
                     (format "%s@%s:" (aref method i) (aref host i)))
                   string-list))
-      (incf i))
+      (setq i (1+ i)))
     (format "*%s/%s %s*"
             prefix multi-method
             (apply 'concat (reverse string-list)))))
@@ -5940,7 +5921,7 @@ log in as u2 to h2."
             ;; is done here.
             (funcall multi-func p m u h command)
             (erase-buffer)
-            (incf i)))
+            (setq i (1+ i))))
         (tramp-open-connection-setup-interactive-shell
          p multi-method method user host)
         (tramp-post-connection multi-method method user host)))))
@@ -6836,7 +6817,8 @@ If `tramp-discard-garbage' is nil, just erase buffer."
 
 (defun tramp-mode-string-to-int (mode-string)
   "Converts a ten-letter `drwxrwxrwx'-style mode string into mode bits."
-  (let* ((mode-chars (string-to-vector mode-string))
+  (let* (case-fold-search
+	 (mode-chars (string-to-vector mode-string))
          (owner-read (aref mode-chars 1))
          (owner-write (aref mode-chars 2))
          (owner-execute-or-setid (aref mode-chars 3))
@@ -6848,45 +6830,61 @@ If `tramp-discard-garbage' is nil, just erase buffer."
          (other-execute-or-sticky (aref mode-chars 9)))
     (save-match-data
       (logior
-       (case owner-read
-         (?r (tramp-octal-to-decimal "00400")) (?- 0)
-         (t (error "Second char `%c' must be one of `r-'" owner-read)))
-       (case owner-write
-         (?w (tramp-octal-to-decimal "00200")) (?- 0)
-         (t (error "Third char `%c' must be one of `w-'" owner-write)))
-       (case owner-execute-or-setid
-         (?x (tramp-octal-to-decimal "00100"))
-         (?S (tramp-octal-to-decimal "04000"))
-         (?s (tramp-octal-to-decimal "04100"))
-         (?- 0)
-         (t (error "Fourth char `%c' must be one of `xsS-'"
-                   owner-execute-or-setid)))
-       (case group-read
-         (?r (tramp-octal-to-decimal "00040")) (?- 0)
-         (t (error "Fifth char `%c' must be one of `r-'" group-read)))
-       (case group-write
-         (?w (tramp-octal-to-decimal "00020")) (?- 0)
-         (t (error "Sixth char `%c' must be one of `w-'" group-write)))
-       (case group-execute-or-setid
-         (?x (tramp-octal-to-decimal "00010"))
-         (?S (tramp-octal-to-decimal "02000"))
-         (?s (tramp-octal-to-decimal "02010"))
-         (?- 0)
-         (t (error "Seventh char `%c' must be one of `xsS-'"
-                   group-execute-or-setid)))
-       (case other-read
-         (?r (tramp-octal-to-decimal "00004")) (?- 0)
-         (t (error "Eighth char `%c' must be one of `r-'" other-read)))
-       (case other-write
-         (?w (tramp-octal-to-decimal "00002")) (?- 0)
+       (cond
+	((char-equal owner-read ?r) (tramp-octal-to-decimal "00400"))
+	((char-equal owner-read ?-) 0)
+	(t (error "Second char `%c' must be one of `r-'" owner-read)))
+       (cond
+	((char-equal owner-write ?w) (tramp-octal-to-decimal "00200"))
+	((char-equal owner-write ?-) 0)
+	(t (error "Third char `%c' must be one of `w-'" owner-write)))
+       (cond
+	((char-equal owner-execute-or-setid ?x)
+	 (tramp-octal-to-decimal "00100"))
+	((char-equal owner-execute-or-setid ?S)
+	 (tramp-octal-to-decimal "04000"))
+	((char-equal owner-execute-or-setid ?s)
+	 (tramp-octal-to-decimal "04100"))
+	((char-equal owner-execute-or-setid ?-) 0)
+	(t (error "Fourth char `%c' must be one of `xsS-'"
+		  owner-execute-or-setid)))
+       (cond
+	((char-equal group-read ?r) (tramp-octal-to-decimal "00040"))
+	((char-equal group-read ?-) 0)
+	(t (error "Fifth char `%c' must be one of `r-'" group-read)))
+       (cond
+	((char-equal group-write ?w) (tramp-octal-to-decimal "00020"))
+	((char-equal group-write ?-) 0)
+	(t (error "Sixth char `%c' must be one of `w-'" group-write)))
+       (cond
+	((char-equal group-execute-or-setid ?x)
+	 (tramp-octal-to-decimal "00010"))
+	((char-equal group-execute-or-setid ?S)
+	 (tramp-octal-to-decimal "02000"))
+	((char-equal group-execute-or-setid ?s)
+	 (tramp-octal-to-decimal "02010"))
+	((char-equal group-execute-or-setid ?-) 0)
+	(t (error "Seventh char `%c' must be one of `xsS-'"
+		  group-execute-or-setid)))
+       (cond
+	((char-equal other-read ?r)
+	 (tramp-octal-to-decimal "00004"))
+	((char-equal other-read ?-) 0)
+	(t (error "Eighth char `%c' must be one of `r-'" other-read)))
+       (cond
+         ((char-equal other-write ?w) (tramp-octal-to-decimal "00002"))
+	 ((char-equal other-write ?-) 0)
          (t (error "Nineth char `%c' must be one of `w-'" other-write)))
-       (case other-execute-or-sticky
-         (?x (tramp-octal-to-decimal "00001"))
-         (?T (tramp-octal-to-decimal "01000"))
-         (?t (tramp-octal-to-decimal "01001"))
-         (?- 0)
-         (t (error "Tenth char `%c' must be one of `xtT-'"
-                   other-execute-or-sticky)))))))
+       (cond
+	((char-equal other-execute-or-sticky ?x)
+	 (tramp-octal-to-decimal "00001"))
+	((char-equal other-execute-or-sticky ?T)
+	 (tramp-octal-to-decimal "01000"))
+	((char-equal other-execute-or-sticky ?t)
+	 (tramp-octal-to-decimal "01001"))
+	((char-equal other-execute-or-sticky ?-) 0)
+	(t (error "Tenth char `%c' must be one of `xtT-'"
+		  other-execute-or-sticky)))))))
 
 (defun tramp-convert-file-attributes (multi-method method user host attr)
   "Convert file-attributes ATTR generated by perl script or ls.
@@ -6989,7 +6987,31 @@ Not actually used.  Use `(format \"%o\" i)' instead?"
 ;; internal data structure.  Convenience functions for internal
 ;; data structure.
 
-(defstruct tramp-file-name multi-method method user host localname)
+(defun tramp-file-name-p (obj)
+  "Check whether TRAMP-FILE-NAME is a Tramp object."
+  (and (vectorp obj) (= 5 (length obj))))
+
+(defun tramp-file-name-multi-method (obj)
+  "Return MULTI-METHOD component of TRAMP-FILE-NAME."
+  (and (tramp-file-name-p obj) (aref obj 0)))
+
+(defun tramp-file-name-method (obj)
+  "Return METHOD component of TRAMP-FILE-NAME."
+  (and (tramp-file-name-p obj) (aref obj 1)))
+
+(defun tramp-file-name-user (obj)
+  "Return USER component of TRAMP-FILE-NAME."
+  (and (tramp-file-name-p obj) (aref obj 2)))
+
+(defun tramp-file-name-host (obj)
+  "Return HOST component of TRAMP-FILE-NAME."
+  (and (tramp-file-name-p obj) (aref obj 3)))
+
+(defun tramp-file-name-localname (obj)
+  "Return LOCALNAME component of TRAMP-FILE-NAME."
+  (and (tramp-file-name-p obj) (aref obj 4)))
+
+;;;
 
 (defun tramp-tramp-file-p (name)
   "Return t iff NAME is a tramp file."
@@ -7022,12 +7044,7 @@ localname (file name on remote host)."
 	(let ((user (match-string (nth 2 tramp-file-name-structure) name))
 	      (host (match-string (nth 3 tramp-file-name-structure) name))
 	      (localname (match-string (nth 4 tramp-file-name-structure) name)))
-	  (make-tramp-file-name
-	   :multi-method nil
-	   :method method
-	   :user (or user nil)
-	   :host host
-	   :localname localname))))))
+	  (vector nil method (or user nil) host localname))))))
 
 (defun tramp-find-default-method (user host)
   "Look up the right method to use in `tramp-default-method-alist'."
@@ -7067,7 +7084,7 @@ If both MULTI-METHOD and METHOD are nil, do a lookup in
     (setq method (match-string method-index name))
     (setq hops (match-string hops-index name))
     (setq len (/ (length (match-data t)) 2))
-    (when (< localname-index 0) (incf localname-index len))
+    (when (< localname-index 0) (setq localname-index (+ localname-index len)))
     (setq localname (match-string localname-index name))
     (let ((index 0))
       (while (string-match hop-regexp hops index)
@@ -7078,12 +7095,12 @@ If both MULTI-METHOD and METHOD are nil, do a lookup in
               (cons (match-string hop-user-index hops) hop-users))
         (setq hop-hosts
               (cons (match-string hop-host-index hops) hop-hosts))))
-    (make-tramp-file-name
-     :multi-method method
-     :method       (apply 'vector (reverse hop-methods))
-     :user         (apply 'vector (reverse hop-users))
-     :host         (apply 'vector (reverse hop-hosts))
-     :localname         localname)))
+    (vector
+     method
+     (apply 'vector (reverse hop-methods))
+     (apply 'vector (reverse hop-users))
+     (apply 'vector (reverse hop-hosts))
+     localname)))
 
 (defun tramp-make-tramp-file-name (multi-method method user host localname)
   "Constructs a tramp file name from METHOD, USER, HOST and LOCALNAME."
@@ -7115,7 +7132,7 @@ If both MULTI-METHOD and METHOD are nil, do a lookup in
       (let ((m (aref method i)) (u (aref user i)) (h (aref host i)))
         (setq hops (concat hops (format-spec hop-format
 					     `((?m . ,m) (?u . ,u) (?h . ,h)))))
-        (incf i)))
+        (setq i (1+ i))))
     (concat prefix hops localname)))
 
 (defun tramp-make-copy-program-file-name (user host localname)
@@ -7230,7 +7247,7 @@ as default."
 		      (assoc (tramp-find-method multi-method method user host)
 			     tramp-methods))))
     (if entry
-	(second entry)
+	(cadr entry)
       (symbol-value param))))
 
 
