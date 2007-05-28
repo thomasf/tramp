@@ -1,7 +1,8 @@
 # Emacs Makefile for TRAMP
 # @configure_input@
 
-# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004,
+#   2005, 2006, 2007 Free Software Foundation, Inc.
 
 # Author: kai.grossjohann@gmx.net
 #         michael.albinus@gmx.de
@@ -72,8 +73,8 @@ XEMACS_FILES = CONTRIBUTORS						\
 		lisp/tramp-vc.el lisp/tramp.el lisp/trampcache.el	\
 		test/test-harness.el test/tramp-expr.el			\
 		test/tramp-file-name.el test/tramp-path.el		\
-		texi/ChangeLog texi/tramp.texi				\
-		texi/tramp_ja.texi
+		texi/ChangeLog texi/tramp.texi texi/tramp_ja.texi	\
+		texi/doclicense.texi
 
 TRAMP_EMACS_MERGE_VERSION = @TRAMP_EMACS_MERGE_VERSION@
 TRAMP_EMACS_MERGE_TAG = $(subst .,-,V-@TRAMP_EMACS_MERGE_VERSION@)
