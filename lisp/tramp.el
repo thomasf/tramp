@@ -3899,14 +3899,14 @@ This will break if COMMAND prints a newline, followed by the value of
 		      'file-local-copy)))
 	       (file-local-copy filename)))
 	    coding-system-used result)
-	(when visit
-	  (setq buffer-file-name filename)
-	  (set-visited-file-modtime)
-	  (set-buffer-modified-p nil))
 	(tramp-message-for-buffer
 	 multi-method method user host
 	 9 "Inserting local temp file `%s'..." local-copy)
 	(setq result (insert-file-contents local-copy nil beg end replace))
+	(when visit
+	  (setq buffer-file-name filename)
+	  (set-visited-file-modtime)
+	  (set-buffer-modified-p nil))
 	;; Now `last-coding-system-used' has right value.  Remember it.
 	(when (boundp 'last-coding-system-used)
 	  (setq coding-system-used (symbol-value 'last-coding-system-used)))
