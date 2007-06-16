@@ -7713,7 +7713,7 @@ Used for non-7bit chars in strings."
 	      (kill-region start (point)))))
 	(insert "
 The buffer(s) above will be appended to this message.  If you don't want
-to append a buffer because it contains sensible data, or because the buffer
+to append a buffer because it contains sensitive data, or because the buffer
 is too large, you should delete the respective buffer.  The buffer(s) will
 contain user and host names.  Passwords will never be included there.")
 
