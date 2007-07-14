@@ -1,6 +1,6 @@
 \input texinfo   @c -*-texinfo-*-
-@c %**start of header
 @setfilename ../info/tramp
+@c %**start of header
 @settitle TRAMP User Manual
 @setchapternewpage odd
 @c %**end of header
