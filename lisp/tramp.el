@@ -5351,7 +5351,7 @@ file exists and nonzero exit status otherwise."
        5 "Starting remote shell `%s' for tilde expansion..." shell)
       (tramp-send-command
        multi-method method user host
-       (concat "PS1='$ ' exec " shell)) ;
+       (concat "PROMPT_COMMAND='' PS1='$ ' exec " shell)) ;
       (tramp-barf-if-no-shell-prompt
        (get-buffer-process (current-buffer))
        60 "Couldn't find remote `%s' prompt" shell)
@@ -5361,11 +5361,12 @@ file exists and nonzero exit status otherwise."
       ;; must use "\n" here, not tramp-rsh-end-of-line.  Kai left the
       ;; last tramp-rsh-end-of-line, Douglas wanted to replace that,
       ;; as well.
-      (process-send-string nil (format "PS1='%s%s%s'; PS2=''; PS3=''%s"
-				       tramp-rsh-end-of-line
-                                       tramp-end-of-output
-				       tramp-rsh-end-of-line
-                                       tramp-rsh-end-of-line))
+      (process-send-string
+       nil (format "PROMPT_COMMAND=''; PS1='%s%s%s'; PS2=''; PS3=''%s"
+		   tramp-rsh-end-of-line
+		   tramp-end-of-output
+		   tramp-rsh-end-of-line
+		   tramp-rsh-end-of-line))
       (tramp-wait-for-output)
       (tramp-message
        9 "Setting remote shell prompt...done")
@@ -5690,6 +5691,7 @@ Maybe the different regular expressions need to be tuned.
 		   (or user (user-login-name)) host method)
     (let ((process-environment (copy-sequence process-environment)))
       (setenv "TERM" tramp-terminal-type)
+      (setenv "PROMPT_COMMAND")
       (setenv "PS1" "$ ")
       (let* ((default-directory (tramp-temporary-file-directory))
 	     ;; If we omit the conditional here, then we would use
@@ -5771,6 +5773,7 @@ arguments, and xx will be used as the host name to connect to.
 	(setq login-args (cons "-p" (cons (match-string 2 host) login-args)))
 	(setq real-host (match-string 1 host)))
       (setenv "TERM" tramp-terminal-type)
+      (setenv "PROMPT_COMMAND")
       (setenv "PS1" "$ ")
       (let* ((default-directory (tramp-temporary-file-directory))
 	     ;; If we omit the conditional, we would use
@@ -5823,6 +5826,7 @@ prompt than you do, so it is not at all unlikely that the variable
 		   (or user "<root>") method)
     (let ((process-environment (copy-sequence process-environment)))
       (setenv "TERM" tramp-terminal-type)
+      (setenv "PROMPT_COMMAND")
       (setenv "PS1" "$ ")
       (let* ((default-directory (tramp-temporary-file-directory))
 	     ;; If we omit the conditional, we use `undecided-dos' in
@@ -5888,6 +5892,7 @@ log in as u2 to h2."
     (tramp-message 7 "Opening `%s' connection..." multi-method)
     (let ((process-environment (copy-sequence process-environment)))
       (setenv "TERM" tramp-terminal-type)
+      (setenv "PROMPT_COMMAND")
       (setenv "PS1" "$ ")
       (let* ((default-directory (tramp-temporary-file-directory))
 	     ;; If we omit the conditional, we use `undecided-dos' in
@@ -6127,10 +6132,11 @@ to set up.  METHOD, USER and HOST specify the connection."
   ;; makes it work under `rc', too.  We also unset the variable $ENV
   ;; because that is read by some sh implementations (eg, bash when
   ;; called as sh) on startup; this way, we avoid the startup file
-  ;; clobbering $PS1.
+  ;; clobbering $PS1.  $PROMP_COMMAND is another way to set the prompt
+  ;; in /bin/bash, it must be discarded as well.
   (tramp-send-command-internal
    multi-method method user host
-   (format "exec env 'ENV=' 'PS1=$ ' %s"
+   (format "exec env 'ENV=' 'PROMPT_COMMAND=' 'PS1=$ ' %s"
 	   (tramp-get-method-parameter
 	    multi-method method user host 'tramp-remote-sh))
    (format "remote `%s' to come up"
@@ -6227,7 +6233,7 @@ to set up.  METHOD, USER and HOST specify the connection."
   (setq tramp-last-cmd-time (current-time))
   (tramp-send-command
    multi-method method user host
-   (format "PS1='%s%s%s'; PS2=''; PS3=''"
+   (format "PROMPT_COMMAND=''; PS1='%s%s%s'; PS2=''; PS3=''"
 	   tramp-rsh-end-of-line
            tramp-end-of-output
 	   tramp-rsh-end-of-line))
