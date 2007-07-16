@@ -3868,11 +3868,15 @@ This will break if COMMAND prints a newline, followed by the value of
 	    (t (error "Wrong method specification for `%s'" method)))
       tmpfil)))
 
-(defun tramp-handle-file-remote-p (filename)
-  "Like `file-remote-p' for tramp files."
+(defun tramp-handle-file-remote-p (filename &optional connected)
+  "Like `file-remote-p' for Tramp files."
   (when (tramp-tramp-file-p filename)
     (with-parsed-tramp-file-name filename nil
-      (vector multi-method method user host ""))))
+      (and (or (not connected)
+	       (let ((p (get-buffer-process
+			 (tramp-get-buffer multi-method method user host))))
+		 (and p (processp p) (memq (process-status p) '(run open)))))
+	   (tramp-make-tramp-file-name multi-method method user host "")))))
 
 (defun tramp-handle-insert-file-contents
   (filename &optional visit beg end replace)
