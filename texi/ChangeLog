@@ -1,3 +1,7 @@
+2007-07-25  Michael Albinus  <michael.albinus@gmx.de>
+
+	* Relicense all FSF files to GPLv3 or later.
+
 2007-07-14  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.texi: Move @setfilename ../info/tramp up, outside the

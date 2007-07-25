@@ -1,3 +1,7 @@
+2007-07-25  Michael Albinus  <michael.albinus@gmx.de>
+
+	* Relicense all FSF files to GPLv3 or later.
+
 2007-07-15  Michael Albinus  <michael.albinus@gmx.de>
 
 	* configure.ac: Bump version (to 2.0.57-pre).  Update merge
