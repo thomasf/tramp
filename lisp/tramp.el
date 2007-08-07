@@ -3868,7 +3868,7 @@ This will break if COMMAND prints a newline, followed by the value of
 	    (t (error "Wrong method specification for `%s'" method)))
       tmpfil)))
 
-(defun tramp-handle-file-remote-p (filename &optional connected)
+(defun tramp-handle-file-remote-p (filename &optional identification connected)
   "Like `file-remote-p' for Tramp files."
   (when (tramp-tramp-file-p filename)
     (with-parsed-tramp-file-name filename nil
@@ -3876,7 +3876,12 @@ This will break if COMMAND prints a newline, followed by the value of
 	       (let ((p (get-buffer-process
 			 (tramp-get-buffer multi-method method user host))))
 		 (and p (processp p) (memq (process-status p) '(run open)))))
-	   (tramp-make-tramp-file-name multi-method method user host "")))))
+	   (cond
+	    ((eq identification 'method) method)
+	    ((eq identification 'user) user)
+	    ((eq identification 'host) host)
+	    (t (tramp-make-tramp-file-name
+		multi-method method user host "")))))))
 
 (defun tramp-handle-insert-file-contents
   (filename &optional visit beg end replace)
@@ -4358,11 +4363,12 @@ Falls back to normal file name handler if no tramp file name handler exists."
 	(cond
 	 ;; When we are in completion mode, some operations shouldn' be
 	 ;; handled by backend.
-	 ((and completion (memq operation '(expand-file-name)))
-	  (tramp-run-real-handler operation args))
 	 ((and completion (zerop (length localname))
 	       (memq operation '(file-exists-p file-directory-p)))
 	  t)
+	 ((and completion (zerop (length localname))
+	       (memq operation '(file-name-as-directory)))
+	  filename)
 	 ;; Call the backend function.
 	 (foreign (apply foreign operation args))
 	 ;; Nothing to do for us.
