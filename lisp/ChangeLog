@@ -1,3 +1,8 @@
+2007-08-21  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp-vc.el (tramp-vc-user-login-name): Get argument by
+	`ad-get-arg'.
+
 2007-08-14  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (top): Require cl.el, when `copy-tree' is not available

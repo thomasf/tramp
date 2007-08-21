@@ -453,7 +453,7 @@ filename we are thinking about..."
 	       (tramp-tramp-file-p file)	; tramp file
 	       (setq ad-return-value
 		     (save-match-data
-		       (tramp-handle-vc-user-login-name uid)))) ; get the owner name
+		       (tramp-handle-vc-user-login-name (ad-get-arg 0))))) ; get the owner name
 	  ad-do-it)))                     ; else call the original
 
   (add-hook 'tramp-unload-hook
