@@ -1,3 +1,11 @@
+2007-10-06  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-completion-mode): Extend doc-string.
+	(tramp-completion-mode-p): Revert change from 2007-09-24.
+	Checking for `return' etc as last character is not sufficient, for
+	example in dired-mode when entering <g> (revert-buffer) or
+	<s> (dired-sort).
+
 2007-08-08  Glenn Morris  <rgm@gnu.org>
 
 	* Replace `iff' in doc-strings and comments.
