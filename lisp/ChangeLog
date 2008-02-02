@@ -7,9 +7,8 @@
 	* tramp.el (tramp-handle-make-auto-save-file-name)
 	(tramp-completion-dissect-file-name, tramp-find-executable): Use
 	`mapc' instead of `mapcar'.
-	* tramp.el (tramp-open-connection-setup-interactive-shell): Send
-	only single prompt setting commands, in order to avoid
-	double-prompt.
+	(tramp-open-connection-setup-interactive-shell): Send only single
+	prompt setting commands, in order to avoid double-prompt.
 
 	* tramp-vc.el (tramp-vc-do-command): Use `mapc' instead of
 	`mapcar'.
