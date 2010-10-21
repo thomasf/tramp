@@ -9,7 +9,7 @@
 #  This file is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published
 #  by the Free Software Foundation, either version 3 of the License, or
-#  (at your option) any later version.
+# (at your option) any later version.
 
 #  This file is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -27,7 +27,7 @@ AC_PREREQ([2.50])
 
 # Initialize configure script.  This is the only point Tramp revision
 # needs to be set.
-AC_INIT([Tramp], [2.2.0-pre], [tramp-devel@gnu.org])
+AC_INIT([Tramp], [2.1.20-pre], [tramp-devel@gnu.org])
 AC_MSG_NOTICE([$PACKAGE_STRING])
 
 # The last version of Tramp that was merged into the Emacs CVS
@@ -116,11 +116,13 @@ fi
 # Necessary for maintainers only.
 AC_EMACS_INSTALL
 
+# Check japanese manual.
+AC_JA_MANUAL
+
 # Check target installation directories.
 AC_PATH_LISPDIR
 AC_PATH_INFODIR
 
-AC_SUBST(abs_srcdir)
 AC_SUBST(prefix)
 AC_SUBST(prefix_default)
 AC_SUBST(datarootdir)
@@ -154,8 +156,3 @@ AC_SUBST(TRAMP_CONFIG_FILES)
 AC_CONFIG_FILES([$TRAMP_CONFIG_FILES])
 
 AC_OUTPUT
-
-# Regenerate autoloads.
-AC_MSG_NOTICE([regenerate autoloads])
-rm -f lisp/tramp-loaddefs.el
-make EMACS_INFO=${EMACS_INFO} -s -C lisp autoloads

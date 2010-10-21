@@ -73,7 +73,7 @@ XEMACS_FILES = CONTRIBUTORS						\
 		lisp/tramp-uu.el lisp/tramp-vc.el lisp/tramp.el		\
 		test/test-harness.el test/tramp-expr.el			\
 		test/tramp-file-name.eltest/tramp-path.el texi/ChangeLog\
-		texi/tramp.texi texi/doclicense.texi
+		texi/tramp.texi texi/tramp_ja.texi texi/doclicense.texi
 
 TRAMP_EMACS_MERGE_VERSION = @TRAMP_EMACS_MERGE_VERSION@
 TRAMP_EMACS_MERGE_TAG = $(subst .,-,V-@TRAMP_EMACS_MERGE_VERSION@)
@@ -196,7 +196,7 @@ xemacs:
 
 savannah: tar cvstag
 	$(FTP_UPLOAD) $(TARNAME).tar.gz*
-	./configure
+	./configure --with-japanese-manual
 	$(MAKE) -C texi savannah
 
 cvs-update:
