@@ -104,8 +104,7 @@ detected as prompt when being sent on echoing hosts, therefore.")
     (tramp-copy-args            (("-p" "%k")))
     (tramp-copy-keep-date       t)))
 ;;;###tramp-autoload
-(add-to-list
- 'tramp-methods
+(add-to-list 'tramp-methods
  '("scp"
    (tramp-login-program        "ssh")
    (tramp-login-args           (("-l" "%u") ("-p" "%p")	("-e" "none") ("%h")))
@@ -4103,22 +4102,10 @@ Gateway hops are already opened."
       (let ((gw (pop target-alist))
 	    (hop (pop target-alist)))
 	;; Is the method prepared for gateways?
-	(unless (tramp-get-method-parameter
-		 (tramp-file-name-method hop) 'tramp-default-port)
+	(unless (tramp-file-name-port hop)
 	  (tramp-error
 	   vec 'file-error
-	   "Method `%s' is not supported for gateway access."
-	   (tramp-file-name-method hop)))
-	;; Add default port if needed.
-	(unless
-	    (string-match
-	     tramp-host-with-port-regexp (tramp-file-name-host hop))
-	  (aset hop 2
-		(concat
-		 (tramp-file-name-host hop) tramp-prefix-port-format
-		 (number-to-string
-		  (tramp-get-method-parameter
-		   (tramp-file-name-method hop) 'tramp-default-port)))))
+	   "Connection `%s' is not supported for gateway access." hop))
 	;; Open the gateway connection.
 	(add-to-list
 	 'target-alist
@@ -4238,7 +4225,7 @@ connection if a previous connection has died for some reason."
 		 (p (let ((default-directory
 			    (tramp-compat-temporary-file-directory)))
 		      (start-process
-		       (or process-name (tramp-buffer-name vec))
+		       (tramp-get-connection-name vec)
 		       (tramp-get-connection-buffer vec)
 		       tramp-encoding-shell))))
 
