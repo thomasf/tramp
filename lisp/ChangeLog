@@ -1,3 +1,22 @@
+2010-12-03  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp-sh.el (tramp-methods): Add "ksu".
+	(tramp-default-user-alist): Add "ksu".  Use `regexp-opt' for
+	method list.
+
+2010-12-01  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.el (tramp-debug-message): Extend function exclude list.
+
+	* tramp-sh.el (tramp-methods): Add recursive options to "pscp" and
+	"psftp".  Exchange "%k" marker with options.
+	(tramp-do-copy-or-rename-file, tramp-sh-handle-file-local-copy):
+	Compute size of link target.
+	(tramp-do-copy-or-rename-file-out-of-band). Move setting of
+	`tramp-current-*' up due to gateway methods.  Optimze computing of
+	copy arguments.  Use `tramp-get-connection-name' and
+	`tramp-get-connection-buffer'.  Improve debug messages.
+
 2010-11-27  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.el (tramp-default-method-alist)
