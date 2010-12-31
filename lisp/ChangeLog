@@ -1,7 +1,7 @@
 2010-12-31  Michael Albinus  <michael.albinus@gmx.de>
 
-	* tramp.el (tramp-methods): Add recursive options to "scpc" and
-	"scpx".
+	* tramp.el (tramp-methods): Add recursive options to "scpc",
+	"scpx", "pscp" and "psftp".
 
 2010-12-10  Michael Albinus  <michael.albinus@gmx.de>
 
