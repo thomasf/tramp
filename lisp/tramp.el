@@ -1,7 +1,7 @@
 ;;; tramp.el --- Transparent Remote Access, Multiple Protocol
 
-;; Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004,
-;;   2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+;; Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
+;;   2007, 2008, 2009, 2010, 2011 Free Software Foundation, Inc.
 
 ;; (copyright statements below in code to be updated with the above notice)
 
@@ -571,7 +571,8 @@ detected as prompt when being sent on echoing hosts, therefore.")
 	     (tramp-async-args           (("-q")))
 	     (tramp-remote-sh            "/bin/sh")
 	     (tramp-copy-program         "scp")
-	     (tramp-copy-args            (("-P" "%p") ("-p" "%k") ("-q") ("-r")))
+	     (tramp-copy-args            (("-P" "%p") ("-p" "%k")
+					  ("-q") ("-r")))
 	     (tramp-copy-keep-date       t)
 	     (tramp-copy-recursive       t)
 	     (tramp-password-end-of-line nil)
@@ -779,8 +780,11 @@ shouldn't return t when it isn't."
   ;; password caching.  "scpc" is chosen if we detect that the user is
   ;; running OpenSSH 4.0 or newer.
   (cond
-   ;; PuTTY is installed.
-   ((executable-find "pscp")
+   ;; PuTTY is installed.  We don't take it, if it is installed on a
+   ;; non-windows system, or pscp from the pssh (parallel ssh) package
+   ;; is found.
+   ((and (eq system-type 'windows-nt)
+	 (executable-find "pscp"))
     (if	(or (fboundp 'password-read)
 	    (fboundp 'auth-source-user-or-password)
 	    ;; Pageant is running.
