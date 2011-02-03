@@ -16,7 +16,7 @@
 
 @include trampver.texi
 
-@c Macro for formatting a filename according to the repective syntax.
+@c Macro for formatting a filename according to the respective syntax.
 @c xxx and yyy are auxiliary macros in order to omit leading and
 @c trailing whitespace.  Not very elegant, but I don't know it better.
 
@@ -2834,6 +2834,9 @@ the following command:
 @example
 [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
 @end example
+
+Furthermore it has been reported, that @value{tramp} (like sshfs,
+incidentally) doesn't work with WinSSHD due to strange prompt settings.
 
 @item
 Echoed characters after login
