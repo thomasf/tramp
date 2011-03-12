@@ -1,3 +1,18 @@
+2011-03-12  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.1.20 released.
+
+	* tramp.el (tramp-progress-reporter-update): Use
+	`tramp-compat-funcall'.
+	(tramp-handle-start-file-process): Use `tramp-compat-process-get'.
+	(tramp-handle-insert-file-contents): Make `file-remote-p' call
+	compatible.
+	(tramp-open-connection-setup-interactive-shell): Use
+	`tramp-compat-process-put'.
+
+	* tramp-compat.el (tramp-compat-process-get)
+	(tramp-compat-process-put): New defuns.
+
 2011-02-22  Glenn Morris  <rgm@gnu.org>
 
 	* tramp-gvfs.el: Fix spelling of "precede".
