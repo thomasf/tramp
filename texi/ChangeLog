@@ -1,8 +1,14 @@
+2011-03-12  Michael Albinus  <michael.albinus@gmx.de>
+
+	Version 2.1.20 released.
+
+	* tramp.texi (Frequently Asked Questions): Add Emacs 24 to
+	supported systems.
+
 2011-02-19  Michael Albinus  <michael.albinus@gmx.de>
 
 	* tramp.texi: Use consistently "Emacs" (instead of "GNU Emacs") and
 	"Debian GNU/Linux".
-	(Frequently Asked Questions): Add Emacs 24 to supported systems.
 
 	* trampver.texi.in [xemacs]: Set emacsothername to "Emacs".
 
