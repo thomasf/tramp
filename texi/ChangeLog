@@ -1,3 +1,13 @@
+2011-04-17  Michael Albinus  <michael.albinus@gmx.de>
+
+	* tramp.texi (Frequently Asked Questions): New item for disabling
+	Tramp in other packages.
+
+2011-03-14  Michael Albinus <michael.albinus@gmx.de>
+
+	* tramp.texi (Remote processes): New subsection "Running shell on
+	a remote host".
+
 2011-03-12  Michael Albinus  <michael.albinus@gmx.de>
 
 	Version 2.2.1 released.
